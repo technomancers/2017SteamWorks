@@ -1,0 +1,11 @@
+.metadata/
+.settings/
+.project
+build/
+.DS_Store
+sysProps.xml
+.gradle
+.classpath
+.project
+.vscode
+bin/

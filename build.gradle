@@ -1,0 +1,14 @@
+plugins {
+	id 'io.github.technomancers.gradlerio' version '0.1.5'
+}
+apply plugin: 'eclipse'
+
+description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
+
+dependencies {
+	//Include external dependencies here (Uses maven central)
+}
+
+gradlerio{
+	teamNumber '1758'
+}

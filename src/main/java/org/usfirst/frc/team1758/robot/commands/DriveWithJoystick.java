@@ -1,5 +1,10 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.usfirst.frc.team1758.robot.Controller;
+import org.usfirst.frc.team1758.robot.OI;
+
+
+
 public class DriveWithJoystick extends CommandBase {
 	private static boolean finished;
 
@@ -12,7 +17,7 @@ public class DriveWithJoystick extends CommandBase {
 	}
 
 	public void execute() {
-
+		OI.drivingController.getRawAxis(Controller.Axes.LEFT_X);
 	}
 
 	public boolean isFinished() {

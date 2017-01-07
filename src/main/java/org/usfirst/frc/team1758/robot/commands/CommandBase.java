@@ -10,7 +10,6 @@ public abstract class CommandBase extends Command {
 	public static OI oi;
 
 	public static void init() {
-		oi = new OI();
 		driveTrain = new DriveTrain();
 	}
 

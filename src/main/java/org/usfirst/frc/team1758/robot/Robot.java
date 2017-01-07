@@ -17,6 +17,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
+		OI.init();
 		CommandBase.init();
 	}
 
@@ -25,30 +26,30 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void updateSmartDashboard() {
-
+		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
 	}
 
 	public void autonomousInit() {
-		autonomousCommand = autoChooser.getSelected();
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		// autonomousCommand = autoChooser.getSelected();
+		// if (autonomousCommand != null)
+		// 	autonomousCommand.start();
 	}
 
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		// Scheduler.getInstance().run();
 	}
 
 	public void teleopInit() {
 		//Comment this line out if you want autonomous to continue until interrupted
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		// if (autonomousCommand != null)
+		// 	autonomousCommand.cancel();
 	}
 
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		// Scheduler.getInstance().run();
 	}
 
 	public void testPeriodic() {
-		LiveWindow.run();
+		// LiveWindow.run();
 	}
 }

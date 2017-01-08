@@ -16,7 +16,7 @@ public class turnOnCameraLight extends CommandBase {
 	}
 
 	public void execute() {
-		vision.light.set(Value.kOn);
+		vision.cameraLightRelay.set(Value.kOn);
 	}
 
 	public boolean isFinished() {
@@ -24,7 +24,7 @@ public class turnOnCameraLight extends CommandBase {
 	}
 
 	public void end() {
-
+		finished = true;
 	}
 
 	public void interrupted() {

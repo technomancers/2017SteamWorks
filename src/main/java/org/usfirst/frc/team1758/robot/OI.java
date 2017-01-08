@@ -1,7 +1,8 @@
 package org.usfirst.frc.team1758.robot;
 
-public class OI {
+import org.usfirst.frc.team1758.utilities.Controller;
 
+public class OI {
 	public static Controller operatorController, drivingController;
 	public static void init()
 	{

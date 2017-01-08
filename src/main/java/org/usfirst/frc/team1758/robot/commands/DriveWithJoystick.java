@@ -1,33 +1,29 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import org.usfirst.frc.team1758.robot.Controller;
+import org.usfirst.frc.team1758.utilities.Controller.Axes;
 import org.usfirst.frc.team1758.robot.OI;
-
-
 
 public class DriveWithJoystick extends CommandBase {
 	private static boolean finished;
-
 	public DriveWithJoystick() {
 		requires(driveTrain);
 	}
-
-	public void initialize() {
+	protected void initialize() {
 		finished = false;
 	}
-
-	public void execute() {
-		OI.drivingController.getRawAxis(Controller.Axes.LEFT_X);
+	protected void execute() {
+		//If you need to do calculations on the Acis do them in a new method inside the Controller
+		double x = OI.drivingController.getRawAxis(Axes.LEFT_X);
+		double y = OI.drivingController.getRawAxis(Axes.LEFT_Y);
+		driveTrain.setPower(x, y);
 	}
-
-	public boolean isFinished() {
+	protected boolean isFinished() {
 		return finished;
 	}
-
-	public void end() {
-
+	protected void end() {
+		driveTrain.setPower(0);
 	}
-
-	public void interrupted() {
+	protected void interrupted() {
+		driveTrain.setPower(0);
 	}
 }

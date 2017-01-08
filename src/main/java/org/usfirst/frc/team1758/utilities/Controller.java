@@ -1,12 +1,11 @@
-package org.usfirst.frc.team1758.robot;
+package org.usfirst.frc.team1758.utilities;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-
 public class Controller
 {
-	public Joystick joystick;
+	private Joystick joystick;
 	public JoystickButton a, b, x, y, lb, rb;
 	public enum Axes {
 		LEFT_X(1), RIGHT_X(4), LEFT_Y(2), RIGHT_Y(5), TRIGGER(3);

@@ -1,26 +1,40 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.robot.commands.turnOnCameraLight;
+import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.robot.commands.ToggleLight;
+import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
+
 
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-
 
 public class Vision extends Subsystem
 {
-	public Relay cameraLightRelay;
+	private boolean isLightOn;
+	private Relay cameraLightRelay;
 	public Vision()
 	{
-		cameraLightRelay = new Relay(3);
+		cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY);
+		isLightOn = false;
 	}
-	CommandGroup comma = new CommandGroup();
-
 	protected void initDefaultCommand()
 	{
-		setDefaultCommand(new turnOnCameraLight());
+		setDefaultCommand(new ToggleLight(LightMode.ON));
+	}
+	public void turnOnLight(){
+		cameraLightRelay.set(Value.kOn);
+		isLightOn = true;
+	}
+	public void turnOffLight(){
+		cameraLightRelay.set(Value.kOff);
+		isLightOn = false;
+	}
+	public void toggleLight(){
+		if(isLightOn){
+			turnOffLight();
+		}else{
+			turnOnLight();
+		}
 	}
 }

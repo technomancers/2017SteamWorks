@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
+import org.usfirst.frc.team1758.robot.commands.turnOnCameraLight;
+import org.usfirst.frc.team1758.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
 
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
@@ -33,6 +36,9 @@ public class Robot extends IterativeRobot {
 		// autonomousCommand = autoChooser.getSelected();
 		// if (autonomousCommand != null)
 		// 	autonomousCommand.start();
+		autonomousCommand = new turnOnCameraLight();
+		autonomousCommand.start();
+
 	}
 
 	public void autonomousPeriodic() {

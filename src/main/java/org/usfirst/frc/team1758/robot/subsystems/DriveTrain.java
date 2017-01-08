@@ -11,22 +11,22 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new DriveWithJoystick());
 	}
 	public DriveTrain(){
-		rf_Motor = new Talon(RobotMap.RIGHT_FRONT_MOTOR);
+		//rf_Motor = new Talon(RobotMap.RIGHT_FRONT_MOTOR);
 		rm_Motor = new Talon(RobotMap.RIGHT_MIDDLE_MOTOR);
-		rb_Motor = new Talon(RobotMap.RIGHT_BACK_MOTOR);
-		lf_Motor = new Talon(RobotMap.LEFT_FRONT_MOTOR);
+		//rb_Motor = new Talon(RobotMap.RIGHT_BACK_MOTOR);
+		//lf_Motor = new Talon(RobotMap.LEFT_FRONT_MOTOR);
 		lm_Motor = new Talon(RobotMap.LEFT_MIDDLE_MOTOR);
-		lb_Motor = new Talon(RobotMap.LEFT_BACK_MOTOR);
+		//lb_Motor = new Talon(RobotMap.LEFT_BACK_MOTOR);
 	}
 	public void setLeftPower(double power){
-		lf_Motor.set(power);
+		//lf_Motor.set(power);
 		lm_Motor.set(power);
-		lb_Motor.set(power);
+		//lb_Motor.set(power);
 	}
 	public void setRightPower(double power){
-		rf_Motor.set(power);
+		//rf_Motor.set(power);
 		rm_Motor.set(power);
-		rb_Motor.set(power);
+		//rb_Motor.set(power);
 	}
 	public void setPower(double power){
 		setPower(power, power);

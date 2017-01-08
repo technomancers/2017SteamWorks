@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Vision extends Subsystem
 {
-	public Relay light;
+	public Relay cameraLightRelay;
 	public Vision()
 	{
-		light = new Relay(3);
+		cameraLightRelay = new Relay(3);
 	}
 
 	protected void initDefaultCommand()

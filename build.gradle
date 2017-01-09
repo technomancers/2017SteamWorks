@@ -1,15 +1,17 @@
-plugins {
-	id 'io.github.technomancers.gradlerio' version '0.1.7'
-}
-apply plugin: 'eclipse'
+plugins { 
+  id 'io.github.technomancers.gradlerio' version '0.1.7' 
+} 
+apply plugin: 'eclipse' 
+  
+description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries
 
-description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
-
-dependencies {
-	//Include external dependencies here (Uses maven central)
-}
-
-gradlerio{
+dependencies { 
+  //Include external dependencies here (Uses maven central) 
+ 
+   
+} 
+ 
+gradlerio{ 
 	teamNumber '1758'
-	robotClass 'org.usfirst.frc.team1758.robot.Robot'
+	robotClass 'org.usfirst.frc.team1758.Robot'
 }

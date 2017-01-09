@@ -17,6 +17,7 @@ public class Vision extends Subsystem
 	private VisionThread frontVisionThread, backVisionThread;
 	private Relay cameraLightRelay;
 	AxisCamera frontCamera, backCamera;
+	USBCamera frontCameraUSB, backCameraUSB;
 	
 	
 
@@ -27,10 +28,9 @@ public class Vision extends Subsystem
 		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
 		backCamera = new AxisCamera("backCamera", RobotMap.ipBackCamera);
 		configureFrontCamera();
-		
+		frontCameraUSB = CameraServer.getInstance().autoCaptureStart();
   } 
-	
-  protected void initDefaultCommand() 
+	protected void initDefaultCommand() 
   { 
     setDefaultCommand(new ToggleLight(LightMode.ON)); 
   } 

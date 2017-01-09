@@ -1,5 +1,5 @@
 plugins {
-	id 'io.github.technomancers.gradlerio' version '0.1.6'
+	id 'io.github.technomancers.gradlerio' version '0.1.7'
 }
 apply plugin: 'eclipse'
 
@@ -7,9 +7,6 @@ description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 
 dependencies {
 	//Include external dependencies here (Uses maven central)
-	compile 'org.opencv:opencv-java:3.1.0'
-	compile 'edu.wpi.cscore.java:cscore:1.0.0:arm'
-	
 }
 
 gradlerio{

@@ -1,6 +1,6 @@
-# Robot Base
+# 2017SteamWorks
 
-This is an empty structure of our Robot code.
+This is the project repository of our code for FRC's 2017 Steamworks game.
 
 ## Prerequisites
 

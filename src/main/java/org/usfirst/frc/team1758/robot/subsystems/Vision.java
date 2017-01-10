@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 
 
@@ -23,9 +26,9 @@ public class Vision extends Subsystem
 	AxisCamera frontCamera, backCamera;
 	UsbCamera frontCameraUSB, backCameraUSB;
 	CameraServer serverCamera;
-	
-	
-
+	MjpegServer mjpegServer;	
+	CvSink cvSink;
+	CvSource cvSource;
  public Vision() 
   { 
     cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY); 
@@ -34,7 +37,17 @@ public class Vision extends Subsystem
 		backCamera = new AxisCamera("backCamera", RobotMap.ipBackCamera);
 		configureFrontCamera();
 		serverCamera = CameraServer.getInstance();
-		serverCamera.startAutomaticCapture(0);
+		frontCameraUSB = new UsbCamera("frontCameraUSB", 0);
+		mjpegServer = new MjpegServer("cameraStream", 1181);
+		mjpegServer.setSource(frontCameraUSB);
+		//Testing around with the CvSink
+		//cvSink = new CvSink("openCv_USBCamera_0");
+		//cvSink.setSource(frontCameraUSB);
+		CameraServer.getInstance().addServer(mjpegServer);
+		
+		
+
+		
 
 	//	frontCameraUSB = CameraServer.getInstance().
 		//backCameraUSB = CameraServer.getInstance().addServer("backCameraUSB", port);
@@ -49,12 +62,14 @@ public class Vision extends Subsystem
   } 
 	public void switchToBackCamera()
 	{
-		serverCamera.startAutomaticCapture(1);
+		mjpegServer.setSource(backCameraUSB);
+		CameraServer.getInstance().addServer(mjpegServer);
 	}
 
 	public void switchToFrontCamera()
 	{
 		serverCamera.startAutomaticCapture(0);
+		
 	}
 	public void startFrontCamera()
 	{

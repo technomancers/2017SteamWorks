@@ -1,7 +1,8 @@
 plugins {
-	id 'io.github.technomancers.gradlerio' version '0.1.7'
+	id 'io.github.technomancers.gradlerio' version '0.1.8'
 }
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 
@@ -12,4 +13,5 @@ dependencies {
 gradlerio{
 	teamNumber '1758'
 	robotClass 'org.usfirst.frc.team1758.robot.Robot'
+	dryRun true
 }

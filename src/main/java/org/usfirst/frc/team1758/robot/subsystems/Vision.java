@@ -51,6 +51,11 @@ public class Vision extends Subsystem
 	{
 		serverCamera.startAutomaticCapture(1);
 	}
+
+	public void switchToFrontCamera()
+	{
+		serverCamera.startAutomaticCapture(0);
+	}
 	public void startFrontCamera()
 	{
 		// Pipline is from GRIP

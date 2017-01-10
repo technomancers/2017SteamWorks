@@ -38,12 +38,13 @@ public class Vision extends Subsystem
 		configureFrontCamera();
 		serverCamera = CameraServer.getInstance();
 		frontCameraUSB = new UsbCamera("frontCameraUSB", 0);
-		mjpegServer = new MjpegServer("cameraStream", 1181);
-		mjpegServer.setSource(frontCameraUSB);
+		//mjpegServer = new MjpegServer("cameraStream", 1181);
+		//mjpegServer.setSource(frontCameraUSB);
 		//Testing around with the CvSink
 		//cvSink = new CvSink("openCv_USBCamera_0");
 		//cvSink.setSource(frontCameraUSB);
-		CameraServer.getInstance().addServer(mjpegServer);
+		//CameraServer.getInstance().addServer(mjpegServer);
+		serverCamera.addAxisCamera("frontCamera", "host");
 		
 		
 
@@ -62,14 +63,13 @@ public class Vision extends Subsystem
   } 
 	public void switchToBackCamera()
 	{
-		mjpegServer.setSource(backCameraUSB);
-		CameraServer.getInstance().addServer(mjpegServer);
+		serverCamera.removeCamera("frontCamera");
+		serverCamera.addAxisCamera("backCamera", "host");
 	}
-
 	public void switchToFrontCamera()
 	{
-		serverCamera.startAutomaticCapture(0);
-		
+		serverCamera.removeCamera("backCamera");
+		serverCamera.addAxisCamera("frontCamera", "host");	
 	}
 	public void startFrontCamera()
 	{

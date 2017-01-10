@@ -4,7 +4,8 @@ plugins {
 apply plugin: 'eclipse' 
 apply plugin: 'idea'
   
-description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
+
+description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries' 
 
 dependencies { 
   //Include external dependencies here (Uses maven central) 

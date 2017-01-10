@@ -16,4 +16,6 @@ public class RobotMap {
 	public final static String ipBackCamera =  "10.17.58.11";
 	public final static int imageHeight = 225;
 	public final static int imageWidth = 300;
+	public final static int frontCameraPort = 0;
+	public final static int backCameraPort = 1; 
 }

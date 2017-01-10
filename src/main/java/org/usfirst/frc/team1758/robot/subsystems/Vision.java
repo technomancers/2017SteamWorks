@@ -22,6 +22,7 @@ public class Vision extends Subsystem
 	private Relay cameraLightRelay;
 	AxisCamera frontCamera, backCamera;
 	UsbCamera frontCameraUSB, backCameraUSB;
+	CameraServer serverCamera;
 	
 	
 
@@ -32,12 +33,29 @@ public class Vision extends Subsystem
 		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
 		backCamera = new AxisCamera("backCamera", RobotMap.ipBackCamera);
 		configureFrontCamera();
-		frontCameraUSB = CameraServer.getInstance().startAutomaticCapture();
+		serverCamera = CameraServer.getInstance();
+		serverCamera.startAutomaticCapture(0);
+
+	//	frontCameraUSB = CameraServer.getInstance().
+		//backCameraUSB = CameraServer.getInstance().addServer("backCameraUSB", port);
+		
+
   } 
+
+
 	protected void initDefaultCommand() 
   { 
     setDefaultCommand(new ToggleLight(LightMode.ON)); 
   } 
+	public void switchToBackCamera()
+	{
+		serverCamera.startAutomaticCapture(1);
+	}
+
+	public void switchToFrontCamera()
+	{
+		serverCamera.startAutomaticCapture(0);
+	}
 	public void startFrontCamera()
 	{
 		// Pipline is from GRIP

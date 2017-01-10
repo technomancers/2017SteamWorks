@@ -22,11 +22,11 @@ public class ToggleLight extends CommandBase {
 				vision.turnOnLight();
 				break;
 			case OFF:
-				vision.turnOffLight();
+				vision.turnOffLight();	
 			default:
 				vision.toggleLight();
 				break;
-		}	
+		}
 		finished = true;
 	}
 	protected boolean isFinished() {

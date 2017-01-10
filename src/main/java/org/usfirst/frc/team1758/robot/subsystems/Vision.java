@@ -2,12 +2,16 @@ package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.usfirst.frc.team1758.robot.RobotMap; 
 import org.usfirst.frc.team1758.robot.commands.ToggleLight; 
-import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode; 
+import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
+
+import edu.wpi.first.wpilibj.CameraServer;
+ 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
 
 
 
@@ -17,7 +21,7 @@ public class Vision extends Subsystem
 	private VisionThread frontVisionThread, backVisionThread;
 	private Relay cameraLightRelay;
 	AxisCamera frontCamera, backCamera;
-	USBCamera frontCameraUSB, backCameraUSB;
+	UsbCamera frontCameraUSB, backCameraUSB;
 	
 	
 
@@ -28,7 +32,7 @@ public class Vision extends Subsystem
 		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
 		backCamera = new AxisCamera("backCamera", RobotMap.ipBackCamera);
 		configureFrontCamera();
-		frontCameraUSB = CameraServer.getInstance().autoCaptureStart();
+		frontCameraUSB = CameraServer.getInstance().startAutomaticCapture();
   } 
 	protected void initDefaultCommand() 
   { 

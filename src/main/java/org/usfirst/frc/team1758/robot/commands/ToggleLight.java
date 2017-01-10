@@ -26,9 +26,7 @@ public class ToggleLight extends CommandBase {
 			default:
 				vision.toggleLight();
 				break;
-		}
-		fasd. adfasd sdasdfasdfasdfasdfasdfasdfsdf
-		
+		}	
 		finished = true;
 	}
 	protected boolean isFinished() {

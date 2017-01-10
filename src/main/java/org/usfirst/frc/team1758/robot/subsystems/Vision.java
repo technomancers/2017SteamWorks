@@ -1,7 +1,11 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.robot.RobotMap; 
-import org.usfirst.frc.team1758.robot.commands.ToggleLight; 
+import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.robot.commands.SwitchCamera;
+ 
+import org.usfirst.frc.team1758.robot.commands.ToggleLight;
+import org.usfirst.frc.team1758.robot.commands.SwitchCamera.cameraInUse;
+ 
 import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -59,7 +63,8 @@ public class Vision extends Subsystem
 
 	protected void initDefaultCommand() 
   { 
-    setDefaultCommand(new ToggleLight(LightMode.ON)); 
+    //setDefaultCommand(new ToggleLight(LightMode.ON)); 
+		setDefaultCommand(new SwitchCamera(cameraInUse.TOGGLE));
   } 
 	public void switchToBackCamera()
 	{
@@ -94,6 +99,10 @@ public class Vision extends Subsystem
     } 
 	}
 	
+	public void	turnOnCamera()
+	{
+		serverCamera.addAxisCamera("frontCamera", "host");
+	}
 	public void configureFrontCamera()
 	{
 		frontCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);

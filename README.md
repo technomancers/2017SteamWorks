@@ -9,8 +9,8 @@ This is an empty structure of our Robot code.
 
 ```sh
 #run this to get this repository
-git clone git@github.com:technomancers/RobotBase.git
-cd RobotBase
+git clone git@github.com:technomancers/2017SteamWorks.git
+cd 2017SteamWorks
 #to make eclipse friendly
 .\gradlew.bat eclipse
 #to deploy

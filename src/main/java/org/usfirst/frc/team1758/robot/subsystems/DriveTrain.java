@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 	private Talon rf_Motor, rm_Motor, rb_Motor, lf_Motor, lm_Motor, lb_Motor;
 	protected void initDefaultCommand() {
-		setDefaultCommand(new DriveWithJoystick());
+	//	setDefaultCommand(new DriveWithJoystick());
 	}
 	public DriveTrain(){
 		//rf_Motor = new Talon(RobotMap.RIGHT_FRONT_MOTOR);

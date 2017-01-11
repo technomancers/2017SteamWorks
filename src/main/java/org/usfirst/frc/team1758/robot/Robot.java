@@ -1,8 +1,11 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
+import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team1758.robot.commands.SwitchCamera;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
+import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.utilities.Controller;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -22,6 +25,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous", autoChooser);
 		OI.init();
 		CommandBase.init();
+		
 	}
 	public void robotPeriodic() {
 		updateSmartDashboard();

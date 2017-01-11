@@ -64,7 +64,7 @@ public class Vision extends Subsystem
 	protected void initDefaultCommand() 
   { 
     //setDefaultCommand(new ToggleLight(LightMode.ON)); 
-		setDefaultCommand(new SwitchCamera(cameraInUse.TOGGLE));
+	//	setDefaultCommand(new SwitchCamera(cameraInUse.TOGGLE));
   } 
 	public void switchToBackCamera()
 	{

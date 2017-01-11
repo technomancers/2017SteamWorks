@@ -1,12 +1,17 @@
 package org.usfirst.frc.team1758.robot.commands;
 
 import org.usfirst.frc.team1758.utilities.Controller.Axes;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
+
+
 import org.usfirst.frc.team1758.robot.OI;
+import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 
 public class DriveWithJoystick extends CommandBase {
 	private static boolean finished;
 	public DriveWithJoystick() {
-		requires(driveTrain);
+		//requires(driveTrain);
 	}
 	protected void initialize() {
 		finished = false;

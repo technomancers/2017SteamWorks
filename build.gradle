@@ -9,9 +9,13 @@ description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 
 dependencies {
 	//Include external dependencies here (Uses maven central)
+
+
 }
 
 gradlerio{
 	teamNumber '1758'
 	robotClass 'org.usfirst.frc.team1758.robot.Robot'
+	rioIP '10.17.58.22'
+	
 }

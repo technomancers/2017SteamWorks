@@ -16,7 +16,7 @@ public class SwitchCamera extends CommandBase{
 
 	public SwitchCamera(cameraInUse camera)
 	{
-		requires(vision);
+		//requires(vision);
 		cameraUse = camera;
 	}
 
@@ -51,4 +51,6 @@ public class SwitchCamera extends CommandBase{
 		{
 
 		}
-	}
+
+		}
+	

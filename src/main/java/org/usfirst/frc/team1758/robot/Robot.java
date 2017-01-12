@@ -19,13 +19,12 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	public SendableChooser<Command> autoChooser;
 	public void robotInit() {
+		OI.init();
+		CommandBase.init();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Turn On Light", new ToggleLight(LightMode.ON));
 		SmartDashboard.putData("Autonomous", autoChooser);
-		OI.init();
-		CommandBase.init();
-		
 	}
 	public void robotPeriodic() {
 		updateSmartDashboard();

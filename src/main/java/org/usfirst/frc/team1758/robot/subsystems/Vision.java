@@ -1,15 +1,7 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.usfirst.frc.team1758.robot.RobotMap;
-import org.usfirst.frc.team1758.robot.commands.SwitchCamera;
- 
-import org.usfirst.frc.team1758.robot.commands.ToggleLight;
-import org.usfirst.frc.team1758.robot.commands.SwitchCamera.cameraInUse;
- 
-import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
-
 import edu.wpi.first.wpilibj.CameraServer;
- 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,8 +11,6 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
-
-
 
 public class Vision extends Subsystem
 {
@@ -33,8 +23,8 @@ public class Vision extends Subsystem
 	MjpegServer mjpegServer;	
 	CvSink cvSink;
 	CvSource cvSource;
- public Vision() 
-  { 
+	public Vision() 
+	{ 
     cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY); 
     isLightOn = false; 
 		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
@@ -49,22 +39,13 @@ public class Vision extends Subsystem
 		//cvSink.setSource(frontCameraUSB);
 		//CameraServer.getInstance().addServer(mjpegServer);
 		serverCamera.addAxisCamera("frontCamera", "host");
-		
-		
-
-		
-
-	//	frontCameraUSB = CameraServer.getInstance().
+		//frontCameraUSB = CameraServer.getInstance().
 		//backCameraUSB = CameraServer.getInstance().addServer("backCameraUSB", port);
-		
-
-  } 
-
-
+	} 
 	protected void initDefaultCommand() 
   { 
     //setDefaultCommand(new ToggleLight(LightMode.ON)); 
-	//	setDefaultCommand(new SwitchCamera(cameraInUse.TOGGLE));
+		//setDefaultCommand(new SwitchCamera(cameraInUse.TOGGLE));
   } 
 	public void switchToBackCamera()
 	{
@@ -80,7 +61,6 @@ public class Vision extends Subsystem
 	{
 		// Pipline is from GRIP
 		// frontVisionThread = new VisionThread(frontCamera, new Pipeline() , pipeline -> {
-
 		// });
 	}
   public void turnOnLight(){ 
@@ -98,7 +78,6 @@ public class Vision extends Subsystem
       turnOnLight(); 
     } 
 	}
-	
 	public void	turnOnCamera()
 	{
 		serverCamera.addAxisCamera("frontCamera", "host");
@@ -107,7 +86,7 @@ public class Vision extends Subsystem
 	{
 		frontCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);
 		frontCamera.setExposureManual(1);
-}
+	}
 	public void configureBackCmera()
 	{
 		backCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);

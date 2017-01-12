@@ -8,23 +8,19 @@ public class SwitchCamera extends CommandBase{
 	{
 		BACK, FRONT, TOGGLE;
 	}
-
 	public SwitchCamera()
 	{
 		this(cameraInUse.TOGGLE);
 	}
-
 	public SwitchCamera(cameraInUse camera)
 	{
 		//requires(vision);
 		cameraUse = camera;
 	}
-
 	protected void initialize()
 	{
 		finished = false;
 	}
-
 	protected void execute() {
 		switch(cameraUse){
 			case BACK:
@@ -37,20 +33,16 @@ public class SwitchCamera extends CommandBase{
 			break;
 		}
 		finished = true;
-			
-		}
-
-		protected boolean isFinished()
-		{
-			return finished;
-		}
-		protected void end()
-		{	
-		}
-		protected void interrupted()
-		{
-
-		}
-
-		}
+	}
+	protected boolean isFinished()
+	{
+		return finished;
+	}
+	protected void end()
+	{	
+	}
+	protected void interrupted()
+	{
+	}
+}
 	

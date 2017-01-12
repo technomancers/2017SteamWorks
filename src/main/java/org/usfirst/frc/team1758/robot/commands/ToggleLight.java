@@ -1,11 +1,5 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import org.usfirst.frc.team1758.robot.subsystems.Vision;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-
-
-
 public class ToggleLight extends CommandBase {
 	private static boolean finished;
 	private static LightMode lightMode;

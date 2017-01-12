@@ -5,8 +5,7 @@ public class RobotMap {
 	public final static int CAMERA_LIGHT_RELAY = 3;
 
 	//DriveTrain Subsystem
-	
-//public final static int RIGHT_FRONT_MOTOR = 0;
+	//public final static int RIGHT_FRONT_MOTOR = 0;
 	public final static int RIGHT_MIDDLE_MOTOR = 1;
 	public final static int RIGHT_BACK_MOTOR = 2;
 	public final static int LEFT_FRONT_MOTOR = 3;

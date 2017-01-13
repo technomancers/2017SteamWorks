@@ -2,6 +2,7 @@ package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team1758.robot.commands.GetGyroAngle;
 import org.usfirst.frc.team1758.robot.commands.SwitchCamera;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
@@ -31,7 +32,8 @@ public class Robot extends IterativeRobot {
 	}
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
-		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
+		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
+	
 	}
 	public void autonomousInit() {
 		autonomousCommand = autoChooser.getSelected();

@@ -32,4 +32,8 @@ public class Controller
 	public double getRawAxis(Axes axes){
 		return joystick.getRawAxis(axes.getPort());
 	}
+	public double getNormalizedAxis(Axes axes)
+	{
+		return getRawAxis(axes) * (-1.0);
+	}
 }

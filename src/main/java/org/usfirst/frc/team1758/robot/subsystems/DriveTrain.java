@@ -1,13 +1,20 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
+
+import edu.wpi.first.wpilibj.RobotDrive;
+
+
+
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class DriveTrain extends Subsystem {
 	private Talon rf_Motor, rm_Motor, rb_Motor, lf_Motor, lm_Motor, lb_Motor;
+	private	RobotDrive tmDrive;
 	protected void initDefaultCommand() {
-	//	setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithJoystick());
 	}
 	public DriveTrain(){
 		//rf_Motor = new Talon(RobotMap.RIGHT_FRONT_MOTOR);
@@ -15,6 +22,7 @@ public class DriveTrain extends Subsystem {
 		//rb_Motor = new Talon(RobotMap.RIGHT_BACK_MOTOR);
 		//lf_Motor = new Talon(RobotMap.LEFT_FRONT_MOTOR);
 		lm_Motor = new Talon(RobotMap.LEFT_MIDDLE_MOTOR);
+		tmDrive = new RobotDrive(lm_Motor, rm_Motor);
 		//lb_Motor = new Talon(RobotMap.LEFT_BACK_MOTOR);
 	}
 	public void setLeftPower(double power){
@@ -33,5 +41,9 @@ public class DriveTrain extends Subsystem {
 	public void setPower(double l_power, double r_power){
 		setLeftPower(l_power);
 		setRightPower(r_power);
+	}
+	public void tankDrive(double left, double right)
+	{
+		tmDrive.tankDrive(left, right);
 	}
 }

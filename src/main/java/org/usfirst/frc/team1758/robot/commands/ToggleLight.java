@@ -10,14 +10,15 @@ public class ToggleLight extends CommandBase {
 		this(LightMode.TOGGLE);
 	}
 	public ToggleLight(LightMode mode){
-		//requires(Vision);
+		requires(vision);
 		lightMode = mode;
 	}
 	protected void initialize() {
 		finished = false;
 	}
 	protected void execute() {
-		switch (lightMode) {
+		if(!finished)
+		{switch (lightMode) {
 			case ON:
 				vision.turnOnLight();
 				break;
@@ -26,7 +27,7 @@ public class ToggleLight extends CommandBase {
 			default:
 				vision.toggleLight();
 				break;
-		}
+		}}
 		finished = true;
 	}
 	protected boolean isFinished() {

@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class CommandBase extends Command {
 	protected static DriveTrain driveTrain;
-	protected static Vision vision;
-	protected static Sensors sensors;
+	public	 static Vision vision;
+	public static Sensors sensors;
 	public static void init() {
 		driveTrain = new DriveTrain();
 		vision = new Vision();

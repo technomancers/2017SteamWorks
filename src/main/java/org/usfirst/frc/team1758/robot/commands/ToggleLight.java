@@ -17,8 +17,7 @@ public class ToggleLight extends CommandBase {
 		finished = false;
 	}
 	protected void execute() {
-		if(!finished)
-		{switch (lightMode) {
+		switch (lightMode) {
 			case ON:
 				vision.turnOnLight();
 				break;
@@ -27,7 +26,7 @@ public class ToggleLight extends CommandBase {
 			default:
 				vision.toggleLight();
 				break;
-		}}
+		}
 		finished = true;
 	}
 	protected boolean isFinished() {

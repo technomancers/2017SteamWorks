@@ -14,5 +14,5 @@ dependencies {
 gradlerio{
 	teamNumber '1758'
 	robotClass 'org.usfirst.frc.team1758.robot.Robot'
-	rioIP '10.17.58.22'
+	rioIP '10.17.58.52'
 }

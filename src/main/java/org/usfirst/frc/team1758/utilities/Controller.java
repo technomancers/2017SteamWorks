@@ -1,5 +1,8 @@
 package org.usfirst.frc.team1758.utilities;
 
+import org.usfirst.frc.team1758.robot.commands.StartCamera;
+import org.usfirst.frc.team1758.robot.subsystems.Vision.CameraMode;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -28,6 +31,8 @@ public class Controller
 		y = new JoystickButton(joystick, 4);
 		lb = new JoystickButton(joystick, 5);
 		rb = new JoystickButton(joystick, 6);
+		a.whenPressed(new StartCamera());
+		b.whenPressed(new StartCamera(CameraMode.BACK));
 	}
 	public double getRawAxis(Axes axes){
 		return joystick.getRawAxis(axes.getPort());

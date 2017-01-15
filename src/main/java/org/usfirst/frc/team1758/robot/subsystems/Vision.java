@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.usfirst.frc.team1758.robot.RobotMap;
-import org.usfirst.frc.team1758.robot.commands.ToggleLight;
-import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
 
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -10,35 +8,44 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.cscore.AxisCamera;
-import edu.wpi.cscore.UsbCamera;
 
 public class Vision extends Subsystem
 {
 	private boolean isLightOn;
-	private AxisCamera frontCamera;
+	private AxisCamera activeCamera, frontCamera, backCamera;
 	private Relay cameraLightRelay;
-	UsbCamera frontCameraUSB, backCameraUSB;
 	CameraServer serverCamera;
+	CameraMode mode;
+	public enum CameraMode
+	{
+		FRONT, BACK;
+	}
 	public Vision() 
 	{ 
     cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY); 
 		serverCamera = CameraServer.getInstance();
+		frontCamera = new AxisCamera("activeCamera", RobotMap.ipFrontCamera);
+		backCamera = new AxisCamera("activeCamera", RobotMap.ipBackCamera);
     isLightOn = false;
-		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
-		configureFrontCamera();
-		switchToFrontCamera();
 	} 
 	protected void initDefaultCommand() 
   { 
-		setDefaultCommand(new ToggleLight(LightMode.ON));
+		//setDefaultCommand(new ToggleLight(LightMode.ON));
   }
-	public void switchToFrontCamera()
+	public void switchToCamera(CameraMode cm)
 	{
-		serverCamera.addCamera(frontCamera);	
-	}
-
-	public void startCapture(){
+		switch(cm){
+			case BACK:
+				activeCamera = backCamera;
+				break;
+			default:
+				activeCamera = frontCamera;
+				break;
+		}	
+		serverCamera.removeCamera("activeCamera");
+		serverCamera.addCamera(activeCamera);
 		serverCamera.startAutomaticCapture();
+
 	}
 
   public void turnOnLight(){ 
@@ -56,10 +63,10 @@ public class Vision extends Subsystem
       turnOnLight(); 
     } 
 	}
-	public void configureFrontCamera()
+	public void configureCameras()
 	{
-		frontCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);
-		frontCamera.setExposureManual(1);
+		activeCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);
+		activeCamera.setExposureManual(1);
 	}
 }
 	

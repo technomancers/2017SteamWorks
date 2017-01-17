@@ -1,5 +1,5 @@
 plugins {
-	id 'io.github.technomancers.gradlerio' version '0.1.15'
+	id 'io.github.technomancers.gradlerio' version '0.1.17'
 }
 apply plugin: 'eclipse'
 apply plugin: 'idea'

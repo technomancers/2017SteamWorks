@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	public SendableChooser<Command> autoChooser;
+
 	public void robotInit() {
 		OI.init();
 		CommandBase.init();
@@ -26,30 +27,36 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Turn On Light", new ToggleLight(LightMode.ON));
 		SmartDashboard.putData("Autonomous", autoChooser);
 	}
+
 	public void robotPeriodic() {
 		updateSmartDashboard();
 	}
+
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
 		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
 	}
+
 	public void autonomousInit() {
 		autonomousCommand = autoChooser.getSelected();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
+
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 	}
+
 	public void teleopInit() {
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
+
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
+
 	public void testPeriodic() {
-		LiveWindow.run();
 	}
 }

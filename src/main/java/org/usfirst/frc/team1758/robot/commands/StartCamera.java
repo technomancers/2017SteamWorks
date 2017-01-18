@@ -24,7 +24,7 @@ public class StartCamera extends CommandBase
 	}
 	protected void execute()
 	{
-		vision.switchToCamera(modeInUse);
+		vision.addCameras();
 		finished = true;
 	}
 	protected boolean isFinished()

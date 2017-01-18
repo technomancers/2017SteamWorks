@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
 
 public class Vision extends Subsystem
 {
 	private boolean isLightOn;
-	private AxisCamera activeCamera, frontCamera, backCamera;
+	private AxisCamera activeCamera, frontCamera;
+	private UsbCamera backCamera, backCameraTwo;
 	private Relay cameraLightRelay;
 	CameraServer serverCamera;
 	CameraMode mode;
@@ -24,27 +26,22 @@ public class Vision extends Subsystem
 	{ 
     cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY); 
 		serverCamera = CameraServer.getInstance();
-		frontCamera = new AxisCamera("activeCamera", RobotMap.ipFrontCamera);
-		backCamera = new AxisCamera("activeCamera", RobotMap.ipBackCamera);
+		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
+		backCamera = new UsbCamera("backCamera", 1);
+		backCameraTwo = new UsbCamera("backCameraTwo", 0);
+		addCameras();
     isLightOn = false;
 	} 
 	protected void initDefaultCommand() 
   { 
 		//setDefaultCommand(new ToggleLight(LightMode.ON));
   }
-	public void switchToCamera(CameraMode cm)
+	public void addCameras()
 	{
-		switch(cm){
-			case BACK:
-				activeCamera = backCamera;
-				break;
-			default:
-				activeCamera = frontCamera;
-				break;
-		}	
-		serverCamera.removeCamera("activeCamera");
-		serverCamera.addCamera(activeCamera);
-		serverCamera.startAutomaticCapture();
+		serverCamera.addCamera(frontCamera);
+		serverCamera.addCamera(backCamera);
+		serverCamera.startAutomaticCapture(backCamera);
+		serverCamera.startAutomaticCapture(frontCamera);
 
 	}
 
@@ -65,8 +62,7 @@ public class Vision extends Subsystem
 	}
 	public void configureCameras()
 	{
-		activeCamera.setResolution(RobotMap.imageWidth, RobotMap.imageHeight);
-		activeCamera.setExposureManual(1);
+	
 	}
 }
 	

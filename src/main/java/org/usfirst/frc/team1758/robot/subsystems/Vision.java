@@ -29,6 +29,7 @@ public class Vision extends Subsystem
 		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
 		backCamera = new UsbCamera("backCamera", 1);
 		backCameraTwo = new UsbCamera("backCameraTwo", 0);
+
 		addCameras();
     isLightOn = false;
 	} 
@@ -40,8 +41,13 @@ public class Vision extends Subsystem
 	{
 		serverCamera.addCamera(frontCamera);
 		serverCamera.addCamera(backCamera);
+		serverCamera.addCamera(backCameraTwo);
+		backCamera.setExposureManual(100);
+		backCameraTwo.setExposureManual(100);
+		frontCamera.setExposureHoldCurrent();
 		serverCamera.startAutomaticCapture(backCamera);
 		serverCamera.startAutomaticCapture(frontCamera);
+		serverCamera.startAutomaticCapture(backCameraTwo);
 
 	}
 
@@ -62,7 +68,7 @@ public class Vision extends Subsystem
 	}
 	public void configureCameras()
 	{
-	
+
 	}
 }
 	

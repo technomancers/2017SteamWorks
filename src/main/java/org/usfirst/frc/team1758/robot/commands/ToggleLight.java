@@ -10,7 +10,7 @@ public class ToggleLight extends CommandBase {
 		this(LightMode.TOGGLE);
 	}
 	public ToggleLight(LightMode mode){
-		//requires(Vision);
+		requires(vision);
 		lightMode = mode;
 	}
 	protected void initialize() {

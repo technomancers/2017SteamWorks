@@ -1,13 +1,9 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
-import org.usfirst.frc.team1758.robot.commands.SwitchCamera;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight;
 import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
-import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.utilities.Controller;
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,8 +20,12 @@ public class Robot extends IterativeRobot {
 		CommandBase.init();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Turn On Light", new ToggleLight(LightMode.ON));
+		autoChooser.addObject("Left", null);
+		autoChooser.addObject("Middle", null);
+		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
+		ToggleLight tl = new ToggleLight(LightMode.TOGGLE);
+		tl.start();
 	}
 
 	public void robotPeriodic() {
@@ -34,7 +34,9 @@ public class Robot extends IterativeRobot {
 
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
-		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
+		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
+		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
+	
 	}
 
 	public void autonomousInit() {

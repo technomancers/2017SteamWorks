@@ -1,8 +1,5 @@
 package org.usfirst.frc.team1758.utilities;
 
-import org.usfirst.frc.team1758.robot.commands.StartCamera;
-import org.usfirst.frc.team1758.robot.subsystems.Vision.CameraMode;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 

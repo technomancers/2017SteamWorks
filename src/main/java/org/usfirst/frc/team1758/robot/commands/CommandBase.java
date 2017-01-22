@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public abstract class CommandBase extends Command {
 	protected static DriveTrain driveTrain;
-	public	 static Vision vision;
+	protected static Vision vision;
 	protected static Sensors sensors;
 	public static void init() {
 		driveTrain = new DriveTrain();

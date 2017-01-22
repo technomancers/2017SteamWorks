@@ -20,6 +20,9 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
+		SmartDashboard.putData("Left", autoChooser);
+		SmartDashboard.putData("Middle", autoChooser);
+		SmartDashboard.putData("Right", autoChooser);
 		ToggleLight tl = new ToggleLight(LightMode.TOGGLE);
 		tl.start();
 	}

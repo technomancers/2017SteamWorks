@@ -41,4 +41,7 @@ public class Controller
 	{
 		return getRawAxis(axes) * (-1.0);
 	}
+	public double getTwist(){
+		return joystick.getTwist();
+	}
 }

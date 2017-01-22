@@ -31,8 +31,6 @@ public class Controller
 		y = new JoystickButton(joystick, 4);
 		lb = new JoystickButton(joystick, 5);
 		rb = new JoystickButton(joystick, 6);
-		a.whenPressed(new StartCamera());
-		b.whenPressed(new StartCamera(CameraMode.BACK));
 	}
 	public double getRawAxis(Axes axes){
 		return joystick.getRawAxis(axes.getPort());

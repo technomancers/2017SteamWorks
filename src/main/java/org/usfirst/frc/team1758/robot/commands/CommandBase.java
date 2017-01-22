@@ -5,11 +5,12 @@ import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 public abstract class CommandBase extends Command {
 	protected static DriveTrain driveTrain;
 	public	 static Vision vision;
-	public static Sensors sensors;
+	protected static Sensors sensors;
 	public static void init() {
 		driveTrain = new DriveTrain();
 		vision = new Vision();
@@ -20,5 +21,8 @@ public abstract class CommandBase extends Command {
 	}
 	public CommandBase() {
 		super();
+	}
+	public static Sensors getSensors(){
+		return sensors;
 	}
 }

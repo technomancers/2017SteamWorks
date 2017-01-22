@@ -19,8 +19,7 @@ public class DriveWithJoystick extends CommandBase {
 		double twist = OI.drivingController.getTwist();
 		double gyroAngle = sensors.getGyroAngle();
 		driveTrain.mecanumDrive(x, y, twist, gyroAngle);
-		//driveTrain.tankDrive(x, y);
-	}
+		}
 	protected boolean isFinished() {
 		return finished;
 	}

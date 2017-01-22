@@ -19,10 +19,10 @@ public class Robot extends IterativeRobot {
 		CommandBase.init();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
+		autoChooser.addObject("Left", null);
+		autoChooser.addObject("Middle", null);
+		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
-		SmartDashboard.putData("Left", autoChooser);
-		SmartDashboard.putData("Middle", autoChooser);
-		SmartDashboard.putData("Right", autoChooser);
 		ToggleLight tl = new ToggleLight(LightMode.TOGGLE);
 		tl.start();
 	}
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public void updateSmartDashboard() {
 		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
 		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
-		SmartDashboard.putNumber("Gyron", CommandBase.sensors.getGyroAngle());
+		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
 	
 	}
 	public void autonomousInit() {

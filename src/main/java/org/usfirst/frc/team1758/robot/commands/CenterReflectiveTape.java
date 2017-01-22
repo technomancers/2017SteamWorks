@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-public class FindReflectiveTape extends CommandBase
+public class CenterReflectiveTape extends CommandBase
 {
 	private boolean finished;
-	public FindReflectiveTape()
+	public CenterReflectiveTape()
 	{
 		requires(vision);
 	}

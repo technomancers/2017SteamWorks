@@ -15,7 +15,7 @@ public class Sensors extends Subsystem
 	public Sensors()
 	{
 		gyro = new ADXRS450_Gyro();
-		encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A,RobotMap.ENCODER_CHANNEL_B);
+		//encoder = new Encoder(RobotMap.ENCODER_CHANNEL_A,RobotMap.ENCODER_CHANNEL_B);
 		Talon newTalon = new Talon(0);
 	}
 	public void initDefaultCommand()

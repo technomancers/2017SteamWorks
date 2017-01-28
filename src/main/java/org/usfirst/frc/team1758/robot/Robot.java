@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.ToggleLight;
-import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
+//import org.usfirst.frc.team1758.robot.commands.ToggleLight;
+//import org.usfirst.frc.team1758.robot.commands.ToggleLight.LightMode;
 import org.usfirst.frc.team1758.utilities.Controller;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,8 +24,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Middle", null);
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
-		ToggleLight tl = new ToggleLight(LightMode.TOGGLE);
-		tl.start();
+	//	ToggleLight tl = new ToggleLight(LightMode.TOGGLE);
+		//tl.start();
 	}
 
 	public void robotPeriodic() {
@@ -33,8 +33,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
-		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
+		SmartDashboard.putNumber("Left X", -OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
+		SmartDashboard.putNumber("Left Y", -OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
+		SmartDashboard.putNumber("Right X", -OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
+		SmartDashboard.putNumber("Right Y", -OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
+		SmartDashboard.putNumber("Triggers Left", -OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
+		SmartDashboard.putNumber("Triggers Right", -OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
 		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
 	
 	}

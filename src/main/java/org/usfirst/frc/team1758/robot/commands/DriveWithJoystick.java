@@ -7,26 +7,21 @@ public class DriveWithJoystick extends CommandBase {
 	private static boolean finished;
 	public DriveWithJoystick() {
 		requires(driveTrain);
-		requires(sensors);
+    requires(sensors);
 	}
 	protected void initialize() {
 		finished = false;
 	}
 	protected void execute() {
 		//If you need to do calculations on the Axis do them in a new method inside the Controller
-		double x = OI.drivingController.getNormalizedAxis(Axes.LEFT_X);
-		double y = OI.drivingController.getNormalizedAxis(Axes.LEFT_Y);
-		double twist = OI.drivingController.getTwist();
-		double gyroAngle = sensors.getGyroAngle();
-		driveTrain.mecanumDrive(x, y, twist, gyroAngle);
+	  double gyroAngle = sensors.getGyroAngle();
+		driveTrain.mecanumDrive(OI.drivingController.getNormalizedAxis(Axes.LEFT_X), OI.drivingController.getNormalizedAxis(Axes.LEFT_Y), OI.drivingController.getNormalizedAxis(Axes.RIGHT_X), gyroAngle);
 		}
 	protected boolean isFinished() {
 		return finished;
 	}
 	protected void end() {
-		driveTrain.setPower(0);
 	}
 	protected void interrupted() {
-		driveTrain.setPower(0);
 	}
 }

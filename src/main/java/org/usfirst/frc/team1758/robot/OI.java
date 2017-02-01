@@ -6,7 +6,7 @@ public class OI {
 	public static Controller operatorController, drivingController;
 	public static void init()
 	{
-		drivingController = new Controller(0);
+		drivingController = new Controller(0, 0.2);
 		operatorController = new Controller(1);
 	}
 }

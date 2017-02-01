@@ -1,74 +1,33 @@
 package org.usfirst.frc.team1758.robot.subsystems;
-
 import org.usfirst.frc.team1758.robot.RobotMap;
 
-
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
-
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.command.Subsystem;
 public class Vision extends Subsystem
 {
-	private boolean isLightOn;
-	private AxisCamera activeCamera, frontCamera;
-	private UsbCamera backCamera, backCameraTwo;
-	private Relay cameraLightRelay;
-	CameraServer serverCamera;
 	CameraMode mode;
+	UsbCamera front_camera, back_camera;
+	CameraServer cServer;
 	public enum CameraMode
 	{
 		FRONT, BACK;
 	}
 	public Vision() 
-	{ 
-    cameraLightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY); 
-		serverCamera = CameraServer.getInstance();
-		frontCamera = new AxisCamera("frontCamera", RobotMap.ipFrontCamera);
-		backCamera = new UsbCamera("backCamera", 1);
-		backCameraTwo = new UsbCamera("backCameraTwo", 0);
-
-		addCameras();
-    isLightOn = false;
+	{
+		cServer = CameraServer.getInstance();
+		front_camera = new UsbCamera("front_camera", RobotMap.FRONT_CAMERA_PORT);
+		front_camera.setExposureManual(0);
+		back_camera = new UsbCamera("back_camera", RobotMap.BACK_CAMERA_PORT);
+		back_camera.setExposureManual(0);
 	} 
 	protected void initDefaultCommand() 
   { 
-		//setDefaultCommand(new ToggleLight(LightMode.ON));
   }
-	public void addCameras()
+	public void startAutomaticCapture()
 	{
-		serverCamera.addCamera(frontCamera);
-		serverCamera.addCamera(backCamera);
-		serverCamera.addCamera(backCameraTwo);
-		backCamera.setExposureManual(100);
-		backCameraTwo.setExposureManual(100);
-		frontCamera.setExposureHoldCurrent();
-		serverCamera.startAutomaticCapture(backCamera);
-		serverCamera.startAutomaticCapture(frontCamera);
-		serverCamera.startAutomaticCapture(backCameraTwo);
-
-	}
-
-  public void turnOnLight(){ 
-    cameraLightRelay.set(Value.kForward); 
-    isLightOn = true; 
-  } 
-  public void turnOffLight(){ 
-    cameraLightRelay.set(Value.kReverse); 
-    isLightOn = false; 
-  } 
-  public void toggleLight(){ 
-    if(isLightOn){ 
-      turnOffLight(); 
-    }else{ 
-      turnOnLight(); 
-    } 
-	}
-	public void configureCameras()
-	{
-
+		cServer.startAutomaticCapture(front_camera);
+		cServer.startAutomaticCapture(back_camera);
 	}
 }
 	

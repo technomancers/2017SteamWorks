@@ -10,4 +10,6 @@ public class RobotMap {
 	public final static int ENCODER_CHANNEL_B = 9;
 	public final static int FRONT_CAMERA_PORT = 0;
 	public final static int BACK_CAMERA_PORT = 1;
+	public final static int CAMERA_LIGHT_RELAY = 0;
+	public final static int SERVO_PORT = 0;
 }

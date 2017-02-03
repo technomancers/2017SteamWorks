@@ -2,6 +2,8 @@ package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.StartAutomaticCapture;
+import org.usfirst.frc.team1758.robot.commands.StartUpProcess;
+import org.usfirst.frc.team1758.robot.commands.TurnOnCameraLight;
 import org.usfirst.frc.team1758.utilities.Controller;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,7 +25,8 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().setEncoder();
-		(new StartAutomaticCapture()).start();
+		(new StartUpProcess()).start();
+
 	}
 
 	public void robotPeriodic() {
@@ -31,12 +34,12 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Left X", -OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
-		SmartDashboard.putNumber("Left Y", -OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
-		SmartDashboard.putNumber("Right X", -OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
-		SmartDashboard.putNumber("Right Y", -OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
-		SmartDashboard.putNumber("Triggers Left", -OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
-		SmartDashboard.putNumber("Triggers Right", -OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
+		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
+		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
+		SmartDashboard.putNumber("Right X", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
+		SmartDashboard.putNumber("Right Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
+		SmartDashboard.putNumber("Triggers Left", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
+		SmartDashboard.putNumber("Triggers Right", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
 		SmartDashboard.putNumber("getDistance", CommandBase.getSensors().getEncoderDistance());
 		SmartDashboard.putNumber("getRaw", CommandBase.getSensors().getRaw());
 		SmartDashboard.putBoolean("getDirection", CommandBase.getSensors().getDirection());
@@ -60,6 +63,7 @@ public class Robot extends IterativeRobot {
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
 	}
 
 	public void teleopPeriodic() {

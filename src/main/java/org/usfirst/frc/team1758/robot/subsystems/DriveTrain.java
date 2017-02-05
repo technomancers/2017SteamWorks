@@ -6,6 +6,7 @@ import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -23,12 +24,15 @@ public class DriveTrain extends Subsystem {
 		lf_Motor = new CANTalon(RobotMap.LEFT_FRONT_MOTOR);
 		lb_Motor = new CANTalon(RobotMap.LEFT_BACK_MOTOR);
 		tmDrive = new RobotDrive(lf_Motor, lb_Motor, rf_Motor, rb_Motor);
+		tmDrive.setInvertedMotor(MotorType.kFrontRight, true);
+		tmDrive.setInvertedMotor(MotorType.kRearRight, true);
 	}
 
 	public void mecanumDriveCartesian(double x, double y, double rotation, double gyroAngle) {
 		tmDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
 	}
-	public void mecanumDrivePolar(double magnitude, double direction, double rotation){
+
+	public void mecanumDrivePolar(double magnitude, double direction, double rotation) {
 		tmDrive.mecanumDrive_Polar(magnitude, direction, rotation);
 	}
 

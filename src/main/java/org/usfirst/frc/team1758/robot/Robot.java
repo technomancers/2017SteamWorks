@@ -2,6 +2,7 @@ package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.groups.StartUpProcess;
+import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 import org.usfirst.frc.team1758.utilities.Controller;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
 		(new StartUpProcess()).start();
+		updateSmartDashboard();
 	}
 
 	public void robotPeriodic() {
@@ -37,6 +39,14 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Triggers Left", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
 		SmartDashboard.putNumber("Triggers Right", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
 		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
+		SmartDashboard.putNumber("Front Left V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.FrontLeft));
+		SmartDashboard.putNumber("Front Right V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.FrontRight));
+		SmartDashboard.putNumber("Back Left V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.BackLeft));
+		SmartDashboard.putNumber("Back Right V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.BackRight));
+		SmartDashboard.putNumber("Front Left P", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontLeft));
+		SmartDashboard.putNumber("Front Right P", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
+		SmartDashboard.putNumber("Back Left P", CommandBase.getDriveTrain().getEncoderPosition(Motor.BackLeft));
+		SmartDashboard.putNumber("Back Right P", CommandBase.getDriveTrain().getEncoderPosition(Motor.BackRight));
 	}
 
 	public void autonomousInit() {

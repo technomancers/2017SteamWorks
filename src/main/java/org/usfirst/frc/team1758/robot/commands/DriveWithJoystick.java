@@ -35,6 +35,7 @@ public class DriveWithJoystick extends CommandBase {
 		servos.setServo(trigger);
 		if (OI.drivingController.lb.get()) {
 			sensors.resetGyroAngle();
+			driveTrain.resetEncoderPosition();
 			staticAngle = 0.0;
 		}
 	}

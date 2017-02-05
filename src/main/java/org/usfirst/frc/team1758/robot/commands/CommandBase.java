@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
@@ -12,19 +13,27 @@ public abstract class CommandBase extends Command {
 	protected static Vision vision;
 	protected static Sensors sensors;
 	protected static Servos servos;
+
 	public static void init() {
 		driveTrain = new DriveTrain();
-	  vision = new Vision();
+		vision = new Vision();
 		sensors = new Sensors();
 		servos = new Servos();
 	}
+
 	public CommandBase(String name) {
 		super(name);
 	}
+
 	public CommandBase() {
 		super();
 	}
-	public static Sensors getSensors(){
+
+	public static Sensors getSensors() {
 		return sensors;
+	}
+
+	public static DriveTrain getDriveTrain() {
+		return driveTrain;
 	}
 }

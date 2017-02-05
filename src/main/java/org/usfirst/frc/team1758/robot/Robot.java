@@ -1,9 +1,7 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.StartAutomaticCapture;
-import org.usfirst.frc.team1758.robot.commands.StartUpProcess;
-import org.usfirst.frc.team1758.robot.commands.TurnOnCameraLight;
+import org.usfirst.frc.team1758.robot.commands.groups.StartUpProcess;
 import org.usfirst.frc.team1758.utilities.Controller;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,9 +22,7 @@ public class Robot extends IterativeRobot {
 		autoChooser.addObject("Middle", null);
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
-		CommandBase.getSensors().setEncoder();
 		(new StartUpProcess()).start();
-
 	}
 
 	public void robotPeriodic() {
@@ -40,12 +36,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
 		SmartDashboard.putNumber("Triggers Left", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
 		SmartDashboard.putNumber("Triggers Right", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
-		SmartDashboard.putNumber("getDistance", CommandBase.getSensors().getEncoderDistance());
-		SmartDashboard.putNumber("getRaw", CommandBase.getSensors().getRaw());
-		SmartDashboard.putBoolean("getDirection", CommandBase.getSensors().getDirection());
-		SmartDashboard.putBoolean("getStopped", CommandBase.getSensors().getStopped());
-		SmartDashboard.putNumber("getRaw", CommandBase.getSensors().getRaw());
-		SmartDashboard.putNumber("getRate", CommandBase.getSensors().getRate());
 		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
 	}
 

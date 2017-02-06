@@ -11,4 +11,6 @@ public class RobotMap {
 	public final static int CAMERA_LIGHT_RELAY = 0;
 	public final static int SERVO_PORT = 0;
 	public final static int ENCODER_CODES_PER_REVOLUTION = 1024;
+	public final static int CAMERA_WIDTH = 640;
+	public final static int CAMERA_HEIGHT = 480;
 }

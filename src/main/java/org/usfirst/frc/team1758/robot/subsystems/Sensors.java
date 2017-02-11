@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj.hal.AnalogJNI;
 public class Sensors extends Subsystem {
 	private ADXRS450_Gyro gyro;
 	private AnalogInput sonic;
+	private Ultrasonic ultra;
 
 	public Sensors() {
 		gyro = new ADXRS450_Gyro();
 		sonic = new AnalogInput(1);
+		ultra = new Ultrasonic(0,1);
 	}
 
 	public void initDefaultCommand() {
@@ -27,10 +29,16 @@ public class Sensors extends Subsystem {
 	public double getGyroAngle() {
 		return gyro.getAngle();
 	}
+	public void startUltrasonic(){
+		//ultra.startAutomaticMode(true);
+	}
 	public double getUltrasonicValue()
 	{
-		double distanceRatio = RobotMap.SONIC_VOLTS/512;
-		return sonic.getVoltage();
+		//double distanceRatio = RobotMap.SONIC_VOLTS/512;
+		return (sonic.getVoltage()/0.0022) - 86.5682;
+		
+		//approximate calibration, requires further testing
+		//double range = (ultra.getRangeInches()/0.0022) - 86.5682;
 	}
 
 	public void calibrateGyroAngle() {

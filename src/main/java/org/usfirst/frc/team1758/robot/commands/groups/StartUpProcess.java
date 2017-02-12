@@ -5,6 +5,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class StartUpProcess extends CommandGroup {
 	public StartUpProcess() {
 		addParallel(new VisionStartUp());
-		addParallel(new CalibrateSensors());
+		addParallel(new SensorsStartUp());
 	}
 }

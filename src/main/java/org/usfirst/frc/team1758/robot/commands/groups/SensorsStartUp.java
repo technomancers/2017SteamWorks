@@ -5,8 +5,8 @@ import org.usfirst.frc.team1758.robot.commands.ResetEncoderPositions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CalibrateSensors extends CommandGroup {
-	public CalibrateSensors() {
+public class SensorsStartUp extends CommandGroup {
+	public SensorsStartUp() {
 		addSequential(new CalibrateGyro());
 		addSequential(new ResetEncoderPositions());
 	}

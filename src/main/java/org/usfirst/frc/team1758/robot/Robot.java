@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1758.robot;
 
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.groups.StartUpProcess;
+import org.usfirst.frc.team1758.robot.commands.TurnOnCameraLight;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 import org.usfirst.frc.team1758.utilities.Controller;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -12,18 +12,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-	public SendableChooser<Command> autoChooser;
+	private SmartDashboard dash;
+	private SendableChooser<Command> autoChooser;
 
 	public void robotInit() {
+		String[] autoModes = new String[4];
+		autoModes[0] = "No Autonomous";
+		autoModes[1] = "Left";
+		autoModes[2] = "Middle";
+		autoModes[3] = "Right";
 		OI.init();
 		CommandBase.init();
+		dash = new SmartDashboard();
+		dash.putStringArray("Auto List", autoModes);
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Left", null);
-		autoChooser.addObject("Middle", null);
-		autoChooser.addObject("Right", null);
+		autoChooser.addObject("Left", new TurnOnCameraLight());
+		autoChooser.addObject("Middle", new TurnOnCameraLight());
+		autoChooser.addObject("Right", new TurnOnCameraLight());
 		SmartDashboard.putData("Autonomous", autoChooser);
-		(new StartUpProcess()).start();
+		CommandBase.getSensors().calibrateGyroAngle();
+		CommandBase.getDriveTrain().resetEncoderPosition();
+		CommandBase.getVision().startAutomaticCapture();
+		CommandBase.getVision().startThread();
 		updateSmartDashboard();
 	}
 
@@ -53,7 +64,20 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		autonomousCommand = autoChooser.getSelected();
+		switch (SmartDashboard.getString("Auto Selector", null)) {
+		case "Left":
+			autonomousCommand = new TurnOnCameraLight();
+			break;
+		case "Middle":
+			autonomousCommand = new TurnOnCameraLight();
+			break;
+		case "Right":
+			autonomousCommand = new TurnOnCameraLight();
+			break;
+		default:
+			autonomousCommand = autoChooser.getSelected();
+			break;
+		}
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -63,6 +87,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		new TurnOnCameraLight().start();
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

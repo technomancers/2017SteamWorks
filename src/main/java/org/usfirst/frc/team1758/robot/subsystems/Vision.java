@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import java.util.concurrent.locks.Lock;
-
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1758.robot.RobotMap;
@@ -50,10 +48,14 @@ public class Vision extends Subsystem {
 		cameraRelay.set(Value.kForward);
 	}
 
+	public void turnOffCameraLight() {
+		cameraRelay.set(Value.kReverse);
+	}
+
 	public void configureCameras() {
-		front_camera.setExposureManual(50);
+		front_camera.setExposureManual(10);
 		front_camera.setResolution(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT);
-		back_camera.setExposureManual(0);
+		back_camera.setExposureManual(10);
 		back_camera.setResolution(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT);
 	}
 

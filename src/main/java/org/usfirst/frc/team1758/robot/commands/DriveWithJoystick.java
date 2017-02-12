@@ -6,6 +6,7 @@ import org.usfirst.frc.team1758.robot.OI;
 
 public class DriveWithJoystick extends CommandBase {
 	private boolean finished;
+	private boolean firstIt = true;
 	private double staticAngle;
 
 	public DriveWithJoystick() {
@@ -22,10 +23,15 @@ public class DriveWithJoystick extends CommandBase {
 	protected void execute() {
 		double gyroAngle;
 		if (OI.drivingController.rb.get()) {
+			if (firstIt) {
+				sensors.resetGyroAngle();
+			}
 			gyroAngle = sensors.getGyroAngle();
 			staticAngle = gyroAngle;
+			firstIt = false;
 		} else {
 			gyroAngle = staticAngle;
+			firstIt = true;
 		}
 		double x = OI.drivingController.getNormalizedAxis(Axes.LEFT_X);
 		double y = OI.drivingController.getNormalizedAxis(Axes.LEFT_Y);

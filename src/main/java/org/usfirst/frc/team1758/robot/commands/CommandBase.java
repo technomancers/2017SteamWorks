@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;

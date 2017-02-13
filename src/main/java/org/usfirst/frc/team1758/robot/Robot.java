@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot {
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		CommandBase.getVision().startAutomaticCapture();
-		CommandBase.getVision().startThread();
 		updateSmartDashboard();
 	}
 

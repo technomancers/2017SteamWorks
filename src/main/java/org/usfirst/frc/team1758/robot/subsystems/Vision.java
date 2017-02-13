@@ -3,7 +3,7 @@ package org.usfirst.frc.team1758.robot.subsystems;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1758.robot.RobotMap;
-import org.usfirst.frc.team1758.robot.vision.TestPipeline;
+import org.usfirst.frc.team1758.robot.vision.BoilerPipeline;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -31,7 +31,15 @@ public class Vision extends Subsystem {
 		front_camera = new UsbCamera("front_camera", RobotMap.FRONT_CAMERA_PORT);
 		back_camera = new UsbCamera("back_camera", RobotMap.BACK_CAMERA_PORT);
 		configureCameras();
-		boilerThread = new VisionThread(front_camera, new TestPipeline(), pipeline -> {
+		boilerThread = new VisionThread(front_camera, new BoilerPipeline(), pipeline -> {
+			if (!pipeline.findContoursOutput().isEmpty()) {
+				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
+				synchronized (imgLock) {
+					centerX = r.x + (r.width / 2);
+				}
+			}
+		});
+		gearThread = new VisionThread(front_camera, new BoilerPipeline(), pipeline -> {
 			if (!pipeline.findContoursOutput().isEmpty()) {
 				Rect r = Imgproc.boundingRect(pipeline.findContoursOutput().get(0));
 				synchronized (imgLock) {
@@ -59,7 +67,11 @@ public class Vision extends Subsystem {
 		back_camera.setResolution(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT);
 	}
 
-	public void startThread() {
+	public void startGearThread() {
+		gearThread.start();
+	}
+
+	public void startBoilerThred(){
 		boilerThread.start();
 	}
 

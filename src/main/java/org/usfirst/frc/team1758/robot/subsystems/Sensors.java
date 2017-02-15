@@ -1,59 +1,47 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
+import org.usfirst.frc.team1758.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Sensors extends Subsystem
-{
+public class Sensors extends Subsystem {
 	private ADXRS450_Gyro gyro;
-	private Encoder encoder;
-	public Sensors()
-	{
+	private AnalogInput sonic;
+	private AnalogInput prox;
+
+	public Sensors() {
 		gyro = new ADXRS450_Gyro();
-		encoder = new Encoder(8, 9, false);
-		}
-	public void initDefaultCommand()
-	{
-		}
-	public double getGyroAngle()
-	{
+		sonic = new AnalogInput(RobotMap.ANALOG_SONIC_PORT);
+		prox = new AnalogInput(RobotMap.PROXIMITY_PORT);
+	}
+
+	public void initDefaultCommand() {
+	}
+
+	public double getGyroAngle() {
 		return gyro.getAngle();
 	}
-	public double getEncoderDistance()
-	{
-		return encoder.getDistance();
+
+	public double getUltrasonicValue() {
+		double ratio = (RobotMap.OUT_VOLTS / 512.0);
+		return sonic.getVoltage() / ratio;
 	}
-	public double getEncoderSpeed()
-	{
-		return encoder.getRate();
+
+	public boolean getProximity() {
+		if (prox.getVoltage() < 0.3) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	public void setEncoder()
-	{
-		encoder.setMaxPeriod(.1);
-		encoder.setMinRate(10);
-		encoder.setDistancePerPulse(5);
-		encoder.setReverseDirection(true);
-		encoder.setSamplesToAverage(7);
+
+	public void calibrateGyroAngle() {
+		gyro.calibrate();
 	}
-	public int get()
-	{
-		return encoder.get();
-	}
-	public double getRaw()
-	{
-		return encoder.getRaw();
-	}
-	public boolean getDirection()
-	{
-		return encoder.getDirection();
-	}
-	public boolean getStopped()
-	{
-		return encoder.getStopped();
-	}
-	public double getRate()
-	{
-		return encoder.getRate();
+
+	public void resetGyroAngle() {
+		gyro.reset();
 	}
 }

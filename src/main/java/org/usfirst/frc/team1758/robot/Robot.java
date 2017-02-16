@@ -34,6 +34,7 @@ public class Robot extends IterativeRobot {
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		CommandBase.getVision().startAutomaticCapture();
+		CommandBase.getVision().startGearThread();
 		updateSmartDashboard();
 	}
 
@@ -60,6 +61,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Center X", CommandBase.getVision().getCenterX());
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putBoolean("Proximity", CommandBase.getSensors().getProximity());
+		SmartDashboard.putNumber("Number of Rectangles", CommandBase.getVision().getNumberOfRectangles());
+		SmartDashboard.putBoolean("Sees Something", CommandBase.getVision().getSeesSomething());
 	}
 
 	public void autonomousInit() {

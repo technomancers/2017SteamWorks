@@ -31,9 +31,9 @@ public class PegPipeline implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {79.3165467625899, 102.07130730050932};
-		double[] hsvThresholdSaturation = {48.156474820143885, 255.0};
-		double[] hsvThresholdValue = {34.39748201438849, 255.0};
+		double[] hsvThresholdHue = {65.0,83.0};
+		double[] hsvThresholdSaturation = {41.0, 255.0};
+		double[] hsvThresholdValue = {34.0, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -43,7 +43,7 @@ public class PegPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 3.0;
+		double filterContoursMinArea = 4.0;
 		double filterContoursMinPerimeter = 0.0;
 		double filterContoursMinWidth = 0.0;
 		double filterContoursMaxWidth = 1000.0;

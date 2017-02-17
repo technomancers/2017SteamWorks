@@ -17,12 +17,15 @@ public class ApproachPeg extends CommandBase
 	protected void initialize()
 	{
 		finished = false;
-		pid = new TechnoPID(1, 0, 0, 15.0);
+		pid = new TechnoPID(1, 0, 0, 20.0);
 		pid.setReference(80.0);
 	}
 	protected void execute()
 	{
-		if(sensors.getUltrasonicValue() > 20){
+		if(vision.getNumberOfRectangles() >= 3 || vision.getNumberOfRectangles() < 2)
+		{
+			driveTrain.mecanumDriveCartesian(0, -.3, 0.0, 0.0);
+		} else if(sensors.getUltrasonicValue() > 20){
 			iterate();
 		}else if(sensors.getUltrasonicValue() > 12){
 			pid.setTolerance(5);
@@ -38,13 +41,13 @@ public class ApproachPeg extends CommandBase
 
 	private void iterate(){
 		double pidV = pid.calculatePID(vision.getCenterX());
-		double normalized = pidV / -120;
-		if (Math.abs(normalized) < .4){
-			normalized = .4 * Math.abs(normalized)/normalized;
+		double normalized = pidV / -400;
+		if (Math.abs(normalized) < .2){
+			normalized = .2 * Math.abs(normalized)/normalized;
 		}
-		driveTrain.tankDrive(normalized, normalized);
+		driveTrain.mecanumDriveCartesian(0.0, 0.0, normalized, 0.0);;
 		if (pid.isDone()){
-				driveTrain.tankDrive(.65, -.65);
+				driveTrain.mecanumDriveCartesian(-.4, 0, 0.0, 0.0);
 		}
 	}
 }

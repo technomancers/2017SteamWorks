@@ -102,7 +102,9 @@ public class Vision extends Subsystem {
 		front_camera.setExposureManual(5);
 		front_camera.setResolution(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT);
 		back_camera.setExposureManual(5);
+		back_camera.setFPS(20);
 		back_camera.setResolution(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT);
+
 	}
 
 	public void startGearThread() {

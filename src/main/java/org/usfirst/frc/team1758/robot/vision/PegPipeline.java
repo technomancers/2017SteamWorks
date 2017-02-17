@@ -31,7 +31,7 @@ public class PegPipeline implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = {60.0,83.0};
+		double[] hsvThresholdHue = {60.0,89.0};
 		double[] hsvThresholdSaturation = {41.0, 255.0};
 		double[] hsvThresholdValue = {34.0, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);

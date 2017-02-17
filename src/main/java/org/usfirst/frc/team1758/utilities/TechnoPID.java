@@ -150,7 +150,6 @@ public class TechnoPID{
         else{
             this.cycleCount = 0;
         }
-        System.out.println(cycleCount);
         return this.cycleCount > this.minCycleCount;
     }
     public void resetPrevious(){

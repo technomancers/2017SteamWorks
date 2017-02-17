@@ -143,14 +143,14 @@ public class TechnoPID{
 
     public boolean isDone(){
         double currentError = Math.abs(this.ref - this.prevVal);
-
+			//System.out.println(currentError);
         if(currentError <= this.tolerance){
             this.cycleCount++;
         }
         else{
             this.cycleCount = 0;
         }
-        
+        System.out.println(cycleCount);
         return this.cycleCount > this.minCycleCount;
     }
     public void resetPrevious(){

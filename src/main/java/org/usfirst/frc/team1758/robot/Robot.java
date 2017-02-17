@@ -1,9 +1,13 @@
 package org.usfirst.frc.team1758.robot;
 
+import org.usfirst.frc.team1758.robot.commands.ApproachPeg;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.TurnOnCameraLight;
+import org.usfirst.frc.team1758.robot.commands.groups.MiddleAutonomous;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 import org.usfirst.frc.team1758.utilities.Controller;
+
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -23,14 +27,15 @@ public class Robot extends IterativeRobot {
 		autoModes[3] = "Right";
 		OI.init();
 		CommandBase.init();
-		dash = new SmartDashboard();
-		dash.putStringArray("Auto List", autoModes);
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new TurnOnCameraLight());
-		autoChooser.addObject("Middle", new TurnOnCameraLight());
+		autoChooser.addObject("Middle", new MiddleAutonomous());
 		autoChooser.addObject("Right", new TurnOnCameraLight());
 		SmartDashboard.putData("Autonomous", autoChooser);
+		dash = new SmartDashboard();
+		dash.putStringArray("Auto List", autoModes);
+		SmartDashboard.putString("Auto Selector", "");
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		CommandBase.getVision().startAutomaticCapture();
@@ -66,12 +71,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		
 		switch (SmartDashboard.getString("Auto Selector", null)) {
 		case "Left":
 			autonomousCommand = new TurnOnCameraLight();
 			break;
 		case "Middle":
-			autonomousCommand = new TurnOnCameraLight();
+			autonomousCommand = new MiddleAutonomous();
 			break;
 		case "Right":
 			autonomousCommand = new TurnOnCameraLight();
@@ -93,6 +99,7 @@ public class Robot extends IterativeRobot {
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
 
 	}
 

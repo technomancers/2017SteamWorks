@@ -10,7 +10,6 @@ description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 dependencies {
 	//Include external dependencies here (Uses maven central)
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-	compile 'nu.pattern:opencv:2.4.9-4'
 }
 
 gradlerio{

@@ -9,6 +9,7 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.vision.PegPipeline;
@@ -60,11 +61,11 @@ public class Vision extends Subsystem {
 						for(MatOfPoint mop: mops)
 						{
 							Rect r = Imgproc.boundingRect(mop);
-							Core.rectangle(image, r.tl(), r.br(), new Scalar(255, 255, 255));;
+							Imgproc.rectangle(image, r.tl(), r.br(), new Scalar(255, 255, 255));
 						}
 					}
 				}
-				Core.putText(image, "testing", new Point(0,0), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(255,255,255));
+				Imgproc.putText(image, "testing", new Point(0,0), Core.FONT_HERSHEY_PLAIN, 1, new Scalar(255, 255, 255));
 				numRectangles = mops.size();
 				outputStream.putFrame(image);
 			}

@@ -1,5 +1,9 @@
 package org.usfirst.frc.team1758.robot;
 
+import edu.wpi.cscore.VideoMode.PixelFormat;
+
+
+
 public class RobotMap {
 	//DriveTrain Subsystem
 	public final static int RIGHT_FRONT_MOTOR = 1;
@@ -16,4 +20,8 @@ public class RobotMap {
 	public final static int PROXIMITY_PORT = 1;
 	public final static double OUT_VOLTS = 4.85;
 	public final static int MJPEG_SERVER_PORT = 1182;
+	public final static int CAMERA_FPS = 30;
+	public final static int CAMERA_EXPOSURE = 5;
+	public final static PixelFormat CAMERA_PIXEL_FORMAT = PixelFormat.kMJPEG;
+	public final static int CAMERA_BRIGHTNESS = 50;
 }

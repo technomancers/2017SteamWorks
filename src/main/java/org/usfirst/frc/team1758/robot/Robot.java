@@ -7,7 +7,6 @@ import org.usfirst.frc.team1758.robot.commands.groups.MiddleAutonomous;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 import org.usfirst.frc.team1758.utilities.Controller;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -38,8 +37,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putString("Auto Selector", "");
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
-		CommandBase.getVision().startAutomaticCapture();
-		CommandBase.getVision().startGearThread();
+		CommandBase.getVision().startVisionThread();
 		updateSmartDashboard();
 	}
 
@@ -71,7 +69,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		
+
 		switch (SmartDashboard.getString("Auto Selector", null)) {
 		case "Left":
 			autonomousCommand = new TurnOnCameraLight();
@@ -99,7 +97,6 @@ public class Robot extends IterativeRobot {
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
 
 	}
 

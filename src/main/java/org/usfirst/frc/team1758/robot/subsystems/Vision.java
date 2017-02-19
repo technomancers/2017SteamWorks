@@ -37,6 +37,7 @@ public class Vision extends Subsystem {
 	private CvSource outputStream;
 	private MjpegServer cameraServer;
 	private Thread visionThread;
+	private int numRectangles, centerX;
 	private PegPipeline pegPipeline;
 
 	public Vision() {
@@ -96,11 +97,26 @@ public class Vision extends Subsystem {
 					logger.trace("Grabbing frame from gear sink");
 					gearSink.grabFrameNoTimeout(image);
 					pegPipeline.process(image);
+					int leftMostX = RobotMap.CAMERA_WIDTH;
+					int rightMostX = 0;
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
 					for(MatOfPoint mop : mops){
 						Rect r = Imgproc.boundingRect(mop);
 						Imgproc.rectangle(image, r.tl(), r.br(), new Scalar(255, 0, 255));
+						int leftX = r.x;
+						int rightX = r.x + r.width;
+						if(leftX < leftMostX)
+						{
+							leftMostX = leftX;
+						}
+						if(rightX > rightMostX)
+						{
+							rightMostX = rightX;
+						}
 					}
+					numRectangles = mops.size();
+					centerX = (rightMostX + leftMostX)/2;
+					Imgproc.line(image, new Point(centerX, 0), new Point(centerX, RobotMap.CAMERA_HEIGHT), new Scalar(255, 0, 0));
 					outputStream.putFrame(image);
 				}		
 			});

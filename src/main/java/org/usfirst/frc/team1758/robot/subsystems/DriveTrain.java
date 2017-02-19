@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
 
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveTrain extends Subsystem {
 	private CANTalon rf_Motor, rb_Motor, lf_Motor, lb_Motor;
 	private RobotDrive tmDrive;
+	private Logger logger;
 
 	public enum Motor {
 		FrontRight, FrontLeft, BackRight, BackLeft
@@ -23,6 +26,8 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public DriveTrain() {
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Creating DriveTrain subsystem");
 		rf_Motor = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
 		rb_Motor = new CANTalon(RobotMap.RIGHT_BACK_MOTOR);
 		lf_Motor = new CANTalon(RobotMap.LEFT_FRONT_MOTOR);
@@ -34,18 +39,22 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void mecanumDriveCartesian(double x, double y, double rotation, double gyroAngle) {
+		logger.trace("Mecanum Cartesian: X:{} Y:{} Rotation:{} Gyro:{}", x, y, rotation, gyroAngle);
 		tmDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
 	}
 
 	public void mecanumDrivePolar(double magnitude, double direction, double rotation) {
+		logger.trace("Mecanum Polar: Magnitude:{} Direction:{} Rotation:{}", magnitude, direction, rotation);
 		tmDrive.mecanumDrive_Polar(magnitude, direction, rotation);
 	}
 
 	public void tankDrive(double left, double right) {
+		logger.trace("Tank: Left:{} Right:{}", left, right);
 		tmDrive.tankDrive(left, right);
 	}
 
 	public void configureEncoders(int codesPerRev) {
+		logger.debug("Configuring the Encoders to {} per revolution", codesPerRev);
 		lf_Motor.configEncoderCodesPerRev(codesPerRev);
 		lb_Motor.configEncoderCodesPerRev(codesPerRev);
 		rf_Motor.configEncoderCodesPerRev(codesPerRev);
@@ -53,6 +62,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void resetEncoderPosition() {
+		logger.debug("Reseting encoder position");
 		lf_Motor.setEncPosition(0);
 		rf_Motor.setEncPosition(0);
 		lb_Motor.setEncPosition(0);

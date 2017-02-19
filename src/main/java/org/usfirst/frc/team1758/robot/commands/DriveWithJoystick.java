@@ -1,15 +1,23 @@
 package org.usfirst.frc.team1758.robot.commands;
 
 import org.usfirst.frc.team1758.utilities.Controller.Axes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 import org.usfirst.frc.team1758.robot.OI;
 
 public class DriveWithJoystick extends CommandBase {
 	private boolean finished;
-	private boolean firstIt = true;
+	private boolean firstIt;
+	private boolean firstTime;
 	private double staticAngle;
+	private Logger logger;
 
 	public DriveWithJoystick() {
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Created DriveWithJoystick command");
 		requires(driveTrain);
 		requires(sensors);
 		requires(servos);
@@ -17,10 +25,16 @@ public class DriveWithJoystick extends CommandBase {
 
 	protected void initialize() {
 		finished = false;
+		firstIt = true;
+		firstTime = true;
 		staticAngle = 0.0;
 	}
 
 	protected void execute() {
+		if(firstTime){
+			logger.debug("DriveWithJoystick command started");
+			firstTime = false;
+		}
 		double gyroAngle;
 		if (OI.drivingController.rb.get()) {
 			if (firstIt) {

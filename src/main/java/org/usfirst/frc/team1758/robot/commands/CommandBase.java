@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
@@ -12,8 +14,11 @@ public abstract class CommandBase extends Command {
 	protected static Vision vision;
 	protected static Sensors sensors;
 	protected static Servos servos;
+	private Logger logger;
 
 	public static void init() {
+		Logger logger = LoggerFactory.getLogger(CommandBase.class);
+		logger.debug("Initialized CommandBase");
 		driveTrain = new DriveTrain();
 		vision = new Vision();
 		sensors = new Sensors();
@@ -22,10 +27,14 @@ public abstract class CommandBase extends Command {
 
 	public CommandBase(String name) {
 		super(name);
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Created CommandBase");
 	}
 
 	public CommandBase() {
 		super();
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Created CommandBase");
 	}
 
 	public static Sensors getSensors() {

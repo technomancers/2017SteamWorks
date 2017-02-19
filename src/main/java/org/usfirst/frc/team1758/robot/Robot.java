@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1758.robot;
 
-import org.usfirst.frc.team1758.robot.commands.ApproachPeg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.TurnOnCameraLight;
 import org.usfirst.frc.team1758.robot.commands.groups.MiddleAutonomous;
@@ -17,8 +18,11 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	private SmartDashboard dash;
 	private SendableChooser<Command> autoChooser;
+	private Logger logger;
 
 	public void robotInit() {
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Initializing Robot");
 		String[] autoModes = new String[4];
 		autoModes[0] = "No Autonomous";
 		autoModes[1] = "Left";
@@ -42,10 +46,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void robotPeriodic() {
+		logger.trace("Loop robot in");
 		updateSmartDashboard();
+		logger.trace("Loop robot out");
 	}
 
 	public void updateSmartDashboard() {
+		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
 		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
 		SmartDashboard.putNumber("Right X", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
@@ -65,11 +72,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putBoolean("Proximity", CommandBase.getSensors().getProximity());
 		SmartDashboard.putNumber("Number of Rectangles", CommandBase.getVision().getNumberOfRectangles());
-		SmartDashboard.putBoolean("Sees Something", CommandBase.getVision().getSeesSomething());
+		SmartDashboard.putBoolean("Sees Something", CommandBase.getVision().doesSeeTarget());
 	}
 
 	public void autonomousInit() {
-
+		logger.debug("Starting Autonoumous");
 		switch (SmartDashboard.getString("Auto Selector", null)) {
 		case "Left":
 			autonomousCommand = new TurnOnCameraLight();
@@ -85,14 +92,18 @@ public class Robot extends IterativeRobot {
 			break;
 		}
 		if (autonomousCommand != null)
+			logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
 			autonomousCommand.start();
 	}
 
 	public void autonomousPeriodic() {
+		logger.trace("Loop autonomous in");
 		Scheduler.getInstance().run();
+		logger.trace("Loog autonomous out");
 	}
 
 	public void teleopInit() {
+		logger.debug("Starting Telop");
 		new TurnOnCameraLight().start();
 		//Comment this line out if you want autonomous to continue until interrupted
 		if (autonomousCommand != null)
@@ -101,9 +112,8 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void teleopPeriodic() {
+		logger.trace("Loop telop in");
 		Scheduler.getInstance().run();
-	}
-
-	public void testPeriodic() {
+		logger.trace("Loop telop out");
 	}
 }

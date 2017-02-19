@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
 import org.opencv.core.*;
 import org.opencv.imgproc.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
 * PegPipeline class.
@@ -20,6 +22,12 @@ public class PegPipeline implements VisionPipeline {
 	private Mat hsvThresholdOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+	private Logger logger;
+
+	public PegPipeline(){
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Created PegPipeline");
+	}
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -29,6 +37,7 @@ public class PegPipeline implements VisionPipeline {
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
 	@Override	public void process(Mat source0) {
+		logger.debug("Processing the image");
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
 		double[] hsvThresholdHue = {60.0,89.0};
@@ -55,7 +64,7 @@ public class PegPipeline implements VisionPipeline {
 		double filterContoursMinRatio = 0.0;
 		double filterContoursMaxRatio = 1000.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
-
+		logger.debug("Done processing");
 	}
 
 	/**
@@ -94,6 +103,7 @@ public class PegPipeline implements VisionPipeline {
 	 */
 	private void hsvThreshold(Mat input, double[] hue, double[] sat, double[] val,
 	    Mat out) {
+				logger.debug("Applying HSV Threshold");
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HSV);
 		Core.inRange(out, new Scalar(hue[0], sat[0], val[0]),
 			new Scalar(hue[1], sat[1], val[1]), out);
@@ -108,6 +118,7 @@ public class PegPipeline implements VisionPipeline {
 	 */
 	private void findContours(Mat input, boolean externalOnly,
 		List<MatOfPoint> contours) {
+			logger.debug("Finding Contours");
 		Mat hierarchy = new Mat();
 		contours.clear();
 		int mode;
@@ -142,6 +153,7 @@ public class PegPipeline implements VisionPipeline {
 		double minPerimeter, double minWidth, double maxWidth, double minHeight, double
 		maxHeight, double[] solidity, double maxVertexCount, double minVertexCount, double
 		minRatio, double maxRatio, List<MatOfPoint> output) {
+			logger.debug("Filtering Contours");
 		final MatOfInt hull = new MatOfInt();
 		output.clear();
 		//operation
@@ -169,9 +181,5 @@ public class PegPipeline implements VisionPipeline {
 			output.add(contour);
 		}
 	}
-
-
-
-
 }
 

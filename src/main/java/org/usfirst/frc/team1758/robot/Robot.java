@@ -29,6 +29,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
+		CommandBase.getVision().startVisionThread();
 		updateSmartDashboard();
 	}
 
@@ -62,7 +63,7 @@ public class Robot extends IterativeRobot {
 		logger.debug("Starting Telop");
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		(new TurnOnLight()).start();
 	}
 
 	public void teleopPeriodic() {

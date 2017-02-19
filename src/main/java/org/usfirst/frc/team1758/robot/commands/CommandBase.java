@@ -44,4 +44,7 @@ public abstract class CommandBase extends Command {
 	public static DriveTrain getDriveTrain() {
 		return driveTrain;
 	}
+	public static Vision getVision(){
+		return vision;
+	}
 }

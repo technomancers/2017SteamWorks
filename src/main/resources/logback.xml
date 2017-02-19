@@ -10,8 +10,8 @@ DEBUG
 INFO
 WARN
 ERROR-->
-	<logger name="org.usfirst.frc.team1758.robot.subsystems.Vision" level="TRACE" />
-  <root level="WARN">
+  <!--<logger name="org.usfirst.frc.team1758.robot.subsystems.Vision" level="TRACE" /> -->
+  <root level="DEBUG">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

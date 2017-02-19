@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot {
 
 	public void updateSmartDashboard() {
 		logger.trace("Update Smart Dashboard");
-		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
+		/*SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
 		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
 		SmartDashboard.putNumber("Right X", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
 		SmartDashboard.putNumber("Right Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
@@ -73,6 +73,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Proximity", CommandBase.getSensors().getProximity());
 		SmartDashboard.putNumber("Number of Rectangles", CommandBase.getVision().getNumberOfRectangles());
 		SmartDashboard.putBoolean("Sees Something", CommandBase.getVision().doesSeeTarget());
+		*/
 	}
 
 	public void autonomousInit() {

@@ -31,7 +31,7 @@ public class Vision extends Subsystem {
 	private Thread visionThread;
 	private UsbCamera gearCamera;
 	private CvSink gearSink;
-	private MjpegServer cameraServer;
+	private MjpegServer cameraServer, sourceServer;
 	private CvSource outputStream;
 	private PegPipeline pegPipeline;
 	private int numRect;
@@ -58,7 +58,7 @@ public class Vision extends Subsystem {
 			gearCamera.setBrightness(RobotMap.CAMERA_BRIGHTNESS);
 			gearCamera.setVideoMode(RobotMap.CAMERA_PIXEL_FORMAT, RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_FPS);
 		}
-
+				
 		if(gearSink == null){
 			logger.debug("Creating a new gear sink");
 			gearSink = new CvSink("gearSink");
@@ -74,9 +74,15 @@ public class Vision extends Subsystem {
 		//May need to create a server for each camera
 		if(cameraServer == null){
 			logger.debug("Creating a new camera server");
-			cameraServer = new MjpegServer("serveCameras", RobotMap.MJPEG_SERVER_PORT);
+			cameraServer = new MjpegServer("serveCameras", 1181);
 			cameraServer.setSource(outputStream);
 		}
+
+		/*if(sourceServer == null){
+			logger.debug("Creating a new source server");
+			sourceServer = new MjpegServer("serveOutputStream", RobotMap.MJPEG_SERVER_PORT);
+			sourceServer.setSource(outputStream);
+		}*/
 	}
 
 	public void turnOnCameraLight() {
@@ -95,7 +101,7 @@ public class Vision extends Subsystem {
 			visionThread = new Thread(() -> {
 				Mat image = new Mat();
 				while (!Thread.interrupted()) {
-					logger.trace("Grabing frame from gear sink");
+					logger.trace("Grabbing frame from gear sink");
 					try{
 						gearSink.grabFrame(image);
 					}catch(Exception e){

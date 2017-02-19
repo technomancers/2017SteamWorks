@@ -3,6 +3,7 @@ package org.usfirst.frc.team1758.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
+import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,11 +23,10 @@ public class Robot extends IterativeRobot {
 		CommandBase.init();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Left", null);
+		autoChooser.addObject("Left", new TurnOnLight());
 		autoChooser.addObject("Middle", null);
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
-		SmartDashboard.putString("Auto Selector", "");
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		updateSmartDashboard();

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Servos;
+import org.usfirst.frc.team1758.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,6 +13,7 @@ public abstract class CommandBase extends Command {
 	protected static DriveTrain driveTrain;
 	protected static Sensors sensors;
 	protected static Servos servos;
+	protected static Vision vision;
 	private Logger logger;
 
 	public static void init() {
@@ -20,6 +22,7 @@ public abstract class CommandBase extends Command {
 		driveTrain = new DriveTrain();
 		sensors = new Sensors();
 		servos = new Servos();
+		vision = new Vision();
 	}
 
 	public CommandBase(String name) {

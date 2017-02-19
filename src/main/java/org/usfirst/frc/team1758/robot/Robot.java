@@ -1,9 +1,10 @@
 package org.usfirst.frc.team1758.robot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.groups.StartUpProcess;
-import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
-import org.usfirst.frc.team1758.utilities.Controller;
+import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -12,66 +13,62 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends IterativeRobot {
 	Command autonomousCommand;
-	public SendableChooser<Command> autoChooser;
+	private SendableChooser<Command> autoChooser;
+	private Logger logger;
 
 	public void robotInit() {
+		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("Initializing Robot");
 		OI.init();
 		CommandBase.init();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Left", null);
+		autoChooser.addObject("Left", new TurnOnLight());
 		autoChooser.addObject("Middle", null);
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
-		(new StartUpProcess()).start();
+		CommandBase.getSensors().calibrateGyroAngle();
+		CommandBase.getDriveTrain().resetEncoderPosition();
+		CommandBase.getVision().startVisionThread();
 		updateSmartDashboard();
 	}
 
 	public void robotPeriodic() {
+		logger.trace("Loop robot in");
 		updateSmartDashboard();
+		logger.trace("Loop robot out");
 	}
 
 	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Left X", OI.drivingController.getRawAxis(Controller.Axes.LEFT_X));
-		SmartDashboard.putNumber("Left Y", OI.drivingController.getRawAxis(Controller.Axes.LEFT_Y));
-		SmartDashboard.putNumber("Right X", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_X));
-		SmartDashboard.putNumber("Right Y", OI.drivingController.getRawAxis(Controller.Axes.RIGHT_Y));
-		SmartDashboard.putNumber("Triggers Left", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_LEFT));
-		SmartDashboard.putNumber("Triggers Right", OI.drivingController.getRawAxis(Controller.Axes.TRIGGER_RIGHT));
-		SmartDashboard.putNumber("Gyro", CommandBase.getSensors().getGyroAngle());
-		SmartDashboard.putNumber("Front Left V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.FrontLeft));
-		SmartDashboard.putNumber("Front Right V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.FrontRight));
-		SmartDashboard.putNumber("Back Left V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.BackLeft));
-		SmartDashboard.putNumber("Back Right V", CommandBase.getDriveTrain().getEncoderVelocity(Motor.BackRight));
-		SmartDashboard.putNumber("Front Left P", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontLeft));
-		SmartDashboard.putNumber("Front Right P", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
-		SmartDashboard.putNumber("Back Left P", CommandBase.getDriveTrain().getEncoderPosition(Motor.BackLeft));
-		SmartDashboard.putNumber("Back Right P", CommandBase.getDriveTrain().getEncoderPosition(Motor.BackRight));
+		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
-		SmartDashboard.putBoolean("Proximity", CommandBase.getSensors().getProximity());
 	}
 
 	public void autonomousInit() {
+		logger.debug("Starting Autonoumous");
 		autonomousCommand = autoChooser.getSelected();
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
+			logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
 			autonomousCommand.start();
+		}
 	}
 
 	public void autonomousPeriodic() {
+		logger.trace("Loop autonomous in");
 		Scheduler.getInstance().run();
+		logger.trace("Loog autonomous out");
 	}
 
 	public void teleopInit() {
-		//Comment this line out if you want autonomous to continue until interrupted
+		logger.debug("Starting Telop");
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
+		(new TurnOnLight()).start();
 	}
 
 	public void teleopPeriodic() {
+		logger.trace("Loop telop in");
 		Scheduler.getInstance().run();
-	}
-
-	public void testPeriodic() {
+		logger.trace("Loop telop out");
 	}
 }

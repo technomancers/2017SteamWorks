@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-public class CalibrateGyro extends CommandBase {
+public class TurnOnLight extends CommandBase {
 	private boolean finished;
 
-	public CalibrateGyro() {
-		requires(sensors);
+	public TurnOnLight() {
+		requires(vision);
 	}
 
 	protected void initialize() {
@@ -12,7 +12,7 @@ public class CalibrateGyro extends CommandBase {
 	}
 
 	protected void execute() {
-		sensors.calibrateGyroAngle();
+		vision.turnOnLights();
 		finished = true;
 	}
 

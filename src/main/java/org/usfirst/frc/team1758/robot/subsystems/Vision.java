@@ -1,34 +1,24 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import java.awt.image.ImageProducer;
-import java.awt.image.PixelGrabber;
 import java.util.ArrayList;
-
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.vision.PegPipeline;
-
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
-
-
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 public class Vision extends Subsystem {
 	private Logger logger;
 	private Relay lightRelay;
@@ -37,8 +27,9 @@ public class Vision extends Subsystem {
 	private CvSource outputStream;
 	private MjpegServer cameraServer;
 	private Thread visionThread;
-	private int numRectangles, centerX;
+	private int numRectangles, centerX, centerOfBiggestRectangle;
 	private PegPipeline pegPipeline;
+	boolean oriented;
 
 	public Vision() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -99,6 +90,7 @@ public class Vision extends Subsystem {
 					pegPipeline.process(image);
 					int leftMostX = RobotMap.CAMERA_WIDTH;
 					int rightMostX = 0;
+					int biggestArea = 0;
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
 					for(MatOfPoint mop : mops){
 						Rect r = Imgproc.boundingRect(mop);
@@ -113,6 +105,15 @@ public class Vision extends Subsystem {
 						{
 							rightMostX = rightX;
 						}
+						if(r.width * r.height > biggestArea)
+						{
+							biggestArea = r.width * r.height;
+							centerOfBiggestRectangle = ((2 * r.x) + r.width)/2;
+						}
+						if(r.width * r.height < biggestArea + 5 && r.width * r.height > biggestArea - 5)
+						{
+							oriented = true;
+						}
 					}
 					numRectangles = mops.size();
 					centerX = (rightMostX + leftMostX)/2;
@@ -123,6 +124,22 @@ public class Vision extends Subsystem {
 		}
 		logger.debug("Starting Vision Thread");
 		visionThread.start();
+	}
+	public double getCenterX()
+	{
+		return centerX;
+	}
+	public double getNumRectangles()
+	{
+		return numRectangles;
+	}
+	public int getCenterOfBiggestRectangle()
+	{
+		return centerOfBiggestRectangle;
+	}
+	public boolean isOriented()
+	{
+		return oriented;
 	}
 	public void stopVisionThread(){
 		logger.debug("Stopping vision thread");

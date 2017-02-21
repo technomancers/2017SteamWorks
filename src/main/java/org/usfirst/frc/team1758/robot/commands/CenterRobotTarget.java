@@ -37,20 +37,22 @@ public class CenterRobotTarget extends CommandBase {
 			firstTime = false;
 		}
 		pidRot.setReference(vision.getLeftMost().area());
+		pidRot.setTolerance(vision.getBiggestRect().area()*0.2);
 		double rotV = pidRot.calculatePID(vision.getRightMost().area());
 		double centerV = pidCent.calculatePID(vision.getCenterX());
 		if(pidRot.isDone() && pidCent.isDone()){
 			finished = true;
 		}else{
 			logger.trace("rotV: {} centerV: {}", rotV, centerV);
-			double normRotV;
-			if (Math.abs(rotV)/rotV > 0){
-				normRotV = -.2;
-			}else{
-				normRotV = .2;
+			double normRotV = rotV / vision.getBiggestRect().area();
+			if(Math.abs(normRotV) < 0.2){
+				normRotV = 0.2 * Math.abs(normRotV)/normRotV;
+			}
+			if(Math.abs(normRotV) > 0.8){
+				normRotV = 0.8 * Math.abs(normRotV)/normRotV;
 			}
 			double normCenterV = centerV / -300.0;
-			driveTrain.mecanumDriveCartesian(0, normRotV, normCenterV, 0.0);
+			driveTrain.mecanumDriveCartesian(0, -normRotV, normCenterV, 0.0);
 		}
 	}
 

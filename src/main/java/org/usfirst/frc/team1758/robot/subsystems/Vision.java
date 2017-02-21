@@ -31,7 +31,7 @@ public class Vision extends Subsystem {
 	private int numRectangles;
 	private double centerX;
 	private PegPipeline pegPipeline;
-	private Rect leftMost, rightMost;
+	private Rect leftMost, rightMost, bigRect;
 
 	public Vision() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -92,6 +92,7 @@ public class Vision extends Subsystem {
 					pegPipeline.process(image);
 					leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
 					rightMost = new Rect(0,0,0,0);
+					bigRect = new Rect(0,0,0,0);
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
 					for(MatOfPoint mop : mops){
 						Rect r = Imgproc.boundingRect(mop);
@@ -101,6 +102,9 @@ public class Vision extends Subsystem {
 						}
 						if(rightMost.br().x < r.br().x){
 							rightMost = r;
+						}
+						if(bigRect.area() < r.area()){
+							bigRect = r;
 						}
 					}
 					numRectangles = mops.size();
@@ -128,6 +132,9 @@ public class Vision extends Subsystem {
 
 	public Rect getRightMost(){
 		return rightMost;
+	}
+	public Rect getBiggestRect(){
+		return bigRect;
 	}
 	public void stopVisionThread(){
 		logger.debug("Stopping vision thread");

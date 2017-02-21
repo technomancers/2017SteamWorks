@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
+import java.awt.image.ImagingOpException;
 import java.util.ArrayList;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -27,9 +28,10 @@ public class Vision extends Subsystem {
 	private CvSource outputStream;
 	private MjpegServer cameraServer;
 	private Thread visionThread;
-	private int numRectangles, centerX, centerOfBiggestRectangle;
+	private int numRectangles;
+	private double centerX;
 	private PegPipeline pegPipeline;
-	boolean oriented;
+	private Rect leftMost, rightMost;
 
 	public Vision() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -88,35 +90,21 @@ public class Vision extends Subsystem {
 					logger.trace("Grabbing frame from gear sink");
 					gearSink.grabFrameNoTimeout(image);
 					pegPipeline.process(image);
-					int leftMostX = RobotMap.CAMERA_WIDTH;
-					int rightMostX = 0;
-					int biggestArea = 0;
+					leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
+					rightMost = new Rect(0,0,0,0);
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
 					for(MatOfPoint mop : mops){
 						Rect r = Imgproc.boundingRect(mop);
 						Imgproc.rectangle(image, r.tl(), r.br(), new Scalar(255, 0, 255));
-						int leftX = r.x;
-						int rightX = r.x + r.width;
-						if(leftX < leftMostX)
-						{
-							leftMostX = leftX;
+						if(leftMost.tl().x > r.tl().x){
+							leftMost = r;
 						}
-						if(rightX > rightMostX)
-						{
-							rightMostX = rightX;
-						}
-						if(r.width * r.height > biggestArea)
-						{
-							biggestArea = r.width * r.height;
-							centerOfBiggestRectangle = ((2 * r.x) + r.width)/2;
-						}
-						if(r.width * r.height < biggestArea + 5 && r.width * r.height > biggestArea - 5)
-						{
-							oriented = true;
+						if(rightMost.br().x < r.br().x){
+							rightMost = r;
 						}
 					}
 					numRectangles = mops.size();
-					centerX = (rightMostX + leftMostX)/2;
+					centerX = (leftMost.tl().x + rightMost.br().x)/2.0;
 					Imgproc.line(image, new Point(centerX, 0), new Point(centerX, RobotMap.CAMERA_HEIGHT), new Scalar(255, 0, 0));
 					outputStream.putFrame(image);
 				}		
@@ -133,13 +121,13 @@ public class Vision extends Subsystem {
 	{
 		return numRectangles;
 	}
-	public int getCenterOfBiggestRectangle()
-	{
-		return centerOfBiggestRectangle;
+
+	public Rect getLeftMost(){
+		return leftMost;
 	}
-	public boolean isOriented()
-	{
-		return oriented;
+
+	public Rect getRightMost(){
+		return rightMost;
 	}
 	public void stopVisionThread(){
 		logger.debug("Stopping vision thread");

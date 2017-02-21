@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
+import org.usfirst.frc.team1758.robot.commands.groups.Centering;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,7 +25,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new TurnOnLight());
-		autoChooser.addObject("Middle", null);
+		autoChooser.addObject("Middle", new Centering());
 		autoChooser.addObject("Right", null);
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().calibrateGyroAngle();
@@ -46,11 +47,12 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		logger.debug("Starting Autonoumous");
-		autonomousCommand = autoChooser.getSelected();
-		if (autonomousCommand != null) {
-			logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
-			autonomousCommand.start();
-		}
+		// autonomousCommand = autoChooser.getSelected();
+		// if (autonomousCommand != null) {
+		// 	logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
+		// 	autonomousCommand.start();
+		// }
+		(new Centering()).start();
 	}
 
 	public void autonomousPeriodic() {

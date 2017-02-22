@@ -26,7 +26,6 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	protected void initialize() {
-		//numCycle = 0;
 		pid = new TechnoPID(1,0,0,15.0);
 		pid.setReference(RobotMap.CAMERA_WIDTH/2);
 		finished = false;

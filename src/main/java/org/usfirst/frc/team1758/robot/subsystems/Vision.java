@@ -31,7 +31,7 @@ public class Vision extends Subsystem {
 	private int numRectangles;
 	private double centerX, areaOfBiggestRectangle;
 	private PegPipeline pegPipeline;
-	private Rect leftMost, rightMost;
+	private Rect leftMost, rightMost, bigRect;
 
 	public Vision() {
 		logger = LoggerFactory.getLogger(this.getClass());

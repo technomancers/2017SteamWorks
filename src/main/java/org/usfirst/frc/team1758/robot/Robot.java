@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.groups.Centering;
+import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -43,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public void updateSmartDashboard() {
 		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
+		SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
 	}
 
 	public void autonomousInit() {

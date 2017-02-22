@@ -22,9 +22,9 @@ public class CenterRobotTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		pidRot = new TechnoPID(.9, 0, 0, .2 / vision.getAreaOfBiggestRectangle());
+		pidRot = new TechnoPID(.7, 0, 0, .5 / vision.getAreaOfBiggestRectangle());
 		pidRot.setMinCycleCount(5);
-		pidCent = new TechnoPID(1.1, 0 ,0, 5.0);
+		pidCent = new TechnoPID(1.1, 0 ,0, 20.0);
 		pidCent.setReference(RobotMap.CAMERA_WIDTH / 2);
 		finished = false;
 		firstTime = true;

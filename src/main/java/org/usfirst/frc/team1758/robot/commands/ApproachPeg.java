@@ -1,17 +1,9 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import javax.imageio.ImageWriter;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
-
-
-
-
 import org.usfirst.frc.team1758.utilities.TechnoPID;
-
-
 
 public class ApproachPeg extends CommandBase {
 	private boolean finished;
@@ -26,7 +18,7 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	protected void initialize() {
-		pid = new TechnoPID(1,0,0,15.0);
+		pid = new TechnoPID(1.6,0,0,5.0);
 		pid.setReference(RobotMap.CAMERA_WIDTH/2);
 		finished = false;
 	}
@@ -35,14 +27,16 @@ public class ApproachPeg extends CommandBase {
 		if(sensors.getUltrasonicValue() > 40)
 		{
 			iterate();
-		} else if(sensors.getUltrasonicValue() > 35)
+		} 
+		else if(sensors.getUltrasonicValue() > 30)
 		{
 			pid.setTolerance(5);
 			iterate();
-		} else if(pid.isDone())
-		{
+		} else {
 			finished = true;
+			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		}
+		
 	}
 	public void iterate()
 	{

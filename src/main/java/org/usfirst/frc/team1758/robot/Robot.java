@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
-import org.usfirst.frc.team1758.robot.commands.groups.Centering;
+import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -26,8 +26,8 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new TurnOnLight());
-		autoChooser.addObject("Middle", new Centering());
-		autoChooser.addObject("Right", null);
+		autoChooser.addObject("Middle", new TurnOnLight());
+		autoChooser.addObject("Right", new AutonomousRight());
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();
@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 		// 	logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
 		// 	autonomousCommand.start();
 		// }
-		(new Centering()).start();
+		(new AutonomousRight()).start();
 	}
 
 	public void autonomousPeriodic() {

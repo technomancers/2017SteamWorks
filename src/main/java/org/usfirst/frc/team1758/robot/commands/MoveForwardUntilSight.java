@@ -17,7 +17,7 @@ public class MoveForwardUntilSight extends CommandBase {
 	}
 
 	protected void execute() {
-		if(driveTrain.getEncoderPosition(Motor.FrontRight) < 18046){
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) < 15241){
 			driveTrain.mecanumDriveCartesian(0, -0.3, 0, 0);
 		}
 		else{

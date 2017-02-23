@@ -29,7 +29,7 @@ public class Vision extends Subsystem {
 	private MjpegServer cameraServer;
 	private Thread visionThread;
 	private int numRectangles;
-	private double centerX, areaOfBiggestRectangle;
+	private double centerX;
 	private PegPipeline pegPipeline;
 	private Rect leftMost, rightMost, bigRect;
 
@@ -92,7 +92,7 @@ public class Vision extends Subsystem {
 					pegPipeline.process(image);
 					leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
 					rightMost = new Rect(0,0,0,0);
-					areaOfBiggestRectangle = 0.0;
+					bigRect = new Rect(0,0,0,0);
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
 					for(MatOfPoint mop : mops){
 						Rect r = Imgproc.boundingRect(mop);
@@ -103,9 +103,8 @@ public class Vision extends Subsystem {
 						if(rightMost.br().x < r.br().x){
 							rightMost = r;
 						}
-						if(r.area() > areaOfBiggestRectangle)
-						{
-							areaOfBiggestRectangle = r.area();
+						if(bigRect.width < r.width){
+							bigRect = r;
 						}
 					}
 					numRectangles = mops.size();
@@ -134,9 +133,9 @@ public class Vision extends Subsystem {
 	public Rect getRightMost(){
 		return rightMost;
 	}
-	public double getAreaOfBiggestRectangle()
-	{
-		return areaOfBiggestRectangle;
+
+	public Rect getBigRect(){
+		return bigRect;
 	}
 	public void stopVisionThread(){
 		logger.debug("Stopping vision thread");

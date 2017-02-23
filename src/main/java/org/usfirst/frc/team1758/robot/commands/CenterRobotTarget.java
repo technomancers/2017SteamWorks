@@ -22,8 +22,7 @@ public class CenterRobotTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		pidRot = new TechnoPID(.7, 0, 0, .5 / vision.getAreaOfBiggestRectangle());
-		pidRot.setMinCycleCount(5);
+		pidRot = new TechnoPID(.7, 0, 0, .4 / vision.getBigRect().area());
 		pidCent = new TechnoPID(1.1, 0 ,0, 20.0);
 		pidCent.setReference(RobotMap.CAMERA_WIDTH / 2);
 		finished = false;
@@ -43,7 +42,7 @@ public class CenterRobotTarget extends CommandBase {
 			finished = true;
 		}else{
 			logger.trace("rotV: {} centerV: {}", rotV, centerV);
-			double normRotV = rotV / vision.getAreaOfBiggestRectangle();
+			double normRotV = rotV / vision.getBigRect().area();
 			if(Math.abs(normRotV) < 0.2){
 				normRotV = 0.2 * Math.abs(normRotV)/normRotV;
 			}

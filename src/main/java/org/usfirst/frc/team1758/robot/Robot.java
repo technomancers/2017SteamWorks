@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
 		logger.debug("Initializing Robot");
 		OI.init();
 		CommandBase.init();
+		autonomousCommand = null;
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new TurnOnLight());
@@ -49,12 +50,11 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		logger.debug("Starting Autonoumous");
-		// autonomousCommand = autoChooser.getSelected();
-		// if (autonomousCommand != null) {
-		// 	logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
-		// 	autonomousCommand.start();
-		// }
-		(new AutonomousRight()).start();
+		autonomousCommand = autoChooser.getSelected();
+		if (autonomousCommand != null) {
+			logger.debug("Choosing {} for autonoumous.", autonomousCommand.getClass());
+			autonomousCommand.start();
+		}
 	}
 
 	public void autonomousPeriodic() {

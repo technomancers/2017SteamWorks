@@ -15,6 +15,6 @@ public class AutonomousRight extends CommandGroup{
 		addSequential(new TurnOnLight());
 		addSequential(new MoveForwardUntilSight());
 		addSequential(new CenterRobotTarget());
-		addSequential(new ApproachPeg());
+	  addSequential(new ApproachPeg());
 	}
 }

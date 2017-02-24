@@ -19,22 +19,19 @@ public class ApproachPeg extends CommandBase {
 
 	protected void initialize() {
 		pid = new TechnoPID(1.6,0,0,15.0);
-		pidRot = new TechnoPID(.7, 0, 0, .4 / vision.getBigRect().width);
+		pidRot = new TechnoPID(1, .4, 0, vision.getBigRect().width *.75);
 		pid.setReference(RobotMap.CAMERA_WIDTH/2);
+		sensors.resetGyroAngle();
 		finished = false;
 	}
 
 	protected void execute() {
-		if(sensors.getUltrasonicValue() > 40)
+		if(sensors.getUltrasonicValue() > 60)
 		{
-			iterate();
-		} 
-		else if(sensors.getUltrasonicValue() > 30)
-		{
-			pid.setTolerance(5);
 			iterate();
 		} else {
 			finished = true;
+			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		}
 		
 	}
@@ -45,21 +42,21 @@ public class ApproachPeg extends CommandBase {
 		double rotV = pidRot.calculatePID(vision.getRightMost().width);
 		if(pid.isDone() && pidRot.isDone()){
 			sensors.resetGyroAngle();
-			driveTrain.mecanumDriveCartesian(-.3, 0.0, 0.0, sensors.getGyroAngle());
+	  	driveTrain.mecanumDriveCartesian(-.3, 0.0, 0.0, sensors.getGyroAngle());
 		}else{
 			double normalized = pidV / -256;
-			if(Math.abs(normalized) < .15){
-				normalized = .15 * Math.abs(normalized)/normalized;
-			}
-			double normRotV = rotV / vision.getBigRect().width;
-			if(Math.abs(normRotV) < 0.2){
-				normRotV = 0.2 * Math.abs(normRotV)/normRotV;
-			}
-			if(Math.abs(normRotV) > 0.8){
-				normRotV = 0.8 * Math.abs(normRotV)/normRotV;
-			}
+			// if(Math.abs(normalized) < .15){
+			// 	normalized = .15 * Math.abs(normalized)/normalized;
+			// }
+			 double normRotV = rotV / (30*vision.getBigRect().width);
+			// if(Math.abs(normRotV) < 0.2){
+			// 	normRotV = 0.2 * Math.abs(normRotV)/normRotV;
+			// }
+			// if(Math.abs(normRotV) > 0.8){
+			// 	normRotV = 0.8 * Math.abs(normRotV)/normRotV;
+			// }
 			logger.trace("Normalized: {}", normalized);
-			driveTrain.mecanumDriveCartesian(0.0, normRotV, normalized, 0.0);
+			driveTrain.mecanumDriveCartesian(-.3, 0.0, normalized, 0.0);
 		}
 	}
 

@@ -26,7 +26,7 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	protected void execute() {
-		if(sensors.getUltrasonicValue() > 60)
+		if(sensors.getUltrasonicValue() > 40 && vision.getNumRectangles() >= 2)
 		{
 			iterate();
 		} else {
@@ -56,7 +56,8 @@ public class ApproachPeg extends CommandBase {
 			// 	normRotV = 0.8 * Math.abs(normRotV)/normRotV;
 			// }
 			logger.trace("Normalized: {}", normalized);
-			driveTrain.mecanumDriveCartesian(-.3, 0.0, normalized, 0.0);
+			logger.trace("Angle: {}",.3 * sensors.getGyroAngle());
+			driveTrain.mecanumDriveCartesian(-.3, -.4 * normalized,- .02 * sensors.getGyroAngle(), 0.0);
 		}
 	}
 

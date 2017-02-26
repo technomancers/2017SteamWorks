@@ -18,8 +18,7 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	protected void initialize() {
-		pid = new TechnoPID(1.6,0,0,15.0);
-		pidRot = new TechnoPID(1, .4, 0, vision.getBigRect().width *.75);
+		pid = new TechnoPID(1.6,0,0,5.0);
 		pid.setReference(RobotMap.CAMERA_WIDTH/2);
 		sensors.resetGyroAngle();
 		finished = false;
@@ -38,9 +37,7 @@ public class ApproachPeg extends CommandBase {
 	public void iterate()
 	{
 		double pidV = pid.calculatePID(vision.getCenterX());
-		pidRot.setReference(vision.getLeftMost().width);
-		double rotV = pidRot.calculatePID(vision.getRightMost().width);
-		if(pid.isDone() && pidRot.isDone()){
+		if(pid.isDone()){
 			sensors.resetGyroAngle();
 	  	driveTrain.mecanumDriveCartesian(-.3, 0.0, 0.0, sensors.getGyroAngle());
 		}else{
@@ -48,7 +45,6 @@ public class ApproachPeg extends CommandBase {
 			// if(Math.abs(normalized) < .15){
 			// 	normalized = .15 * Math.abs(normalized)/normalized;
 			// }
-			 double normRotV = rotV / (30*vision.getBigRect().width);
 			// if(Math.abs(normRotV) < 0.2){
 			// 	normRotV = 0.2 * Math.abs(normRotV)/normRotV;
 			// }
@@ -57,7 +53,7 @@ public class ApproachPeg extends CommandBase {
 			// }
 			logger.trace("Normalized: {}", normalized);
 			logger.trace("Angle: {}",.3 * sensors.getGyroAngle());
-			driveTrain.mecanumDriveCartesian(-.3, -.4 * normalized,- .02 * sensors.getGyroAngle(), 0.0);
+			driveTrain.mecanumDriveCartesian(-.3, -.4 * normalized,0, sensors.getGyroAngle());
 		}
 	}
 

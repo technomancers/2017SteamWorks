@@ -2,7 +2,10 @@ package org.usfirst.frc.team1758.robot.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.usfirst.frc.team1758.robot.subsystems.BallPickup;
+import org.usfirst.frc.team1758.robot.subsystems.Compressing;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1758.robot.subsystems.Gear;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Servos;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
@@ -14,6 +17,9 @@ public abstract class CommandBase extends Command {
 	protected static Sensors sensors;
 	protected static Servos servos;
 	protected static Vision vision;
+	protected static Gear gear;
+	protected static Compressing compressing;
+	protected static BallPickup ballPickup;
 	private Logger logger;
 
 	public static void init() {
@@ -23,6 +29,9 @@ public abstract class CommandBase extends Command {
 		sensors = new Sensors();
 		servos = new Servos();
 		vision = new Vision();
+		gear = new Gear();
+		compressing = new Compressing();
+		ballPickup = new BallPickup();
 	}
 
 	public CommandBase(String name) {

@@ -19,7 +19,7 @@ public class RobotMap {
 	public final static int CAMERA_HEIGHT = 240;
 	public final static int MJPEG_SERVER_PORT = 1182;
 	public final static int CAMERA_FPS = 30;
-	public final static int CAMERA_EXPOSURE = 5;
+	public final static int CAMERA_EXPOSURE = 0;
 	public final static PixelFormat CAMERA_PIXEL_FORMAT = PixelFormat.kMJPEG;
 	public final static int CAMERA_BRIGHTNESS = 50;
 
@@ -30,4 +30,11 @@ public class RobotMap {
 	public final static int ANALOG_SONIC_PORT = 0;
 	public final static int PROXIMITY_PORT = 1;
 	public final static double OUT_VOLTS = 4.85;
+
+	//Pneumatics
+	public final static int COMPRESSOR_NODE_ID = 0;
+	public final static int GEAR_SOLENOID_IN = 0;
+	public final static int GEAR_SOLENOID_OUT = 1;
+	public final static int BALL_SOLENOID_IN = 2;
+	public final static int BALL_SOLENOID_OUT = 3;
 }

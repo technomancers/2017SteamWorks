@@ -2,15 +2,12 @@ package org.usfirst.frc.team1758.robot.commands;
 
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 
-
-public class MoveForwardUntilSight extends CommandBase {
+public class MoveForward extends CommandBase {
 	private boolean finished;
 
-	public MoveForwardUntilSight() {
-		requires(sensors);
+	public MoveForward() {
 		requires(driveTrain);
 	}
 
@@ -21,12 +18,12 @@ public class MoveForwardUntilSight extends CommandBase {
 	}
 
 	protected void execute() {
-		if(sensors.getGyroAngle() > 28)
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) > 8192)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.tankDrive(.5, 0);
+			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
 		}
 	}
 	

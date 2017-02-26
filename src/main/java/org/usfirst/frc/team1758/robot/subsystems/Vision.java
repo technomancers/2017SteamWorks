@@ -32,6 +32,7 @@ public class Vision extends Subsystem {
 	private double centerX;
 	private PegPipeline pegPipeline;
 	private Rect leftMost, rightMost, bigRect;
+	private long currTime, prevTime;
 
 	public Vision() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -88,7 +89,12 @@ public class Vision extends Subsystem {
 				Mat image = new Mat(RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_WIDTH, 6);
 				while(!Thread.interrupted()){
 					logger.trace("Grabbing frame from gear sink");
-					gearSink.grabFrameNoTimeout(image);
+					currTime = gearSink.grabFrameNoTimeout(image);
+					if (currTime == 0 || currTime == prevTime){
+						logger.warn("No Frame to grab");
+						continue;
+					}
+					prevTime = currTime;
 					pegPipeline.process(image);
 					leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
 					rightMost = new Rect(0,0,0,0);
@@ -136,6 +142,11 @@ public class Vision extends Subsystem {
 
 	public Rect getBigRect(){
 		return bigRect;
+	}
+
+	public long getCurrTime()
+	{
+		return currTime;
 	}
 	public void stopVisionThread(){
 		logger.debug("Stopping vision thread");

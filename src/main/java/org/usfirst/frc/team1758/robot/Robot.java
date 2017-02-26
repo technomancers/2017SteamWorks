@@ -3,7 +3,11 @@ package org.usfirst.frc.team1758.robot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
+import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
+import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
+import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
+import org.usfirst.frc.team1758.robot.commands.groups.AutonomousLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
@@ -26,7 +30,7 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = null;
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Left", new TurnOnLight());
+		autoChooser.addObject("Left", new AutonomousLeft());
 		autoChooser.addObject("Middle", new TurnOnLight());
 		autoChooser.addObject("Right", new AutonomousRight());
 		SmartDashboard.putData("Autonomous", autoChooser);
@@ -34,6 +38,7 @@ public class Robot extends IterativeRobot {
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		CommandBase.getVision().startVisionThread();
 		updateSmartDashboard();
+
 	}
 
 	public void robotPeriodic() {
@@ -73,6 +78,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		logger.trace("Loop telop in");
 		Scheduler.getInstance().run();
+		OI.drivingController.a.whenPressed(new ToggleGear());
+		OI.drivingController.b.whenPressed(new ToggleBallPickup());
+		OI.drivingController.x.whenPressed(new ToggleCompressor());
 		logger.trace("Loop telop out");
 	}
 }

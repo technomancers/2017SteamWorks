@@ -9,6 +9,7 @@ import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
+import org.usfirst.frc.team1758.robot.commands.groups.GearPushAndPull;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot {
 		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
+		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX());
 	}
 
 	public void autonomousInit() {
@@ -78,9 +80,10 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		logger.trace("Loop telop in");
 		Scheduler.getInstance().run();
-		OI.drivingController.a.whenPressed(new ToggleGear());
+		OI.drivingController.a.whenPressed(new GearPushAndPull());
 		OI.drivingController.b.whenPressed(new ToggleBallPickup());
 		OI.drivingController.x.whenPressed(new ToggleCompressor());
+		OI.drivingController.y.whenPressed(new ToggleGear());
 		logger.trace("Loop telop out");
 	}
 }

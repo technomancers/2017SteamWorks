@@ -15,12 +15,12 @@ public class TurnBackThreeFive extends CommandBase {
 	}
 
 	protected void execute() {
-		if(sensors.getGyroAngle() < -35)
+		if(sensors.getGyroAngle() < -30)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.tankDrive(-.5, 0);
+			driveTrain.tankDrive(-.75, 0);
 		}
 	}
 	

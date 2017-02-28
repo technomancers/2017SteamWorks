@@ -9,6 +9,7 @@ public class ApproachPeg extends CommandBase {
 	private boolean finished;
 	private TechnoPID pid, pidRot;
 	private Logger logger;
+	private int counter;
 
 	public ApproachPeg() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -22,40 +23,37 @@ public class ApproachPeg extends CommandBase {
 		pid.setReference(RobotMap.CAMERA_WIDTH/2);
 		sensors.resetGyroAngle();
 		finished = false;
+		counter = 0;
 	}
 
 	protected void execute() {
-		if(sensors.getUltrasonicValue() > 40 && vision.getNumRectangles() >= 2)
+		logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
+		if(isDone())
 		{
-			iterate();
-		} else {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
+		} else {
+			iterate();
 		}
 		
 	}
 	public void iterate()
 	{
-		double pidV = pid.calculatePID(vision.getCenterX());
-		if(pid.isDone()){
-			sensors.resetGyroAngle();
-	  	driveTrain.mecanumDriveCartesian(-.3, 0.0, 0.0, sensors.getGyroAngle());
-		}else{
-			double normalized = pidV / -256;
-			// if(Math.abs(normalized) < .15){
-			// 	normalized = .15 * Math.abs(normalized)/normalized;
-			// }
-			// if(Math.abs(normRotV) < 0.2){
-			// 	normRotV = 0.2 * Math.abs(normRotV)/normRotV;
-			// }
-			// if(Math.abs(normRotV) > 0.8){
-			// 	normRotV = 0.8 * Math.abs(normRotV)/normRotV;
-			// }
-			logger.trace("Normalized: {}", normalized);
-			logger.trace("Angle: {}",.3 * sensors.getGyroAngle());
-			driveTrain.mecanumDriveCartesian(-.3, -.4 * normalized,0, sensors.getGyroAngle());
+		double x, y, rotate;
+		x = 0;
+		y = 0;
+		rotate = 0;
+		if(sensors.getUltrasonicValue() > 10){
+			x = -0.3;
 		}
+		if(!isCentered()){
+			y =  -.001 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH/2);  
+		}
+		//logger.trace("Normalized: {}", normalized);
+		logger.trace("Angle: {}",.3 * sensors.getGyroAngle());
+		driveTrain.mecanumDriveCartesian(x,  y, rotate, sensors.getGyroAngle());
 	}
+	
 
 	protected boolean isFinished() {
 		return finished;
@@ -63,7 +61,18 @@ public class ApproachPeg extends CommandBase {
 
 	protected void end() {
 	}
-
+	private boolean isCentered(){
+		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH/2) +5) && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH/2)-5);
+	}
+	private boolean isDone(){
+		if(sensors.getUltrasonicValue() <  35 && isCentered() || vision.getNumRectangles() < 2){
+			counter++;
+		}
+		else{
+			counter = 0;
+		}
+		return counter > 2;
+	}
 	protected void interrupted() {
 	}
 }

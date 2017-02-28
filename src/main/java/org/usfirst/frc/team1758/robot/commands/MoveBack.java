@@ -4,10 +4,10 @@ import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 
 
-public class MoveForward extends CommandBase {
+public class MoveBack extends CommandBase {
 	private boolean finished;
 
-	public MoveForward() {
+	public MoveBack() {
 		requires(driveTrain);
 	}
 
@@ -18,12 +18,13 @@ public class MoveForward extends CommandBase {
 	}
 
 	protected void execute() {
-		if(driveTrain.getEncoderPosition(Motor.FrontRight) > 7000)
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -6000)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
+			
+			driveTrain.mecanumDriveCartesian(0, .3, 0, 0);
 		}
 	}
 	

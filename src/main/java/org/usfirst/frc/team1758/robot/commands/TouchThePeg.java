@@ -4,26 +4,27 @@ import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 
 
-public class MoveForward extends CommandBase {
-	private boolean finished;
 
-	public MoveForward() {
+public class TouchThePeg extends CommandBase {
+	private boolean finished;
+	private double averageEncoderPosition;
+
+	public TouchThePeg() {
 		requires(driveTrain);
 	}
 
 	protected void initialize() {
 		finished = false;
 		driveTrain.resetEncoderPosition();
-		sensors.resetGyroAngle();
 	}
 
 	protected void execute() {
-		if(driveTrain.getEncoderPosition(Motor.FrontRight) > 7000)
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -400)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
+			driveTrain.mecanumDriveCartesian(-.25,	0, 0, 0);
 		}
 	}
 	

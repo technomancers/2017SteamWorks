@@ -2,7 +2,9 @@ package org.usfirst.frc.team1758.robot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.usfirst.frc.team1758.robot.commands.ClimbRope;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
+import org.usfirst.frc.team1758.robot.commands.ShootBall;
 import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
 import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
@@ -39,7 +41,7 @@ public class Robot extends IterativeRobot {
 		CommandBase.getDriveTrain().resetEncoderPosition();
 		CommandBase.getVision().startVisionThread();
 		updateSmartDashboard();
-
+		(new ToggleCompressor()).start();
 	}
 
 	public void robotPeriodic() {
@@ -75,15 +77,15 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		(new TurnOnLight()).start();
+		(new ToggleBallPickup()).start();
+		(new ShootBall()).start();
+		OI.drivingController.x.whenPressed(new ClimbRope());
+		OI.drivingController.a.whenPressed(new ToggleGear());
 	}
 
 	public void teleopPeriodic() {
 		logger.trace("Loop telop in");
 		Scheduler.getInstance().run();
-		OI.drivingController.a.whenPressed(new GearPushAndPull());
-		OI.drivingController.b.whenPressed(new ToggleBallPickup());
-		OI.drivingController.x.whenPressed(new ToggleCompressor());
-		OI.drivingController.y.whenPressed(new ToggleGear());
 		logger.trace("Loop telop out");
 	}
 }

@@ -3,6 +3,7 @@ package org.usfirst.frc.team1758.robot.commands;
 public class ToggleBallPickup extends CommandBase {
 	private boolean finished;
 	private boolean engaged;
+
 	public ToggleBallPickup() {
 		requires(ballPickup);
 		engaged = false;
@@ -13,11 +14,13 @@ public class ToggleBallPickup extends CommandBase {
 	}
 
 	protected void execute() {
-		if(engaged){
+		if (engaged) {
 			ballPickup.pullPiston();
+			ballPickup.setPickupSpeed(0);
 			engaged = false;
-		}else{
+		} else {
 			ballPickup.pushPiston();
+			ballPickup.setPickupSpeed(.5);
 			engaged = true;
 		}
 		finished = true;

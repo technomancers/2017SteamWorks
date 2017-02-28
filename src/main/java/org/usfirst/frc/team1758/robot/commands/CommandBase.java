@@ -6,8 +6,10 @@ import org.usfirst.frc.team1758.robot.subsystems.BallPickup;
 import org.usfirst.frc.team1758.robot.subsystems.Compressing;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Gear;
+import org.usfirst.frc.team1758.robot.subsystems.Rope;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Servos;
+import org.usfirst.frc.team1758.robot.subsystems.Shooter;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,6 +22,8 @@ public abstract class CommandBase extends Command {
 	protected static Gear gear;
 	protected static Compressing compressing;
 	protected static BallPickup ballPickup;
+	protected static Rope rope;
+	protected static Shooter shooter;
 	private Logger logger;
 
 	public static void init() {
@@ -32,6 +36,8 @@ public abstract class CommandBase extends Command {
 		gear = new Gear();
 		compressing = new Compressing();
 		ballPickup = new BallPickup();
+		rope = new Rope();
+		shooter = new Shooter();
 	}
 
 	public CommandBase(String name) {
@@ -53,7 +59,8 @@ public abstract class CommandBase extends Command {
 	public static DriveTrain getDriveTrain() {
 		return driveTrain;
 	}
-	public static Vision getVision(){
+
+	public static Vision getVision() {
 		return vision;
 	}
 }

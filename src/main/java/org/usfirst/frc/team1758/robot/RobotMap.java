@@ -2,8 +2,6 @@ package org.usfirst.frc.team1758.robot;
 
 import edu.wpi.cscore.VideoMode.PixelFormat;
 
-
-
 public class RobotMap {
 	//DriveTrain
 	public final static int RIGHT_FRONT_MOTOR = 1;
@@ -25,7 +23,7 @@ public class RobotMap {
 
 	//Servos
 	public final static int SERVO_PORT = 0;
-	
+
 	//Sensors
 	public final static int ANALOG_SONIC_PORT = 0;
 	public final static int PROXIMITY_PORT = 1;
@@ -37,4 +35,13 @@ public class RobotMap {
 	public final static int GEAR_SOLENOID_OUT = 1;
 	public final static int BALL_SOLENOID_IN = 2;
 	public final static int BALL_SOLENOID_OUT = 3;
+
+	//BallPickUp
+	public final static int BALL_PICKUP_MOTOR_PORT = 5;
+
+	//Shooter
+	public final static int SHOOTER_MOTOR_PORT = 6;
+
+	//Rope
+	public final static int ROPE_MOTOR_PORT = 7;
 }

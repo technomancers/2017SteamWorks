@@ -9,17 +9,12 @@ import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+public class AutonomousRight extends CommandGroup {
 
-
-public class AutonomousRight extends CommandGroup{
-	
-	public AutonomousRight(){
+	public AutonomousRight() {
 		addSequential(new TurnOnLight());
 		addSequential(new MoveForwardUntilSight());
 		addSequential(new MoveForward());
-		addSequential(new CenterRobotTarget());
-	  addSequential(new ApproachPeg());
-		addSequential(new TouchThePeg());
-		addSequential(new GearPushAndPull());
-		}
+		addSequential(new Autonomous());
+	}
 }

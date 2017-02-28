@@ -13,14 +13,15 @@ public class ApproachPeg extends CommandBase {
 
 	public ApproachPeg() {
 		logger = LoggerFactory.getLogger(this.getClass());
+		logger.debug("ApproachPeg command created");
 		requires(vision);
 		requires(driveTrain);
 		requires(sensors);
 	}
 
 	protected void initialize() {
-		pid = new TechnoPID(1.6,0,0,5.0);
-		pid.setReference(RobotMap.CAMERA_WIDTH/2);
+		pid = new TechnoPID(1.6, 0, 0, 5.0);
+		pid.setReference(RobotMap.CAMERA_WIDTH / 2);
 		sensors.resetGyroAngle();
 		finished = false;
 		counter = 0;
@@ -28,32 +29,30 @@ public class ApproachPeg extends CommandBase {
 
 	protected void execute() {
 		logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
-		if(isDone())
-		{
+		if (isDone()) {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
 			iterate();
 		}
-		
+
 	}
-	public void iterate()
-	{
+
+	public void iterate() {
 		double x, y, rotate;
 		x = 0;
 		y = 0;
 		rotate = 0;
-		if(sensors.getUltrasonicValue() > 10){
+		if (sensors.getUltrasonicValue() > 10) {
 			x = -0.3;
 		}
-		if(!isCentered()){
-			y =  -.001 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH/2);  
+		if (!isCentered()) {
+			y = -.001 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2);
 		}
 		//logger.trace("Normalized: {}", normalized);
-		logger.trace("Angle: {}",.3 * sensors.getGyroAngle());
-		driveTrain.mecanumDriveCartesian(x,  y, rotate, sensors.getGyroAngle());
+		logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
+		driveTrain.mecanumDriveCartesian(x, y, rotate, sensors.getGyroAngle());
 	}
-	
 
 	protected boolean isFinished() {
 		return finished;
@@ -61,18 +60,21 @@ public class ApproachPeg extends CommandBase {
 
 	protected void end() {
 	}
-	private boolean isCentered(){
-		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH/2) +5) && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH/2)-5);
+
+	private boolean isCentered() {
+		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 5)
+				&& (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 5);
 	}
-	private boolean isDone(){
-		if(sensors.getUltrasonicValue() <  35 && isCentered() || vision.getNumRectangles() < 2){
+
+	private boolean isDone() {
+		if (sensors.getUltrasonicValue() < 35 && isCentered() || vision.getNumRectangles() < 2) {
 			counter++;
-		}
-		else{
+		} else {
 			counter = 0;
 		}
 		return counter > 2;
 	}
+
 	protected void interrupted() {
 	}
 }

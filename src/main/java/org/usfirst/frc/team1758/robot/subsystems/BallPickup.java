@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import com.ctre.CANTalon;
 
@@ -11,25 +12,34 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class BallPickup extends Subsystem {
 	private DoubleSolenoid ballSolenoid;
-	private CANTalon motor;
+	private boolean engaged;
+	//private CANTalon motor;
 
 	public BallPickup() {
 		ballSolenoid = new DoubleSolenoid(RobotMap.BALL_SOLENOID_IN, RobotMap.BALL_SOLENOID_OUT);
-		motor = new CANTalon(RobotMap.BALL_PICKUP_MOTOR_PORT);
+		engaged = false;
+		//motor = new CANTalon(RobotMap.BALL_PICKUP_MOTOR_PORT);
 	}
 
 	protected void initDefaultCommand() {
 	}
 
-	public void pushPiston() {
+	public void engage() {
+		ballSolenoid.set(Value.kReverse);
+		//motor.set(.7);
+		engaged = true;
+	}
+
+	public void disengage() {
+		//motor.set(0);
+		engaged = false;
+	}
+
+	public void reset() {
 		ballSolenoid.set(Value.kForward);
 	}
 
-	public void pullPiston() {
-		ballSolenoid.set(Value.kReverse);
-	}
-
-	public void setPickupSpeed(double power) {
-		motor.set(power);
+	public boolean isEngaged() {
+		return engaged;
 	}
 }

@@ -1,12 +1,17 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
-public class MoveForward extends CommandBase {
+public class StrafeForward extends CommandBase {
 	private boolean finished;
+	private Logger logger;
 
-	public MoveForward() {
+	public StrafeForward() {
+		logger = LoggerFactory.getLogger(this.getClass());
 		requires(driveTrain);
+		requires(sensors);
 	}
 
 	protected void initialize() {
@@ -16,11 +21,12 @@ public class MoveForward extends CommandBase {
 	}
 
 	protected void execute() {
-		if (driveTrain.getEncoderPosition(Motor.FrontRight) > 4000) {
+		logger.trace("Strafing Away");
+		if (driveTrain.getEncoderPosition(Motor.FrontRight) < 6000) {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
+			driveTrain.mecanumDriveCartesian(-.3, 0, 0, sensors.getGyroAngle());
 		}
 	}
 

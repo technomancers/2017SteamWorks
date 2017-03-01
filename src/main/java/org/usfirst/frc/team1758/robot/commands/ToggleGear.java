@@ -1,11 +1,15 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ToggleGear extends CommandBase {
 	private boolean finished;
-	private boolean engaged;
+	private Logger logger;
+
 	public ToggleGear() {
+		logger = LoggerFactory.getLogger(this.getClass());
 		requires(gear);
-		engaged = false;
 	}
 
 	protected void initialize() {
@@ -13,12 +17,11 @@ public class ToggleGear extends CommandBase {
 	}
 
 	protected void execute() {
-		if(engaged){
+		logger.debug("Toggling Gear");
+		if (gear.isEngaged()) {
 			gear.pullPiston();
-			engaged = false;
-		}else{
+		} else {
 			gear.pushPiston();
-			engaged = true;
 		}
 		finished = true;
 	}

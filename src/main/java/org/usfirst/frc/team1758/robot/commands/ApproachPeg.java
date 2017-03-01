@@ -7,7 +7,7 @@ import org.usfirst.frc.team1758.utilities.TechnoPID;
 
 public class ApproachPeg extends CommandBase {
 	private boolean finished;
-	private TechnoPID pid, pidRot;
+	private TechnoPID pid;
 	private Logger logger;
 	private int counter;
 
@@ -43,11 +43,11 @@ public class ApproachPeg extends CommandBase {
 		x = 0;
 		y = 0;
 		rotate = 0;
-		if (sensors.getUltrasonicValue() > 10) {
+		if (sensors.getUltrasonicValue() > 30) {
 			x = -0.3;
 		}
 		if (!isCentered()) {
-			y = -.001 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2);
+			y = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-3 * (RobotMap.CAMERA_WIDTH / 2));
 		}
 		//logger.trace("Normalized: {}", normalized);
 		logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
@@ -62,12 +62,12 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	private boolean isCentered() {
-		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 5)
-				&& (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 5);
+		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 7)
+				&& (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 7);
 	}
 
 	private boolean isDone() {
-		if (sensors.getUltrasonicValue() < 35 && isCentered() || vision.getNumRectangles() < 2) {
+		if (sensors.getUltrasonicValue() < 35 && isCentered()) {
 			counter++;
 		} else {
 			counter = 0;

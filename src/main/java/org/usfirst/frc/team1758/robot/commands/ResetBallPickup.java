@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-public class ToggleBallPickup extends CommandBase {
+public class ResetBallPickup extends CommandBase {
 	private boolean finished;
 
-	public ToggleBallPickup() {
+	public ResetBallPickup() {
 		requires(ballPickup);
 	}
 
@@ -12,21 +12,11 @@ public class ToggleBallPickup extends CommandBase {
 	}
 
 	protected void execute() {
-		if (ballPickup.isEngaged()) {
-			ballPickup.disengage();
-		} else {
-			ballPickup.engage();
-		}
+		ballPickup.reset();
 		finished = true;
 	}
 
 	protected boolean isFinished() {
 		return finished;
-	}
-
-	protected void end() {
-	}
-
-	protected void interrupted() {
 	}
 }

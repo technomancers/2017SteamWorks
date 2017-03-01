@@ -2,16 +2,14 @@ package org.usfirst.frc.team1758.robot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.commands.ClimbRope;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.ShootBall;
+import org.usfirst.frc.team1758.robot.commands.ResetBallPickup;
 import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
 import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
-import org.usfirst.frc.team1758.robot.commands.groups.GearPushAndPull;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -78,9 +76,11 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 		(new TurnOnLight()).start();
 		(new ToggleBallPickup()).start();
-		(new ShootBall()).start();
-		OI.drivingController.x.whenPressed(new ClimbRope());
+		//(new ShootBall()).start();
+		//(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
+		OI.drivingController.b.whenPressed(new ToggleBallPickup());
+		OI.pitController.a.whenPressed(new ResetBallPickup());
 	}
 
 	public void teleopPeriodic() {

@@ -22,8 +22,8 @@ public abstract class CommandBase extends Command {
 	protected static Gear gear;
 	protected static Compressing compressing;
 	protected static BallPickup ballPickup;
-	//protected static Rope rope;
-	//protected static Shooter shooter;
+	protected static Rope rope;
+	protected static Shooter shooter;
 	private Logger logger;
 
 	public static void init() {

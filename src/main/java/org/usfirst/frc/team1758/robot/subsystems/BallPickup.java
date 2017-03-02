@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BallPickup extends Subsystem {
 	private DoubleSolenoid ballSolenoid;
 	private boolean engaged;
-	//private CANTalon motor;
+	private CANTalon motor;
 
 	public BallPickup() {
 		ballSolenoid = new DoubleSolenoid(RobotMap.BALL_SOLENOID_IN, RobotMap.BALL_SOLENOID_OUT);
 		engaged = false;
-		//motor = new CANTalon(RobotMap.BALL_PICKUP_MOTOR_PORT);
+		motor = new CANTalon(RobotMap.BALL_PICKUP_MOTOR_PORT);
 	}
 
 	protected void initDefaultCommand() {
@@ -26,12 +26,12 @@ public class BallPickup extends Subsystem {
 
 	public void engage() {
 		ballSolenoid.set(Value.kReverse);
-		//motor.set(.7);
+		motor.set(.7);
 		engaged = true;
 	}
 
 	public void disengage() {
-		//motor.set(0);
+		motor.set(0);
 		engaged = false;
 	}
 

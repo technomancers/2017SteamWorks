@@ -12,6 +12,7 @@ import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
+import org.usfirst.frc.team1758.robot.commands.groups.AutonomousMiddle;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -34,7 +35,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new AutonomousLeft());
-		autoChooser.addObject("Middle", new TurnOnLight());
+		autoChooser.addObject("Middle", new AutonomousMiddle());
 		autoChooser.addObject("Right", new AutonomousRight());
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().calibrateGyroAngle();
@@ -69,7 +70,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		logger.trace("Loop autonomous in");
 		Scheduler.getInstance().run();
-		logger.trace("Loog autonomous out");
+		logger.trace("Loop autonomous out");
 	}
 
 	public void teleopInit() {
@@ -77,12 +78,12 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		(new TurnOnLight()).start();
-		(new ToggleBallPickup()).start();
-		(new ShootBall()).start();
+		//(new ToggleBallPickup()).start();
+		//(new ShootBall()).start();
 		(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
-		OI.drivingController.b.whenPressed(new ToggleBallPickup());
-		OI.pitController.a.whenPressed(new ResetBallPickup());
+		//OI.drivingController.b.whenPressed(new ToggleBallPickup());
+		//OI.pitController.a.whenPressed(new ResetBallPickup());
 	}
 
 	public void teleopPeriodic() {

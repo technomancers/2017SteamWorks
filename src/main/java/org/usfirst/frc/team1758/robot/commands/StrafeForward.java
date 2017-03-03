@@ -21,7 +21,7 @@ public class StrafeForward extends CommandBase {
 	}
 
 	protected void execute() {
-		logger.trace("Strafing Away");
+		logger.trace("Strafing Forward");
 		if (driveTrain.getEncoderPosition(Motor.FrontRight) < 6000) {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);

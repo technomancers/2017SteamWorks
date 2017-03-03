@@ -35,9 +35,9 @@ public abstract class CommandBase extends Command {
 		vision = new Vision();
 		gear = new Gear();
 		compressing = new Compressing();
-		//ballPickup = new BallPickup();
+		ballPickup = new BallPickup();
 		rope = new Rope();
-		//shooter = new Shooter();
+		shooter = new Shooter();
 	}
 
 	public CommandBase(String name) {

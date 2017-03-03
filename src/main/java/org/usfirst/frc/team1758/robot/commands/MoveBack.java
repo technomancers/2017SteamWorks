@@ -18,7 +18,7 @@ public class MoveBack extends CommandBase {
 	}
 
 	protected void execute() {
-		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -6000)
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -8000)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);

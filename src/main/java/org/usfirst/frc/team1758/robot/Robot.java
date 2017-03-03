@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.ClimbRope;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.ResetBallPickup;
-import org.usfirst.frc.team1758.robot.commands.ShootBall;
 import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
+//import org.usfirst.frc.team1758.robot.commands.ResetBallPickup;
+//import org.usfirst.frc.team1758.robot.commands.ShootBall;
+//import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
 import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
@@ -55,7 +57,7 @@ public class Robot extends IterativeRobot {
 		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
-		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX());
+		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX()); 
 	}
 
 	public void autonomousInit() {
@@ -83,7 +85,11 @@ public class Robot extends IterativeRobot {
 		(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
 		//OI.drivingController.b.whenPressed(new ToggleBallPickup());
+<<<<<<< HEAD
 		//OI.pitController.a.whenPressed(new ResetBallPickup());
+=======
+		OI.pitController.a.whenPressed(new ResetBallPickup());
+>>>>>>> 04605d6a2f93b3e3fc40f1129985d4cd645b0827
 	}
 
 	public void teleopPeriodic() {

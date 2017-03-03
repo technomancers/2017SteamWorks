@@ -44,7 +44,7 @@ public class ApproachPeg extends CommandBase {
 		y = 0;
 		rotate = 0;
 		if (sensors.getUltrasonicValue() > 30) {
-			x = -0.3;
+			x = -0.4;
 		}
 		if (!isCentered()) {
 			y = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-3 * (RobotMap.CAMERA_WIDTH / 2));

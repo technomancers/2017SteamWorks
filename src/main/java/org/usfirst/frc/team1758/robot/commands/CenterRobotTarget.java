@@ -59,11 +59,11 @@ public class CenterRobotTarget extends CommandBase {
 	}
 
 	private boolean isCentered() {
-		return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + 5 && vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - 5;
+		return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + 15 && vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - 15;
 	}
 
 	private boolean oriented() {
-		return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 40;
+		return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 50;
 	}
 
 	private boolean isDone() {

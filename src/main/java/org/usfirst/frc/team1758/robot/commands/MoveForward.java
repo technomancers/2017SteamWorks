@@ -16,7 +16,7 @@ public class MoveForward extends CommandBase {
 	}
 
 	protected void execute() {
-		if (driveTrain.getEncoderPosition(Motor.FrontRight) > 4000) {
+		if (driveTrain.getEncoderPosition(Motor.FrontRight) > 8000) {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {

@@ -11,6 +11,7 @@ public class Rope extends Subsystem {
 
 	public Rope() {
 		motor = new CANTalon(RobotMap.ROPE_MOTOR_PORT);
+		motor.setInverted(true);
 	}
 
 	protected void initDefaultCommand() {

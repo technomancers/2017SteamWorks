@@ -25,7 +25,7 @@ public class RobotMap {
 	public final static int SERVO_PORT = 0;
 
 	//Sensors
-	public final static int ANALOG_SONIC_PORT = 0;
+	public final static int ANALOG_SONIC_PORT = 3;
 	public final static int PROXIMITY_PORT = 1;
 	public final static double OUT_VOLTS = 4.85;
 

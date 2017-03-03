@@ -57,7 +57,7 @@ public class Robot extends IterativeRobot {
 		logger.trace("Update Smart Dashboard");
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
-		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX()); 
+		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX());
 	}
 
 	public void autonomousInit() {
@@ -85,11 +85,7 @@ public class Robot extends IterativeRobot {
 		(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
 		//OI.drivingController.b.whenPressed(new ToggleBallPickup());
-<<<<<<< HEAD
 		//OI.pitController.a.whenPressed(new ResetBallPickup());
-=======
-		OI.pitController.a.whenPressed(new ResetBallPickup());
->>>>>>> 04605d6a2f93b3e3fc40f1129985d4cd645b0827
 	}
 
 	public void teleopPeriodic() {

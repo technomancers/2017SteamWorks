@@ -58,6 +58,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
 		SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
 		SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX());
+		SmartDashboard.putBoolean("Gear Engaged", CommandBase.getGear().isEngaged());
 	}
 
 	public void autonomousInit() {

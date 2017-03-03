@@ -63,4 +63,8 @@ public abstract class CommandBase extends Command {
 	public static Vision getVision() {
 		return vision;
 	}
+
+	public static Gear getGear() {
+		return gear;
+	}
 }

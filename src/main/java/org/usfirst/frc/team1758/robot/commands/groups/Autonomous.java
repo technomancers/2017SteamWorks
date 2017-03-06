@@ -9,6 +9,6 @@ public class Autonomous extends CommandGroup {
 	public Autonomous() {
 		addSequential(new CenterRobotTarget());
 		addSequential(new ApproachPeg());
-		addSequential(new GearPushAndPull());
+		//addSequential(new GearPushAndPull());
 	}
 }

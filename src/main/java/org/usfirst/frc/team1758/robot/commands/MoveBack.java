@@ -23,7 +23,6 @@ public class MoveBack extends CommandBase {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			
 			driveTrain.mecanumDriveCartesian(0, .3, 0, 0);
 		}
 	}

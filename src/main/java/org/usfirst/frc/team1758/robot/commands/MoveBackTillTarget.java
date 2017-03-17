@@ -25,7 +25,7 @@ public class MoveBackTillTarget extends CommandBase {
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
 			
-			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
+			driveTrain.mecanumDriveCartesian(0, .3, 0, 0);
 		}
 	}
 	

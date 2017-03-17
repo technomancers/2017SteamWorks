@@ -20,7 +20,7 @@ public class TurnRight extends CommandBase {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.tankDrive(-.75, 0);
+			driveTrain.tankDrive(.5,.5);
 		}
 	}
 	

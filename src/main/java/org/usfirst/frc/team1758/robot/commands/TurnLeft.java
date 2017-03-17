@@ -1,9 +1,5 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
-
-import ch.qos.logback.core.joran.conditional.ElseAction;
-
 public class TurnLeft extends CommandBase {
 	private boolean finished;
 
@@ -23,7 +19,7 @@ public class TurnLeft extends CommandBase {
 			finished = true;
 			driveTrain.tankDrive(0, 0);
 		} else {
-			driveTrain.tankDrive(.5, 0);
+			driveTrain.tankDrive(-.5, -.5);
 		}
 	}
 

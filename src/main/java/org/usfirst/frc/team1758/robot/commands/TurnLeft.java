@@ -4,10 +4,10 @@ import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 import ch.qos.logback.core.joran.conditional.ElseAction;
 
-public class MoveForwardUntilSight extends CommandBase {
+public class TurnLeft extends CommandBase {
 	private boolean finished;
 
-	public MoveForwardUntilSight() {
+	public TurnLeft() {
 		requires(sensors);
 		requires(driveTrain);
 	}
@@ -19,7 +19,7 @@ public class MoveForwardUntilSight extends CommandBase {
 	}
 
 	protected void execute() {
-		if (sensors.getGyroAngle() > 30) {
+		if (sensors.getGyroAngle() < -30) {
 			finished = true;
 			driveTrain.tankDrive(0, 0);
 		} else {

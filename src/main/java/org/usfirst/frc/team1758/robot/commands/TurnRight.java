@@ -1,11 +1,10 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
-
-public class MoveForward extends CommandBase {
+public class TurnRight extends CommandBase {
 	private boolean finished;
 
-	public MoveForward() {
+	public TurnRight() {
+		requires(sensors);
 		requires(driveTrain);
 	}
 
@@ -16,14 +15,15 @@ public class MoveForward extends CommandBase {
 	}
 
 	protected void execute() {
-		if (driveTrain.getEncoderPosition(Motor.FrontRight) > 8000) {
+		if(sensors.getGyroAngle() > 30)
+		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
+			driveTrain.tankDrive(-.75, 0);
 		}
 	}
-
+	
 	protected boolean isFinished() {
 		return finished;
 	}

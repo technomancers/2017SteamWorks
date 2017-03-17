@@ -1,11 +1,15 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-public class TurnBackThreeFive extends CommandBase {
+import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
+
+
+
+public class MoveBackTillTarget extends CommandBase {
 	private boolean finished;
 
-	public TurnBackThreeFive() {
-		requires(sensors);
+	public MoveBackTillTarget() {
 		requires(driveTrain);
+		requires(sensors);
 	}
 
 	protected void initialize() {
@@ -15,12 +19,13 @@ public class TurnBackThreeFive extends CommandBase {
 	}
 
 	protected void execute() {
-		if(sensors.getGyroAngle() < -30)
+		if(sensors.getUltrasonicValue() < 60)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.tankDrive(-.75, 0);
+			
+			driveTrain.mecanumDriveCartesian(0, -.3, 0, 0);
 		}
 	}
 	

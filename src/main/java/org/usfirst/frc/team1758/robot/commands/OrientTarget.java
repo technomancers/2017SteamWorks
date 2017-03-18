@@ -4,14 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
 
-public class CenterRobotTarget extends CommandBase {
+public class OrientTarget extends CommandBase {
 	private boolean finished;
 	private Logger logger;
 	private boolean firstTime;
 
-	public CenterRobotTarget() {
+	public OrientTarget() {
 		logger = LoggerFactory.getLogger(this.getClass());
-		logger.debug("CenterRobotTarget command created.");
+		logger.debug("OrientTarget command created.");
 		requires(vision);
 		requires(driveTrain);
 
@@ -24,12 +24,12 @@ public class CenterRobotTarget extends CommandBase {
 
 	protected void execute() {
 		if (firstTime) {
-			logger.debug("CenterRobotTarget command started");
+			logger.debug("OrientTarget command started");
 			firstTime = false;
 		}
 		if (isDone()) {
 			finished = true;
-			logger.debug("CenterRobotTarget isDone");
+			logger.debug("OrientTarget isDone");
 		} else {
 			double x, y, rot;
 			x = 0;

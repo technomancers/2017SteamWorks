@@ -16,6 +16,7 @@ public class ClimbRope extends CommandBase {
 
 	protected void execute() {
 		double speed = OI.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
+		speed += OI.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
 		rope.setMotor(speed);
 	}
 

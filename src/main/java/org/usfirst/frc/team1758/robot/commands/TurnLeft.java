@@ -2,10 +2,12 @@ package org.usfirst.frc.team1758.robot.commands;
 
 public class TurnLeft extends CommandBase {
 	private boolean finished;
+	private double angle;
 
-	public TurnLeft() {
+	public TurnLeft(double angle) {
 		requires(sensors);
 		requires(driveTrain);
+		this.angle = angle;
 	}
 
 	protected void initialize() {
@@ -15,7 +17,7 @@ public class TurnLeft extends CommandBase {
 	}
 
 	protected void execute() {
-		if (sensors.getGyroAngle() < -30) {
+		if (sensors.getGyroAngle() < -1 * angle) {
 			finished = true;
 			driveTrain.tankDrive(0, 0);
 		} else {

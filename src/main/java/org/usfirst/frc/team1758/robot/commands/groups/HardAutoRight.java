@@ -10,8 +10,8 @@ public class HardAutoRight extends CommandGroup {
 
 	public HardAutoRight() {
 		addSequential(new TurnOnLight());
-		addSequential(new MoveBack());
-		addSequential(new TurnLeft());
+		addSequential(new MoveBack(8000));
+		addSequential(new TurnLeft(30));
 		addSequential(new MoveBack(9931));
 	}
 }

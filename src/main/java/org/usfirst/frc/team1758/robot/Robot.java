@@ -86,8 +86,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		(new TurnOnLight()).start();
-		//(new ToggleBallPickup()).start();
-		//(new ShootBall()).start();
+		(new ToggleBallPickup()).start();
+		(new ShootBall()).start();
 		(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
 		//OI.drivingController.b.whenPressed(new ToggleBallPickup());

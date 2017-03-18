@@ -2,7 +2,6 @@ package org.usfirst.frc.team1758.utilities;
 
 import java.nio.file.Paths;
 import java.util.Collections;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.cfg4j.provider.ConfigurationProvider;

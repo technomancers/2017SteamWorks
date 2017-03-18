@@ -48,7 +48,7 @@ public class OrientTarget extends CommandBase {
 				x = configs.orientedProportional() * (vision.getLeftMost().area() - vision.getRightMost().area());
 			}
 			logger.trace("X: {}, ROT: {}", x, rot);
-			driveTrain.mecanumDriveCartesian(x, y, rot, 0.0);
+			driveTrain.mecanumDriveCartesian(.5*x,.5*y, rot, 0.0);
 		}
 	}
 

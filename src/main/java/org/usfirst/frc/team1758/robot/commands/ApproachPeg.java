@@ -47,11 +47,11 @@ public class ApproachPeg extends CommandBase {
 			y = 0.3;
 		}
 		if (!isCentered()) {
-			x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (2.75 * (RobotMap.CAMERA_WIDTH / 2));
+			x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-2.75 * (RobotMap.CAMERA_WIDTH / 2));
 		}
 		//logger.trace("Normalized: {}", normalized);
 		logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
-		driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
+		driveTrain.mecanumDriveCartesian(.75 * x,.75 * y, rotate, 0);
 	}
 
 	protected boolean isFinished() {

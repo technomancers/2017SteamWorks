@@ -10,9 +10,11 @@ description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 dependencies {
 	//Include external dependencies here (Uses maven central)
 	compile fileTree(dir: 'libs', include: ['*.jar'])
+	riolibs fileTree(dir: 'libs', include: ['*.so'])
 	compile 'org.slf4j:slf4j-api:+'
 	compile 'ch.qos.logback:logback-classic:+'
 	compile 'ch.qos.logback:logback-core:+'
+	compile 'org.cfg4j:cfg4j-core:+'
 }
 
 gradlerio{

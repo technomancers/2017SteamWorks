@@ -3,13 +3,11 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
-import org.usfirst.frc.team1758.utilities.TechnoPID;
 
 public class CenterRobotTarget extends CommandBase {
 	private boolean finished;
 	private Logger logger;
 	private boolean firstTime;
-	private double lastCycle;
 
 	public CenterRobotTarget() {
 		logger = LoggerFactory.getLogger(this.getClass());
@@ -20,7 +18,6 @@ public class CenterRobotTarget extends CommandBase {
 	}
 
 	protected void initialize() {
-		lastCycle = 0.0;
 		finished = false;
 		firstTime = true;
 	}

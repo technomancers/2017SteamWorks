@@ -4,8 +4,6 @@ import org.usfirst.frc.team1758.robot.commands.StrafeAway;
 import org.usfirst.frc.team1758.robot.commands.StrafeForward;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GearPushAndPull extends CommandGroup {

@@ -1,0 +1,34 @@
+autonomous:
+  grip:
+    hueThreshold: 60.0, 89.0
+    saturationThreshold: 41.0, 255.0
+    valueThreshold: 34.0, 255.0
+    externalContours: false
+    minArea: 10.0
+    minPerimeter: 0.0
+    minWidth: 0.0
+    maxWidth: 1000.0
+    minHeight: 0.0
+    maxHeight: 1000.0
+    solidity: 0.0, 100.0
+    maxVertices: 1000000.0
+    minVertices: 0.0
+    minRatio: 0.0
+    maxRatio: 1000.0
+  approach:
+    untilDistance: 30.0
+    doneDistance: 35.0
+    speed: -0.4
+    centerProportional: -.333
+    centerThreshold: 7.0
+    doneIterations: 2.0
+  orient:
+    centerProportional: .25
+    orientedProportional: -.00333
+    centerThreshold: 15.0
+    orientThreshold: 50.0
+  blind:
+    speed: .5
+    moveBack: 4000
+    turnRight: 30.0 
+    turnLeft: 30.0

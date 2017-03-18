@@ -2,9 +2,6 @@ package org.usfirst.frc.team1758.robot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
-import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
-import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.utilities.Controller;
 
 public class OI {

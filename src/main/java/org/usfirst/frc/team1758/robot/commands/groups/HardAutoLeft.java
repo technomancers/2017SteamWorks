@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1758.robot.commands.groups;
 
 import org.usfirst.frc.team1758.robot.commands.MoveBack;
-import org.usfirst.frc.team1758.robot.commands.MoveBackTillTarget;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.TurnRight;
 
@@ -13,6 +12,5 @@ public class HardAutoLeft extends CommandGroup {
 		addSequential(new TurnOnLight());
 		addSequential(new MoveBack());
 		addSequential(new TurnRight());
-		addSequential(new MoveBackTillTarget());
 	}
 }

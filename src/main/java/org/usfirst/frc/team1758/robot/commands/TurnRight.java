@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1758.robot.commands;
 
-public class TurnBackThreeFive extends CommandBase {
+public class TurnRight extends CommandBase {
 	private boolean finished;
 
-	public TurnBackThreeFive() {
+	public TurnRight() {
 		requires(sensors);
 		requires(driveTrain);
 	}
@@ -15,12 +15,12 @@ public class TurnBackThreeFive extends CommandBase {
 	}
 
 	protected void execute() {
-		if(sensors.getGyroAngle() < -30)
+		if(sensors.getGyroAngle() > 30)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.tankDrive(-.75, 0);
+			driveTrain.tankDrive(.5,.5);
 		}
 	}
 	

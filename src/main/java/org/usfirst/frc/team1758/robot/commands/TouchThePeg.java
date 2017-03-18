@@ -24,7 +24,7 @@ public class TouchThePeg extends CommandBase {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(-.25,	0, 0, 0);
+			driveTrain.mecanumDriveCartesian(0,	-.25, 0, 0);
 		}
 	}
 	

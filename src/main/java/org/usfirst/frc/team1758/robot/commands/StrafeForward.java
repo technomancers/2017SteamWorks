@@ -26,7 +26,7 @@ public class StrafeForward extends CommandBase {
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
 		} else {
-			driveTrain.mecanumDriveCartesian(-.3, 0, 0, sensors.getGyroAngle());
+			driveTrain.mecanumDriveCartesian(0, -.3, 0, sensors.getGyroAngle());
 		}
 	}
 

@@ -13,7 +13,7 @@ public class OI {
 	public static void init() {
 		Logger logger = LoggerFactory.getLogger(OI.class);
 		logger.debug("Creating Controllers");
-		drivingController = new Controller(0, 0.2);
+		drivingController = new Controller(0, 0.1);
 		pitController = new Controller(1);
 	}
 }

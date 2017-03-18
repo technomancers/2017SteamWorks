@@ -32,6 +32,7 @@ public class CenterRobotTarget extends CommandBase {
 		}
 		if (isDone()) {
 			finished = true;
+			logger.debug("CenterRobotTarget isDone");
 		} else {
 			double x, y, rot;
 			x = 0;
@@ -41,9 +42,9 @@ public class CenterRobotTarget extends CommandBase {
 				rot = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (4 * (RobotMap.CAMERA_WIDTH / 2));
 			}
 			if (!oriented()) {
-				y = (vision.getLeftMost().area() - vision.getRightMost().area()) / -300;
+				x = (vision.getLeftMost().area() - vision.getRightMost().area()) / -300;
 			}
-			logger.trace("Y: {}, ROT: {}", y, rot);
+			logger.trace("X: {}, ROT: {}", x, rot);
 			driveTrain.mecanumDriveCartesian(x, y, rot, 0.0);
 		}
 	}

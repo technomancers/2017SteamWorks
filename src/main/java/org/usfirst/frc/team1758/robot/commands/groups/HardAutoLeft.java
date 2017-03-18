@@ -1,16 +1,17 @@
 package org.usfirst.frc.team1758.robot.commands.groups;
 
 import org.usfirst.frc.team1758.robot.commands.MoveBack;
-import org.usfirst.frc.team1758.robot.commands.TurnLeft;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
+import org.usfirst.frc.team1758.robot.commands.TurnRight;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class AutonomousRight extends CommandGroup {
+public class HardAutoLeft extends CommandGroup {
 
-	public AutonomousRight() {
+	public HardAutoLeft() {
 		addSequential(new TurnOnLight());
 		addSequential(new MoveBack());
-		addSequential(new TurnLeft());
-		addSequential(new Autonomous());
+		addSequential(new TurnRight());
+		addSequential(new MoveBack(9931));
 	}
 }

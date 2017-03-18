@@ -2,8 +2,8 @@ package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
+import org.usfirst.frc.team1758.utilities.Configuration.DriveTrainConfig;
 
 import com.ctre.CANTalon;
 
@@ -25,17 +25,19 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(new DriveWithJoystick());
 	}
 
-	public DriveTrain() {
+	public DriveTrain(DriveTrainConfig configs) {
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("Creating DriveTrain subsystem");
-		rf_Motor = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
-		rb_Motor = new CANTalon(RobotMap.RIGHT_BACK_MOTOR);
-		lf_Motor = new CANTalon(RobotMap.LEFT_FRONT_MOTOR);
-		lb_Motor = new CANTalon(RobotMap.LEFT_BACK_MOTOR);
-		configureEncoders(RobotMap.ENCODER_CODES_PER_REVOLUTION);
+		rf_Motor = new CANTalon(configs.motors().rightFront().port());
+		rb_Motor = new CANTalon(configs.motors().rightBack().port());
+		lf_Motor = new CANTalon(configs.motors().leftFront().port());
+		lb_Motor = new CANTalon(configs.motors().leftBack().port());
+		configureEncoders(configs.encoders().encoderCodesPerRevolution());
 		tmDrive = new RobotDrive(lf_Motor, lb_Motor, rf_Motor, rb_Motor);
-		tmDrive.setInvertedMotor(MotorType.kFrontRight, true);
-		tmDrive.setInvertedMotor(MotorType.kRearRight, true);
+		tmDrive.setInvertedMotor(MotorType.kFrontRight, configs.motors().rightFront().reverse());
+		tmDrive.setInvertedMotor(MotorType.kRearRight, configs.motors().rightBack().reverse());
+		tmDrive.setInvertedMotor(MotorType.kFrontLeft, configs.motors().leftFront().reverse());
+		tmDrive.setInvertedMotor(MotorType.kRearLeft, configs.motors().leftBack().reverse());
 	}
 
 	public void mecanumDriveCartesian(double x, double y, double rotation, double gyroAngle) {

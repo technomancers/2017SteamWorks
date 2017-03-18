@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.utilities.Configuration.GearConfig;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -9,9 +10,9 @@ public class Gear extends Subsystem {
 	private DoubleSolenoid gearSolenoid;
 	private boolean engaged;
 
-	public Gear() {
+	public Gear(GearConfig configs) {
 		engaged = false;
-		gearSolenoid = new DoubleSolenoid(RobotMap.GEAR_SOLENOID_IN, RobotMap.GEAR_SOLENOID_OUT);
+		gearSolenoid = new DoubleSolenoid(configs.solenoid().inPort(), configs.solenoid().outPort());
 	}
 
 	protected void initDefaultCommand() {

@@ -2,7 +2,7 @@ package org.usfirst.frc.team1758.robot.subsystems;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.utilities.Configuration.SensorsConfig;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -12,12 +12,14 @@ public class Sensors extends Subsystem {
 	private ADXRS450_Gyro gyro;
 	private AnalogInput sonic;
 	private Logger logger;
+	private SensorsConfig configs;
 
-	public Sensors() {
+	public Sensors(SensorsConfig configs) {
+		this.configs = configs;
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("Creating Sensors subsystem");
 		gyro = new ADXRS450_Gyro();
-		sonic = new AnalogInput(RobotMap.ANALOG_SONIC_PORT);
+		sonic = new AnalogInput(configs.ultrasonic().port());
 	}
 
 	public void initDefaultCommand() {
@@ -28,7 +30,7 @@ public class Sensors extends Subsystem {
 	}
 
 	public double getUltrasonicValue() {
-		double ratio = (RobotMap.OUT_VOLTS / 512.0);
+		double ratio = (configs.ultrasonic().suppliedVolts() / 512.0);
 		return sonic.getVoltage() / ratio;
 	}
 

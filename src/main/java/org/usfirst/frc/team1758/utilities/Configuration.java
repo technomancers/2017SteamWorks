@@ -13,6 +13,8 @@ import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.reload.ReloadStrategy;
 import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
 
+import edu.wpi.cscore.VideoMode.PixelFormat;
+
 public class Configuration {
 	public RobotConfig robotConfig;
 	public AutonomousConfig autonomousConfig;
@@ -54,7 +56,7 @@ public class Configuration {
 
 		double maxVertices();
 
-		double minvertices();
+		double minVertices();
 
 		double minRatio();
 
@@ -100,7 +102,6 @@ public class Configuration {
 	}
 
 	public interface AutonomousConfig {
-		GripConfig grip();
 
 		ApproachConfig approach();
 
@@ -109,90 +110,129 @@ public class Configuration {
 		BlindConfig blind();
 	}
 
-	public interface Enabler{
+	public interface Enabler {
 		boolean enable();
 	}
 
-	public interface Porter{
+	public interface Porter {
 		int port();
 	}
 
-	public interface DriveTrainMotorsConfig{
-		int rightFront();
-		int rightBack();
-		int leftFront();
-		int leftBack();
+	public interface MotorConfig extends Porter {
+		boolean reverse();
 	}
 
-	public interface DriveTrainEncodersConfig{
+	public interface DriveTrainMotorsConfig {
+		MotorConfig rightFront();
+
+		MotorConfig rightBack();
+
+		MotorConfig leftFront();
+
+		MotorConfig leftBack();
+	}
+
+	public interface DriveTrainEncodersConfig {
 		int encoderCodesPerRevolution();
 	}
 
-	public interface DriveTrainConfig extends Enabler{
+	public interface DriveTrainConfig extends Enabler {
 		DriveTrainMotorsConfig motors();
+
 		DriveTrainEncodersConfig encoders();
 	}
 
-	public interface VisionCameraConfig extends Porter{
+	public interface VisionCameraConfig extends Porter {
 		int width();
-		int height();
-		int fps();
-		int exposure();
-		int brightness();
-	}
 
-	public interface VisionServerConfig extends Porter{
+		int height();
+
+		int fps();
+
+		int exposure();
+
+		int brightness();
+
 		String format();
 	}
 
-	public interface VisionConfig extends Enabler{
+	public interface VisionConfig extends Enabler {
 		VisionCameraConfig camera();
-		VisionServerConfig server();
+
+		Porter server();
+
 		Porter relay();
+
+		GripConfig grip();
 	}
 
-	public interface SensorsUltrasonicConfig extends Porter{
+	public interface SensorsUltrasonicConfig extends Porter {
 		double suppliedVolts();
 	}
 
-	public interface SensorsConfig extends Enabler{
+	public interface SensorsConfig extends Enabler {
 		SensorsUltrasonicConfig ultrasonic();
 	}
 
-	public interface RopeConfig extends Enabler{
-		Porter motor();
+	public interface RopeConfig extends Enabler {
+		MotorConfig motor();
 	}
 
-	public interface GearSolenoidsConfig{
+	public interface GearSolenoidsConfig {
 		int inPort();
+
 		int outPort();
 	}
 
-	public interface GearConfig extends Enabler{
+	public interface GearConfig extends Enabler {
 		GearSolenoidsConfig solenoid();
 	}
 
-	public interface CompressorConfig extends Enabler{
+	public interface PneumaticsConfig extends Enabler {
 		Porter compressor();
 	}
 
-	public interface ControllerConfig extends Enabler, Porter{
+	public interface ControllerConfig extends Enabler, Porter {
 		double threshold();
 	}
 
-	public interface ControllersConfig{
+	public interface ControllersConfig {
 		ControllerConfig driving();
+
 		ControllerConfig pit();
 	}
 
-	public interface RobotConfig{
+	public interface RobotConfig {
 		DriveTrainConfig driveTrain();
+
 		VisionConfig vision();
+
 		SensorsConfig sensors();
+
 		RopeConfig rope();
+
 		GearConfig gear();
-		CompressorConfig compressor();
+
+		PneumaticsConfig pneumatics();
+
 		ControllersConfig controllers();
+	}
+
+	public static PixelFormat StringToFormat(String format) {
+		switch (format.toLowerCase()) {
+		case "mjpeg":
+			return PixelFormat.kMJPEG;
+		case "bgr":
+			return PixelFormat.kBGR;
+		case "rgb565":
+			return PixelFormat.kRGB565;
+		case "yuyv":
+			return PixelFormat.kYUYV;
+		case "gray":
+			return PixelFormat.kGray;
+		default:
+			return PixelFormat.kUnknown;
+		}
 	}
 
 	private Environment GetEnvironment(String environment) {

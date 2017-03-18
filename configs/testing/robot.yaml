@@ -2,10 +2,18 @@ robot:
   driveTrain:
     enable: true
     motors:
-      rightFront: 0
-      rightBack: 1
-      leftFront: 3
-      leftBack: 4
+      rightFront:
+        port: 0
+        reverse: true
+      rightBack: 
+        port: 1
+        reverse: true
+      leftFront: 
+        port: 3
+        reverse: false
+      leftBack: 
+        port: 4
+        reverse: false
     encoders:
       encoderCodesPerRevolution: 1024
   vision:
@@ -17,9 +25,9 @@ robot:
       fps: 30
       exposure: 0
       brightness: 50
+      format: mjpeg
     server:
       port: 1182
-      format: mjpeg
     relay:
       port: 0
   sensors:
@@ -31,12 +39,13 @@ robot:
     enable: true
     motor:
       port: 6
+      reverse: true
   gear:
     enable: true
     solenoid:
       inPort: 0
       outPort: 1
-  compressor:
+  pneumatics:
     enable: true
     compressor:
       port: 0
@@ -49,3 +58,19 @@ robot:
       enable: false
       port: 1
       threshold: 0.0
+  grip:
+    hueThreshold: 60.0, 89.0
+    saturationThreshold: 41.0, 255.0
+    valueThreshold: 34.0, 255.0
+    externalContours: false
+    minArea: 10.0
+    minPerimeter: 0.0
+    minWidth: 0.0
+    maxWidth: 1000.0
+    minHeight: 0.0
+    maxHeight: 1000.0
+    solidity: 0.0, 100.0
+    maxVertices: 1000000.0
+    minVertices: 0.0
+    minRatio: 0.0
+    maxRatio: 1000.0

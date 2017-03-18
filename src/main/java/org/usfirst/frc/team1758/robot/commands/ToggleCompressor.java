@@ -3,8 +3,9 @@ package org.usfirst.frc.team1758.robot.commands;
 public class ToggleCompressor extends CommandBase {
 	private boolean finished;
 	private boolean engaged;
+
 	public ToggleCompressor() {
-		requires(compressing);
+		requires(pneumatics);
 		engaged = false;
 	}
 
@@ -13,11 +14,11 @@ public class ToggleCompressor extends CommandBase {
 	}
 
 	protected void execute() {
-		if(engaged){
-			compressing.turnOffCompressor();
+		if (engaged) {
+			pneumatics.turnOffCompressor();
 			engaged = false;
-		}else{
-			compressing.turnOnCompressor();
+		} else {
+			pneumatics.turnOnCompressor();
 			engaged = true;
 		}
 		finished = true;

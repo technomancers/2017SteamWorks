@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import java.awt.image.ImagingOpException;
 import java.util.ArrayList;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -10,16 +9,18 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.RobotMap;
 import org.usfirst.frc.team1758.robot.vision.PegPipeline;
+import org.usfirst.frc.team1758.utilities.Configuration;
+import org.usfirst.frc.team1758.utilities.Configuration.VisionConfig;
+
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 public class Vision extends Subsystem {
 	private Logger logger;
 	private Relay lightRelay;
@@ -33,12 +34,14 @@ public class Vision extends Subsystem {
 	private PegPipeline pegPipeline;
 	private Rect leftMost, rightMost, bigRect;
 	private long currTime, prevTime;
+	private VisionConfig configs;
 
-	public Vision() {
+	public Vision(VisionConfig configs) {
+		this.configs = configs;
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("Vision subsystem created");
-		lightRelay = new Relay(RobotMap.CAMERA_LIGHT_RELAY);
-		pegPipeline = new PegPipeline();
+		lightRelay = new Relay(configs.relay().port());
+		pegPipeline = new PegPipeline(configs.grip());
 		initCamera();
 	}
 
@@ -49,110 +52,116 @@ public class Vision extends Subsystem {
 		logger.debug("Turning on light");
 		lightRelay.set(Value.kForward);
 	}
-	public void turnOffLights(){
+
+	public void turnOffLights() {
 		logger.debug("Turning off light");
 		lightRelay.set(Value.kReverse);
 	}
-	public void initCamera(){
+
+	public void initCamera() {
 		logger.debug("Initializing Camera");
-		if(gearCamera == null){
+		if (gearCamera == null) {
 			logger.debug("Creating a new gear camera");
-			gearCamera = new UsbCamera("gearCamera", RobotMap.GEAR_CAMERA_PORT);
-			gearCamera.setExposureManual(RobotMap.CAMERA_EXPOSURE);
-			gearCamera.setBrightness(RobotMap.CAMERA_BRIGHTNESS);
-			gearCamera.setVideoMode(RobotMap.CAMERA_PIXEL_FORMAT, RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_FPS);
+			gearCamera = new UsbCamera("gearCamera", configs.camera().port());
+			gearCamera.setExposureManual(configs.camera().exposure());
+			gearCamera.setBrightness(configs.camera().brightness());
+			gearCamera.setVideoMode(Configuration.StringToFormat(configs.camera().format()), configs.camera().width(),
+					configs.camera().height(), configs.camera().fps());
 		}
 
-		if(gearSink == null){
+		if (gearSink == null) {
 			logger.debug("Creating a new gear sink");
 			gearSink = new CvSink("gearSink");
 			gearSink.setEnabled(true);
 			gearSink.setSource(gearCamera);
 		}
 
-		if(outputStream == null){
+		if (outputStream == null) {
 			logger.debug("Creating a new output stream");
-			outputStream = new CvSource("Cameras", PixelFormat.kMJPEG, RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_FPS);
+			outputStream = new CvSource("Cameras", Configuration.StringToFormat(configs.camera().format()),
+					configs.camera().width(), configs.camera().height(), configs.camera().fps());
 		}
-		
+
 		//May need to create a server for each camera
-		if(cameraServer == null){
+		if (cameraServer == null) {
 			logger.debug("Creating a new camera server");
-			cameraServer = new MjpegServer("serveCameras", RobotMap.MJPEG_SERVER_PORT);
+			cameraServer = new MjpegServer("serveCameras", configs.server().port());
 			cameraServer.setSource(outputStream);
 		}
 	}
-	public void startVisionThread(){
-		if(visionThread == null){
+
+	public void startVisionThread() {
+		if (visionThread == null) {
 			logger.debug("Creating a new vision thread");
 			visionThread = new Thread(() -> {
-				Mat image = new Mat(RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_WIDTH, 6);
-				while(!Thread.interrupted()){
+				Mat image = new Mat(configs.camera().height(), configs.camera().width(), 6);
+				while (!Thread.interrupted()) {
 					logger.trace("Grabbing frame from gear sink");
 					currTime = gearSink.grabFrameNoTimeout(image);
-					if (currTime == 0 || currTime == prevTime){
+					if (currTime == 0 || currTime == prevTime) {
 						logger.warn("No Frame to grab");
 						continue;
 					}
 					prevTime = currTime;
 					pegPipeline.process(image);
-					leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
-					rightMost = new Rect(0,0,0,0);
-					bigRect = new Rect(0,0,0,0);
+					leftMost = new Rect(configs.camera().width(), configs.camera().height(), 0, 0);
+					rightMost = new Rect(0, 0, 0, 0);
+					bigRect = new Rect(0, 0, 0, 0);
 					ArrayList<MatOfPoint> mops = pegPipeline.filterContoursOutput();
-					for(MatOfPoint mop : mops){
+					for (MatOfPoint mop : mops) {
 						Rect r = Imgproc.boundingRect(mop);
 						Imgproc.rectangle(image, r.tl(), r.br(), new Scalar(255, 0, 255));
-						if(leftMost.tl().x > r.tl().x){
+						if (leftMost.tl().x > r.tl().x) {
 							leftMost = r;
 						}
-						if(rightMost.br().x < r.br().x){
+						if (rightMost.br().x < r.br().x) {
 							rightMost = r;
 						}
-						if(bigRect.width < r.width){
+						if (bigRect.width < r.width) {
 							bigRect = r;
 						}
 					}
 					numRectangles = mops.size();
-					centerX = (leftMost.tl().x + rightMost.br().x)/2.0;
-					Imgproc.line(image, new Point(centerX, 0), new Point(centerX, RobotMap.CAMERA_HEIGHT), new Scalar(255, 0, 0));
+					centerX = (leftMost.tl().x + rightMost.br().x) / 2.0;
+					Imgproc.line(image, new Point(centerX, 0), new Point(centerX, configs.camera().height()),
+							new Scalar(255, 0, 0));
 					outputStream.putFrame(image);
-				}		
+				}
 			});
 		}
 		logger.debug("Starting Vision Thread");
 		visionThread.start();
 	}
-	public double getCenterX()
-	{
+
+	public double getCenterX() {
 		return centerX;
 	}
-	public double getNumRectangles()
-	{
+
+	public double getNumRectangles() {
 		return numRectangles;
 	}
 
-	public Rect getLeftMost(){
+	public Rect getLeftMost() {
 		return leftMost;
 	}
 
-	public Rect getRightMost(){
+	public Rect getRightMost() {
 		return rightMost;
 	}
 
-	public Rect getBigRect(){
+	public Rect getBigRect() {
 		return bigRect;
 	}
 
-	public long getCurrTime()
-	{
+	public long getCurrTime() {
 		return currTime;
 	}
-	public void stopVisionThread(){
+
+	public void stopVisionThread() {
 		logger.debug("Stopping vision thread");
-		if(visionThread != null && visionThread.getState() == Thread.State.RUNNABLE){
+		if (visionThread != null && visionThread.getState() == Thread.State.RUNNABLE) {
 			visionThread.interrupt();
-		}else{
+		} else {
 			logger.warn("Vision thread is not created or not runnable to stop");
 		}
 	}

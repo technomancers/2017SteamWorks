@@ -9,6 +9,7 @@ import org.opencv.core.*;
 import org.opencv.imgproc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.usfirst.frc.team1758.utilities.Configuration.GripConfig;
 
 /**
 * PegPipeline class.
@@ -24,8 +25,10 @@ public class PegPipeline implements VisionPipeline {
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 	private Logger logger;
+	private GripConfig configs;
 
-	public PegPipeline() {
+	public PegPipeline(GripConfig configs) {
+		this.configs = configs;
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("Created PegPipeline");
 	}
@@ -42,29 +45,29 @@ public class PegPipeline implements VisionPipeline {
 		logger.debug("Processing the image");
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = source0;
-		double[] hsvThresholdHue = { 60.0, 89.0 };
-		double[] hsvThresholdSaturation = { 41.0, 255.0 };
-		double[] hsvThresholdValue = { 34.0, 255.0 };
+		double[] hsvThresholdHue = configs.hueThreshold();
+		double[] hsvThresholdSaturation = configs.saturationThreshold();
+		double[] hsvThresholdValue = configs.valueThreshold();
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
 		Mat findContoursInput = hsvThresholdOutput;
-		boolean findContoursExternalOnly = false;
+		boolean findContoursExternalOnly = configs.externalContours();
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 10.0;
-		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 0.0;
-		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 0.0;
-		double filterContoursMaxHeight = 1000.0;
-		double[] filterContoursSolidity = { 0.0, 100.0 };
-		double filterContoursMaxVertices = 1000000.0;
-		double filterContoursMinVertices = 0.0;
-		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 1000.0;
+		double filterContoursMinArea = configs.minArea();
+		double filterContoursMinPerimeter = configs.minPerimeter();
+		double filterContoursMinWidth = configs.minWidth();
+		double filterContoursMaxWidth = configs.maxWidth();
+		double filterContoursMinHeight = configs.minHeight();
+		double filterContoursMaxHeight = configs.maxHeight();
+		double[] filterContoursSolidity = configs.solidity();
+		double filterContoursMaxVertices = configs.maxVertices();
+		double filterContoursMinVertices = configs.minVertices();
+		double filterContoursMinRatio = configs.minRatio();
+		double filterContoursMaxRatio = configs.maxRatio();
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth,
 				filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity,
 				filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio,

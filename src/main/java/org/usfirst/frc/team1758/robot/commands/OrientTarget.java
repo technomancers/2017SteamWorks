@@ -3,13 +3,16 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.utilities.Configuration.OrientConfig;
 
 public class OrientTarget extends CommandBase {
 	private boolean finished;
 	private Logger logger;
 	private boolean firstTime;
+	private OrientConfig configs;
 
-	public OrientTarget() {
+	public OrientTarget(OrientConfig configs) {
+		this.configs = configs;
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("OrientTarget command created.");
 		requires(vision);
@@ -36,10 +39,11 @@ public class OrientTarget extends CommandBase {
 			y = 0;
 			rot = 0;
 			if (!isCentered()) {
-				rot = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (4 * (RobotMap.CAMERA_WIDTH / 2));
+				rot = configs.centerProportional()
+						* ((vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2));
 			}
 			if (!oriented()) {
-				x = (vision.getLeftMost().area() - vision.getRightMost().area()) / -300;
+				x = configs.orientedProportional() * (vision.getLeftMost().area() - vision.getRightMost().area());
 			}
 			logger.trace("X: {}, ROT: {}", x, rot);
 			driveTrain.mecanumDriveCartesian(x, y, rot, 0.0);
@@ -57,11 +61,12 @@ public class OrientTarget extends CommandBase {
 	}
 
 	private boolean isCentered() {
-		return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + 15 && vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - 15;
+		return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + configs.centerThreshold()
+				&& vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - configs.centerThreshold();
 	}
 
 	private boolean oriented() {
-		return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 50;
+		return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < configs.orientThreshold();
 	}
 
 	private boolean isDone() {

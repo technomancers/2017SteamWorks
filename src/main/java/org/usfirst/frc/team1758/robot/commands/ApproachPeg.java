@@ -3,13 +3,16 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
+import org.usfirst.frc.team1758.utilities.Configuration.ApproachConfig;
 
 public class ApproachPeg extends CommandBase {
 	private boolean finished;
 	private Logger logger;
 	private int counter;
+	private ApproachConfig configs;
 
-	public ApproachPeg() {
+	public ApproachPeg(ApproachConfig configs) {
+		this.configs = configs;
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("ApproachPeg command created");
 		requires(vision);
@@ -39,14 +42,13 @@ public class ApproachPeg extends CommandBase {
 		x = 0;
 		y = 0;
 		rotate = 0;
-		if (sensors.getUltrasonicValue() > 40) {
-			y = 0.3;
+		if (sensors.getUltrasonicValue() > configs.untilDistance()) {
+			y = configs.speed();
 		}
 		if (!isCentered()) {
-			x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (2.75 * (RobotMap.CAMERA_WIDTH / 2));
+			x = configs.centerProportional()
+					* ((vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2));
 		}
-		//logger.trace("Normalized: {}", normalized);
-		logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
 		driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
 	}
 
@@ -58,17 +60,17 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	private boolean isCentered() {
-		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 7)
-				&& (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 7);
+		return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + configs.centerThreshold())
+				&& (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - configs.centerThreshold());
 	}
 
 	private boolean isDone() {
-		if (sensors.getUltrasonicValue() < 40 && isCentered()) {
+		if (sensors.getUltrasonicValue() < configs.doneDistance() && isCentered()) {
 			counter++;
 		} else {
 			counter = 0;
 		}
-		return counter > 2;
+		return counter > configs.doneIterations();
 	}
 
 	protected void interrupted() {

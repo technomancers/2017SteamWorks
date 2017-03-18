@@ -88,13 +88,15 @@ public class Configuration {
 	public interface BlindConfig {
 		double speed();
 
-		double moveBack();
+		int moveBack();
+
+		int moveBackCenter();
 
 		double turnRight();
 
 		double turnLeft();
 
-		double finalBack();
+		int finalBack();
 	}
 
 	public interface AutonomousConfig {

@@ -2,12 +2,13 @@ package org.usfirst.frc.team1758.robot.commands.groups;
 
 import org.usfirst.frc.team1758.robot.commands.ApproachPeg;
 import org.usfirst.frc.team1758.robot.commands.OrientTarget;
+import org.usfirst.frc.team1758.utilities.Configuration.AutonomousConfig;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup {
-	public Autonomous() {
-		addSequential(new OrientTarget());
-		addSequential(new ApproachPeg());
+	public Autonomous(AutonomousConfig configs) {
+		addSequential(new OrientTarget(configs.orient()));
+		addSequential(new ApproachPeg(configs.approach()));
 	}
 }

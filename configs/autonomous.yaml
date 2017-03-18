@@ -16,10 +16,10 @@ autonomous:
     minRatio: 0.0
     maxRatio: 1000.0
   approach:
-    untilDistance: 30.0
-    doneDistance: 35.0
-    speed: -0.4
-    centerProportional: -.333
+    untilDistance: 40.0
+    doneDistance: 40.0
+    speed: 0.3
+    centerProportional: .3636
     centerThreshold: 7.0
     doneIterations: 2.0
   orient:
@@ -29,7 +29,8 @@ autonomous:
     orientThreshold: 50.0
   blind:
     speed: .5
-    moveBack: 4000
+    moveBackCenter: 4000
+    moveBack: 8000
     turnRight: 30.0 
     turnLeft: 30.0
     finalBack: 9931

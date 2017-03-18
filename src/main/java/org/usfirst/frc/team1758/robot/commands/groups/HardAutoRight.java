@@ -3,15 +3,16 @@ package org.usfirst.frc.team1758.robot.commands.groups;
 import org.usfirst.frc.team1758.robot.commands.MoveBack;
 import org.usfirst.frc.team1758.robot.commands.TurnLeft;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
+import org.usfirst.frc.team1758.utilities.Configuration.BlindConfig;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class HardAutoRight extends CommandGroup {
 
-	public HardAutoRight() {
+	public HardAutoRight(BlindConfig configs) {
 		addSequential(new TurnOnLight());
-		addSequential(new MoveBack(8000));
-		addSequential(new TurnLeft(30));
-		addSequential(new MoveBack(9931));
+		addSequential(new MoveBack(configs.moveBack()));
+		addSequential(new TurnLeft(configs.turnLeft()));
+		addSequential(new MoveBack(configs.finalBack()));
 	}
 }

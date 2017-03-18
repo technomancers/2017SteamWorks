@@ -14,6 +14,7 @@ import org.usfirst.frc.team1758.robot.commands.groups.HardAutoLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.HardAutoMiddle;
 import org.usfirst.frc.team1758.robot.commands.groups.HardAutoRight;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
+import org.usfirst.frc.team1758.utilities.Configuration;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,8 +26,10 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	private SendableChooser<Command> autoChooser;
 	private Logger logger;
+	private Configuration configs;
 
 	public void robotInit() {
+		configs = new Configuration();
 		logger = LoggerFactory.getLogger(this.getClass());
 		logger.debug("Initializing Robot");
 		OI.init();
@@ -34,12 +37,12 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = null;
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
-		autoChooser.addObject("Left", new AutonomousLeft());
-		autoChooser.addObject("Middle", new AutonomousMiddle());
-		autoChooser.addObject("Right", new AutonomousRight());
-		autoChooser.addObject("Hard Left", new HardAutoLeft());
-		autoChooser.addObject("Hard Right", new HardAutoRight());
-		autoChooser.addObject("Hard Middle", new HardAutoMiddle());
+		autoChooser.addObject("Left", new AutonomousLeft(configs.autonomousConfig));
+		autoChooser.addObject("Middle", new AutonomousMiddle(configs.autonomousConfig));
+		autoChooser.addObject("Right", new AutonomousRight(configs.autonomousConfig));
+		autoChooser.addObject("Hard Left", new HardAutoLeft(configs.autonomousConfig.blind()));
+		autoChooser.addObject("Hard Right", new HardAutoRight(configs.autonomousConfig.blind()));
+		autoChooser.addObject("Hard Middle", new HardAutoMiddle(configs.autonomousConfig.blind()));
 		SmartDashboard.putData("Autonomous", autoChooser);
 		CommandBase.getSensors().calibrateGyroAngle();
 		CommandBase.getDriveTrain().resetEncoderPosition();

@@ -15,7 +15,7 @@ import org.cfg4j.source.reload.ReloadStrategy;
 import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
 
 public class Configuration {
-	public Properties robotConfig;
+	public ConfigurationProvider robotConfig;
 	public AutonomousConfig autonomousConfig;
 
 	public Configuration() {
@@ -86,12 +86,26 @@ public class Configuration {
 		double orientThreshold();
 	}
 
+	public interface BlindConfig {
+		double speed();
+
+		double moveBack();
+
+		double turnRight();
+
+		double turnLeft();
+
+		double finalBack();
+	}
+
 	public interface AutonomousConfig {
 		GripConfig grip();
 
 		ApproachConfig approach();
 
 		OrientConfig orient();
+
+		BlindConfig blind();
 	}
 
 	private Environment GetEnvironment(String environment) {
@@ -109,12 +123,12 @@ public class Configuration {
 		return bootProvider.bind("bootstrap", BootstrapConfig.class);
 	}
 
-	private Properties GetRobotConfig(BootstrapConfig bootConfig) {
+	private ConfigurationProvider GetRobotConfig(BootstrapConfig bootConfig) {
 		ConfigurationSource robotSource = new FilesConfigurationSource(
 				() -> Collections.singletonList(Paths.get("robot.yaml")));
 		ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
 				.withEnvironment(GetEnvironment(bootConfig.environment())).build();
-		return robotProvider.allConfigurationAsProperties();
+		return robotProvider;
 	}
 
 	private AutonomousConfig GetAutonomousConfig(BootstrapConfig bootConfig) {

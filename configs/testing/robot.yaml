@@ -1,52 +1,51 @@
-robot:
-  driveTrain:
-    enable: true
-    motors:
-      rightFront: 0
-      rightBack: 1
-      leftFront: 3
-      leftBack: 4
-    encoders:
-      encoderCodesPerRevolution: 1024
-  vision:
-    enable: true
-    camera:
-      port: 0
-      width: 320
-      height: 240
-      fps: 30
-      exposure: 0
-      brightness: 50
-    server:
-      port: 1182
-      format: mjpeg
-    relay:
-      port: 0
-  sensors:
-    enable: true
-    ultrasonic:
-      suppliedVolts: 4.85
-      port: 3
-  rope:
-    enable: true
-    motor:
-      port: 6
-  gear:
-    enable: true
-    solenoids:
-      in: 0
-      out: 1
+driveTrain:
+  enable: true
+  motors:
+    rightFront: 0
+    rightBack: 1
+    leftFront: 3
+    leftBack: 4
+  encoders:
+    encoderCodesPerRevolution: 1024
+vision:
+  enable: true
+  camera:
+    port: 0
+    width: 320
+    height: 240
+    fps: 30
+    exposure: 0
+    brightness: 50
+  server:
+    port: 1182
+    format: mjpeg
+  relay:
+    port: 0
+sensors:
+  enable: true
+  ultrasonic:
+    suppliedVolts: 4.85
+    port: 3
+rope:
+  enable: true
+  motor:
+    port: 6
+gear:
+  enable: true
+  solenoids:
+    in: 0
+    out: 1
+compressor:
+  enable: true
   compressor:
+    port: 0
+controllers:
+  driving:
     enable: true
-    compressor:
-      port: 0
-  controllers:
-    driving:
-      enable: true
-      port: 0
-      threshold: 0.1
-    pit:
-      enable: false
-      port: 1
-      threshold: 0.0
-    
+    port: 0
+    threshold: 0.1
+  pit:
+    enable: false
+    port: 1
+    threshold: 0.0
+  

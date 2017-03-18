@@ -22,3 +22,36 @@ gradlerio{
 	robotClass 'org.usfirst.frc.team1758.robot.Robot'
 	rioIP '10.17.58.21'
 }
+
+afterEvaluate{ project ->
+	def deployConfigs = task('deployConfigs', type: DeployConfigsTask){
+		ssh tasks['discover']
+		configDir = file('configs/')
+	}
+	deployConfigs.dependsOn tasks['discover']
+	deployConfigs.description 'Deploy the configuration files'
+	deployConfigs.group 'RoboRIO'
+}
+
+class DeployConfigsTask extends DefaultTask{
+	def sshService
+	
+	@SkipWhenEmpty
+	@InputFiles
+	@PathSensitive(PathSensitivity.NONE)
+	File configDir
+
+	public void ssh(io.github.technomancers.RioTask task){
+		sshService = task.ssh
+	}
+
+	@TaskAction
+	void deployConfigs() {
+		sshService.run {
+			session(sshService.remotes.rio){
+				put from: configDir, into: "~/" 
+			}
+		}
+	}
+}
+

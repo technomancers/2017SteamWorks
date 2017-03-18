@@ -14,7 +14,7 @@ import org.cfg4j.source.reload.ReloadStrategy;
 import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
 
 public class Configuration {
-	public ConfigurationProvider robotConfig;
+	public RobotConfig robotConfig;
 	public AutonomousConfig autonomousConfig;
 
 	public Configuration() {
@@ -109,6 +109,92 @@ public class Configuration {
 		BlindConfig blind();
 	}
 
+	public interface Enabler{
+		boolean enable();
+	}
+
+	public interface Porter{
+		int port();
+	}
+
+	public interface DriveTrainMotorsConfig{
+		int rightFront();
+		int rightBack();
+		int leftFront();
+		int leftBack();
+	}
+
+	public interface DriveTrainEncodersConfig{
+		int encoderCodesPerRevolution();
+	}
+
+	public interface DriveTrainConfig extends Enabler{
+		DriveTrainMotorsConfig motors();
+		DriveTrainEncodersConfig encoders();
+	}
+
+	public interface VisionCameraConfig extends Porter{
+		int width();
+		int height();
+		int fps();
+		int exposure();
+		int brightness();
+	}
+
+	public interface VisionServerConfig extends Porter{
+		String format();
+	}
+
+	public interface VisionConfig extends Enabler{
+		VisionCameraConfig camera();
+		VisionServerConfig server();
+		Porter relay();
+	}
+
+	public interface SensorsUltrasonicConfig extends Porter{
+		double suppliedVolts();
+	}
+
+	public interface SensorsConfig extends Enabler{
+		SensorsUltrasonicConfig ultrasonic();
+	}
+
+	public interface RopeConfig extends Enabler{
+		Porter motor();
+	}
+
+	public interface GearSolenoidsConfig{
+		int inPort();
+		int outPort();
+	}
+
+	public interface GearConfig extends Enabler{
+		GearSolenoidsConfig solenoid();
+	}
+
+	public interface CompressorConfig extends Enabler{
+		Porter compressor();
+	}
+
+	public interface ControllerConfig extends Enabler, Porter{
+		double threshold();
+	}
+
+	public interface ControllersConfig{
+		ControllerConfig driving();
+		ControllerConfig pit();
+	}
+
+	public interface RobotConfig{
+		DriveTrainConfig driveTrain();
+		VisionConfig vision();
+		SensorsConfig sensors();
+		RopeConfig rope();
+		GearConfig gear();
+		CompressorConfig compressor();
+		ControllersConfig controllers();
+	}
+
 	private Environment GetEnvironment(String environment) {
 		if (environment == null || environment.isEmpty()) {
 			return new ImmutableEnvironment("configs/");
@@ -124,12 +210,12 @@ public class Configuration {
 		return bootProvider.bind("bootstrap", BootstrapConfig.class);
 	}
 
-	private ConfigurationProvider GetRobotConfig(BootstrapConfig bootConfig) {
+	private RobotConfig GetRobotConfig(BootstrapConfig bootConfig) {
 		ConfigurationSource robotSource = new FilesConfigurationSource(
 				() -> Collections.singletonList(Paths.get("robot.yaml")));
 		ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
 				.withEnvironment(GetEnvironment(bootConfig.environment())).build();
-		return robotProvider;
+		return robotProvider.bind("robot", RobotConfig.class);
 	}
 
 	private AutonomousConfig GetAutonomousConfig(BootstrapConfig bootConfig) {

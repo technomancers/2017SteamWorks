@@ -13,6 +13,7 @@ import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousLeft;
+import org.usfirst.frc.team1758.robot.commands.groups.AutonomousMiddle;
 import org.usfirst.frc.team1758.robot.commands.groups.AutonomousRight;
 import org.usfirst.frc.team1758.robot.commands.groups.HardAutoLeft;
 import org.usfirst.frc.team1758.robot.commands.groups.HardAutoMiddle;
@@ -39,7 +40,7 @@ public class Robot extends IterativeRobot {
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("No Autonomous", null);
 		autoChooser.addObject("Left", new AutonomousLeft());
-		autoChooser.addObject("Middle", new TurnOnLight());
+		autoChooser.addObject("Middle", new AutonomousMiddle());
 		autoChooser.addObject("Right", new AutonomousRight());
 		autoChooser.addObject("Hard Left", new HardAutoLeft());
 		autoChooser.addObject("Hard Right", new HardAutoRight());

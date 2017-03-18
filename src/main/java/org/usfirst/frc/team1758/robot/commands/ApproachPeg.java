@@ -43,15 +43,15 @@ public class ApproachPeg extends CommandBase {
 		x = 0;
 		y = 0;
 		rotate = 0;
-		if (sensors.getUltrasonicValue() > 30) {
-			y = -0.4;
+		if (sensors.getUltrasonicValue() > 40) {
+			y = 0.3;
 		}
 		if (!isCentered()) {
-			x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-3 * (RobotMap.CAMERA_WIDTH / 2));
+			x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (2.75 * (RobotMap.CAMERA_WIDTH / 2));
 		}
 		//logger.trace("Normalized: {}", normalized);
 		logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
-		driveTrain.mecanumDriveCartesian(x, y, rotate, sensors.getGyroAngle());
+		driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
 	}
 
 	protected boolean isFinished() {
@@ -67,7 +67,7 @@ public class ApproachPeg extends CommandBase {
 	}
 
 	private boolean isDone() {
-		if (sensors.getUltrasonicValue() < 35 && isCentered()) {
+		if (sensors.getUltrasonicValue() < 40 && isCentered()) {
 			counter++;
 		} else {
 			counter = 0;

@@ -65,7 +65,7 @@ public class Vision extends Subsystem {
       gearCamera = new UsbCamera("gearCamera", configs.camera().port());
       gearCamera.setExposureManual(configs.camera().exposure());
       gearCamera.setBrightness(configs.camera().brightness());
-      gearCamera.setVideoMode(Configuration.StringToFormat(configs.camera().format()), configs.camera().width(),
+      gearCamera.setVideoMode(Configuration.stringToFormat(configs.camera().format()), configs.camera().width(),
           configs.camera().height(), configs.camera().fps());
     }
 
@@ -78,7 +78,7 @@ public class Vision extends Subsystem {
 
     if (outputStream == null) {
       logger.debug("Creating a new output stream");
-      outputStream = new CvSource("Cameras", Configuration.StringToFormat(configs.camera().format()),
+      outputStream = new CvSource("Cameras", Configuration.stringToFormat(configs.camera().format()),
           configs.camera().width(), configs.camera().height(), configs.camera().fps());
     }
 

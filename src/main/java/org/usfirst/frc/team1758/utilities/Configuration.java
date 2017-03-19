@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1758.utilities;
 
+import edu.wpi.cscore.VideoMode.PixelFormat;
+
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -13,16 +15,14 @@ import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.reload.ReloadStrategy;
 import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
 
-import edu.wpi.cscore.VideoMode.PixelFormat;
-
 public class Configuration {
   public RobotConfig robotConfig;
   public AutonomousConfig autonomousConfig;
 
   public Configuration() {
-    BootstrapConfig bootConfig = GetBootstrapConfig();
-    robotConfig = GetRobotConfig(bootConfig);
-    autonomousConfig = GetAutonomousConfig(bootConfig);
+    BootstrapConfig bootConfig = getBootstrapConfig();
+    robotConfig = getRobotConfig(bootConfig);
+    autonomousConfig = getAutonomousConfig(bootConfig);
   }
 
   public interface BootstrapConfig {
@@ -218,52 +218,52 @@ public class Configuration {
     ControllersConfig controllers();
   }
 
-  public static PixelFormat StringToFormat(String format) {
+  public static PixelFormat stringToFormat(String format) {
     switch (format.toLowerCase()) {
-    case "mjpeg":
-      return PixelFormat.kMJPEG;
-    case "bgr":
-      return PixelFormat.kBGR;
-    case "rgb565":
-      return PixelFormat.kRGB565;
-    case "yuyv":
-      return PixelFormat.kYUYV;
-    case "gray":
-      return PixelFormat.kGray;
-    default:
-      return PixelFormat.kUnknown;
+      case "mjpeg":
+        return PixelFormat.kMJPEG;
+      case "bgr":
+        return PixelFormat.kBGR;
+      case "rgb565":
+        return PixelFormat.kRGB565;
+      case "yuyv":
+        return PixelFormat.kYUYV;
+      case "gray":
+        return PixelFormat.kGray;
+      default:
+        return PixelFormat.kUnknown;
     }
   }
 
-  private Environment GetEnvironment(String environment) {
+  private Environment getEnvironment(String environment) {
     if (environment == null || environment.isEmpty()) {
       return new ImmutableEnvironment("configs/");
     }
     return new ImmutableEnvironment("configs/" + environment + "/");
   }
 
-  private BootstrapConfig GetBootstrapConfig() {
+  private BootstrapConfig getBootstrapConfig() {
     ConfigurationSource bootSource = new FilesConfigurationSource(
         () -> Collections.singletonList(Paths.get("bootstrap.yaml")));
     ConfigurationProvider bootProvider = new ConfigurationProviderBuilder().withConfigurationSource(bootSource)
-        .withEnvironment(GetEnvironment(null)).build();
+        .withEnvironment(getEnvironment(null)).build();
     return bootProvider.bind("bootstrap", BootstrapConfig.class);
   }
 
-  private RobotConfig GetRobotConfig(BootstrapConfig bootConfig) {
+  private RobotConfig getRobotConfig(BootstrapConfig bootConfig) {
     ConfigurationSource robotSource = new FilesConfigurationSource(
         () -> Collections.singletonList(Paths.get("robot.yaml")));
     ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
-        .withEnvironment(GetEnvironment(bootConfig.environment())).build();
+        .withEnvironment(getEnvironment(bootConfig.environment())).build();
     return robotProvider.bind("robot", RobotConfig.class);
   }
 
-  private AutonomousConfig GetAutonomousConfig(BootstrapConfig bootConfig) {
+  private AutonomousConfig getAutonomousConfig(BootstrapConfig bootConfig) {
     ConfigurationSource autoSource = new FilesConfigurationSource(
         () -> Collections.singletonList(Paths.get("autonomous.yaml")));
     ReloadStrategy reloadStrategy = new PeriodicalReloadStrategy(bootConfig.reload(), TimeUnit.SECONDS);
     ConfigurationProvider autoProvider = new ConfigurationProviderBuilder().withConfigurationSource(autoSource)
-        .withEnvironment(GetEnvironment(null)).withReloadStrategy(reloadStrategy).build();
+        .withEnvironment(getEnvironment(null)).withReloadStrategy(reloadStrategy).build();
     return autoProvider.bind("autonomous", AutonomousConfig.class);
   }
 }

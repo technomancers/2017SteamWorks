@@ -4,23 +4,23 @@ import org.usfirst.frc.team1758.robot.OI;
 import org.usfirst.frc.team1758.utilities.Controller.Axes;
 
 public class ClimbRope extends CommandBase {
-	private boolean finished;
+  private boolean finished;
 
-	public ClimbRope() {
-		requires(rope);
-	}
+  public ClimbRope() {
+    requires(rope);
+  }
 
-	protected void initialize() {
-		finished = false;
-	}
+  protected void initialize() {
+    finished = false;
+  }
 
-	protected void execute() {
-		double speed = OI.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
-		speed += OI.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
-		rope.setMotor(speed);
-	}
+  protected void execute() {
+    double speed = OI.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
+    speed += OI.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
+    rope.setMotor(speed);
+  }
 
-	protected boolean isFinished() {
-		return finished;
-	}
+  protected boolean isFinished() {
+    return finished;
+  }
 }

@@ -8,8 +8,8 @@ import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class Autonomous extends CommandGroup {
-	public Autonomous(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
-		addSequential(new OrientTarget(configs.orient(), cameraConfigs));
-		addSequential(new ApproachPeg(configs.approach(), cameraConfigs));
-	}
+  public Autonomous(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
+    addSequential(new OrientTarget(configs.orient(), cameraConfigs));
+    addSequential(new ApproachPeg(configs.approach(), cameraConfigs));
+  }
 }

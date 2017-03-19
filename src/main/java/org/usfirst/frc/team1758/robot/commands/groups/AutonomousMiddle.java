@@ -8,9 +8,9 @@ import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonomousMiddle extends CommandGroup {
-	public AutonomousMiddle(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
-		addSequential(new TurnOnLight());
-		addSequential(new MoveBack(configs.blind().moveBackCenter()));
-		addSequential(new Autonomous(configs, cameraConfigs));
-	}
+  public AutonomousMiddle(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
+    addSequential(new TurnOnLight());
+    addSequential(new MoveBack(configs.blind().moveBackCenter()));
+    addSequential(new Autonomous(configs, cameraConfigs));
+  }
 }

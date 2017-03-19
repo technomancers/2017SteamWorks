@@ -6,75 +6,75 @@ import org.usfirst.frc.team1758.utilities.Configuration.ApproachConfig;
 import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 
 public class ApproachPeg extends CommandBase {
-	private boolean finished;
-	private Logger logger;
-	private int counter;
-	private ApproachConfig configs;
-	private VisionCameraConfig cameraConfigs;
+  private boolean finished;
+  private Logger logger;
+  private int counter;
+  private ApproachConfig configs;
+  private VisionCameraConfig cameraConfigs;
 
-	public ApproachPeg(ApproachConfig configs, VisionCameraConfig cameraConfig) {
-		this.configs = configs;
-		this.cameraConfigs = cameraConfig;
-		logger = LoggerFactory.getLogger(this.getClass());
-		logger.debug("ApproachPeg command created");
-		requires(vision);
-		requires(driveTrain);
-		requires(sensors);
-	}
+  public ApproachPeg(ApproachConfig configs, VisionCameraConfig cameraConfig) {
+    this.configs = configs;
+    this.cameraConfigs = cameraConfig;
+    logger = LoggerFactory.getLogger(this.getClass());
+    logger.debug("ApproachPeg command created");
+    requires(vision);
+    requires(driveTrain);
+    requires(sensors);
+  }
 
-	protected void initialize() {
-		sensors.resetGyroAngle();
-		finished = false;
-		counter = 0;
-	}
+  protected void initialize() {
+    sensors.resetGyroAngle();
+    finished = false;
+    counter = 0;
+  }
 
-	protected void execute() {
-		logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
-		if (isDone()) {
-			finished = true;
-			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
-		} else {
-			iterate();
-		}
+  protected void execute() {
+    logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
+    if (isDone()) {
+      finished = true;
+      driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
+    } else {
+      iterate();
+    }
 
-	}
+  }
 
-	public void iterate() {
-		double x, y, rotate;
-		x = 0;
-		y = 0;
-		rotate = 0;
-		if (sensors.getUltrasonicValue() > configs.untilDistance()) {
-			y = configs.speed();
-		}
-		if (!isCentered()) {
-			x = configs.centerProportional()
-					* ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
-		}
-		driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
-	}
+  public void iterate() {
+    double x, y, rotate;
+    x = 0;
+    y = 0;
+    rotate = 0;
+    if (sensors.getUltrasonicValue() > configs.untilDistance()) {
+      y = configs.speed();
+    }
+    if (!isCentered()) {
+      x = configs.centerProportional()
+          * ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
+    }
+    driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
+  }
 
-	protected boolean isFinished() {
-		return finished;
-	}
+  protected boolean isFinished() {
+    return finished;
+  }
 
-	protected void end() {
-	}
+  protected void end() {
+  }
 
-	private boolean isCentered() {
-		return (vision.getCenterX() < (cameraConfigs.width() / 2) + configs.centerThreshold())
-				&& (vision.getCenterX() > (cameraConfigs.width() / 2) - configs.centerThreshold());
-	}
+  private boolean isCentered() {
+    return (vision.getCenterX() < (cameraConfigs.width() / 2) + configs.centerThreshold())
+        && (vision.getCenterX() > (cameraConfigs.width() / 2) - configs.centerThreshold());
+  }
 
-	private boolean isDone() {
-		if (sensors.getUltrasonicValue() < configs.doneDistance() && isCentered()) {
-			counter++;
-		} else {
-			counter = 0;
-		}
-		return counter > configs.doneIterations();
-	}
+  private boolean isDone() {
+    if (sensors.getUltrasonicValue() < configs.doneDistance() && isCentered()) {
+      counter++;
+    } else {
+      counter = 0;
+    }
+    return counter > configs.doneIterations();
+  }
 
-	protected void interrupted() {
-	}
+  protected void interrupted() {
+  }
 }

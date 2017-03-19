@@ -3,11 +3,13 @@ plugins {
 }
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'checkstyle'
 
 
 description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
 
 dependencies {
+	checkstyle 'com.puppycrawl.tools:checkstyle:+'
 	//Include external dependencies here (Uses maven central)
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 	riolibs fileTree(dir: 'libs', include: ['*.so'])
@@ -15,6 +17,10 @@ dependencies {
 	compile 'ch.qos.logback:logback-classic:+'
 	compile 'ch.qos.logback:logback-core:+'
 	compile 'org.cfg4j:cfg4j-core:+'
+}
+
+checkstyle{
+	configFile file('checkstyle.xml')
 }
 
 gradlerio{

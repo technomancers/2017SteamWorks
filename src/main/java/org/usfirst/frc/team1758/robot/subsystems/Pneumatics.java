@@ -6,22 +6,22 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Pneumatics extends Subsystem {
-	private Compressor compressor;
+  private Compressor compressor;
 
-	public Pneumatics(PneumaticsConfig configs) {
-		compressor = new Compressor(configs.compressor().port());
-		compressor.setClosedLoopControl(false);
-	}
+  public Pneumatics(PneumaticsConfig configs) {
+    compressor = new Compressor(configs.compressor().port());
+    compressor.setClosedLoopControl(false);
+  }
 
-	protected void initDefaultCommand() {
-	}
+  protected void initDefaultCommand() {
+  }
 
-	public void turnOnCompressor() {
-		compressor.setClosedLoopControl(true);
-	}
+  public void turnOnCompressor() {
+    compressor.setClosedLoopControl(true);
+  }
 
-	public void turnOffCompressor() {
-		compressor.setClosedLoopControl(false);
-	}
+  public void turnOffCompressor() {
+    compressor.setClosedLoopControl(false);
+  }
 
 }

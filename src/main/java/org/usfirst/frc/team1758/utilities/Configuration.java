@@ -16,254 +16,254 @@ import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 
 public class Configuration {
-	public RobotConfig robotConfig;
-	public AutonomousConfig autonomousConfig;
+  public RobotConfig robotConfig;
+  public AutonomousConfig autonomousConfig;
 
-	public Configuration() {
-		BootstrapConfig bootConfig = GetBootstrapConfig();
-		robotConfig = GetRobotConfig(bootConfig);
-		autonomousConfig = GetAutonomousConfig(bootConfig);
-	}
+  public Configuration() {
+    BootstrapConfig bootConfig = GetBootstrapConfig();
+    robotConfig = GetRobotConfig(bootConfig);
+    autonomousConfig = GetAutonomousConfig(bootConfig);
+  }
 
-	public interface BootstrapConfig {
-		String environment();
+  public interface BootstrapConfig {
+    String environment();
 
-		int reload();
-	}
+    int reload();
+  }
 
-	public interface GripConfig {
-		double[] hueThreshold();
+  public interface GripConfig {
+    double[] hueThreshold();
 
-		double[] saturationThreshold();
+    double[] saturationThreshold();
 
-		double[] valueThreshold();
+    double[] valueThreshold();
 
-		boolean externalContours();
+    boolean externalContours();
 
-		double minArea();
+    double minArea();
 
-		double minPerimeter();
+    double minPerimeter();
 
-		double minWidth();
+    double minWidth();
 
-		double maxWidth();
+    double maxWidth();
 
-		double minHeight();
+    double minHeight();
 
-		double maxHeight();
+    double maxHeight();
 
-		double[] solidity();
+    double[] solidity();
 
-		double maxVertices();
+    double maxVertices();
 
-		double minVertices();
+    double minVertices();
 
-		double minRatio();
+    double minRatio();
 
-		double maxRatio();
-	}
+    double maxRatio();
+  }
 
-	public interface ApproachConfig {
-		double untilDistance();
+  public interface ApproachConfig {
+    double untilDistance();
 
-		double doneDistance();
+    double doneDistance();
 
-		double speed();
+    double speed();
 
-		double centerProportional();
+    double centerProportional();
 
-		double centerThreshold();
+    double centerThreshold();
 
-		double doneIterations();
-	}
+    double doneIterations();
+  }
 
-	public interface OrientConfig {
-		double centerProportional();
+  public interface OrientConfig {
+    double centerProportional();
 
-		double orientedProportional();
+    double orientedProportional();
 
-		double centerThreshold();
+    double centerThreshold();
 
-		double orientThreshold();
-	}
+    double orientThreshold();
+  }
 
-	public interface BlindConfig {
-		double speed();
+  public interface BlindConfig {
+    double speed();
 
-		int moveBack();
+    int moveBack();
 
-		int moveBackCenter();
+    int moveBackCenter();
 
-		double turnRight();
+    double turnRight();
 
-		double turnLeft();
+    double turnLeft();
 
-		int finalBack();
-	}
+    int finalBack();
+  }
 
-	public interface AutonomousConfig {
+  public interface AutonomousConfig {
 
-		ApproachConfig approach();
+    ApproachConfig approach();
 
-		OrientConfig orient();
+    OrientConfig orient();
 
-		BlindConfig blind();
-	}
+    BlindConfig blind();
+  }
 
-	public interface Enabler {
-		boolean enable();
-	}
+  public interface Enabler {
+    boolean enable();
+  }
 
-	public interface Porter {
-		int port();
-	}
+  public interface Porter {
+    int port();
+  }
 
-	public interface MotorConfig extends Porter {
-		boolean reverse();
-	}
+  public interface MotorConfig extends Porter {
+    boolean reverse();
+  }
 
-	public interface DriveTrainMotorsConfig {
-		MotorConfig rightFront();
+  public interface DriveTrainMotorsConfig {
+    MotorConfig rightFront();
 
-		MotorConfig rightBack();
+    MotorConfig rightBack();
 
-		MotorConfig leftFront();
+    MotorConfig leftFront();
 
-		MotorConfig leftBack();
-	}
+    MotorConfig leftBack();
+  }
 
-	public interface DriveTrainEncodersConfig {
-		int encoderCodesPerRevolution();
-	}
+  public interface DriveTrainEncodersConfig {
+    int encoderCodesPerRevolution();
+  }
 
-	public interface DriveTrainConfig extends Enabler {
-		DriveTrainMotorsConfig motors();
+  public interface DriveTrainConfig extends Enabler {
+    DriveTrainMotorsConfig motors();
 
-		DriveTrainEncodersConfig encoders();
-	}
+    DriveTrainEncodersConfig encoders();
+  }
 
-	public interface VisionCameraConfig extends Porter {
-		int width();
+  public interface VisionCameraConfig extends Porter {
+    int width();
 
-		int height();
+    int height();
 
-		int fps();
+    int fps();
 
-		int exposure();
+    int exposure();
 
-		int brightness();
+    int brightness();
 
-		String format();
-	}
+    String format();
+  }
 
-	public interface VisionConfig extends Enabler {
-		VisionCameraConfig camera();
+  public interface VisionConfig extends Enabler {
+    VisionCameraConfig camera();
 
-		Porter server();
+    Porter server();
 
-		Porter relay();
+    Porter relay();
 
-		GripConfig grip();
-	}
+    GripConfig grip();
+  }
 
-	public interface SensorsUltrasonicConfig extends Porter {
-		double suppliedVolts();
-	}
+  public interface SensorsUltrasonicConfig extends Porter {
+    double suppliedVolts();
+  }
 
-	public interface SensorsConfig extends Enabler {
-		SensorsUltrasonicConfig ultrasonic();
-	}
+  public interface SensorsConfig extends Enabler {
+    SensorsUltrasonicConfig ultrasonic();
+  }
 
-	public interface RopeConfig extends Enabler {
-		MotorConfig motor();
-	}
+  public interface RopeConfig extends Enabler {
+    MotorConfig motor();
+  }
 
-	public interface GearSolenoidsConfig {
-		int inPort();
+  public interface GearSolenoidsConfig {
+    int inPort();
 
-		int outPort();
-	}
+    int outPort();
+  }
 
-	public interface GearConfig extends Enabler {
-		GearSolenoidsConfig solenoid();
-	}
+  public interface GearConfig extends Enabler {
+    GearSolenoidsConfig solenoid();
+  }
 
-	public interface PneumaticsConfig extends Enabler {
-		Porter compressor();
-	}
+  public interface PneumaticsConfig extends Enabler {
+    Porter compressor();
+  }
 
-	public interface ControllerConfig extends Enabler, Porter {
-		double threshold();
-	}
+  public interface ControllerConfig extends Enabler, Porter {
+    double threshold();
+  }
 
-	public interface ControllersConfig {
-		ControllerConfig driving();
+  public interface ControllersConfig {
+    ControllerConfig driving();
 
-		ControllerConfig pit();
-	}
+    ControllerConfig pit();
+  }
 
-	public interface RobotConfig {
-		DriveTrainConfig driveTrain();
+  public interface RobotConfig {
+    DriveTrainConfig driveTrain();
 
-		VisionConfig vision();
+    VisionConfig vision();
 
-		SensorsConfig sensors();
+    SensorsConfig sensors();
 
-		RopeConfig rope();
+    RopeConfig rope();
 
-		GearConfig gear();
+    GearConfig gear();
 
-		PneumaticsConfig pneumatics();
+    PneumaticsConfig pneumatics();
 
-		ControllersConfig controllers();
-	}
+    ControllersConfig controllers();
+  }
 
-	public static PixelFormat StringToFormat(String format) {
-		switch (format.toLowerCase()) {
-		case "mjpeg":
-			return PixelFormat.kMJPEG;
-		case "bgr":
-			return PixelFormat.kBGR;
-		case "rgb565":
-			return PixelFormat.kRGB565;
-		case "yuyv":
-			return PixelFormat.kYUYV;
-		case "gray":
-			return PixelFormat.kGray;
-		default:
-			return PixelFormat.kUnknown;
-		}
-	}
+  public static PixelFormat StringToFormat(String format) {
+    switch (format.toLowerCase()) {
+    case "mjpeg":
+      return PixelFormat.kMJPEG;
+    case "bgr":
+      return PixelFormat.kBGR;
+    case "rgb565":
+      return PixelFormat.kRGB565;
+    case "yuyv":
+      return PixelFormat.kYUYV;
+    case "gray":
+      return PixelFormat.kGray;
+    default:
+      return PixelFormat.kUnknown;
+    }
+  }
 
-	private Environment GetEnvironment(String environment) {
-		if (environment == null || environment.isEmpty()) {
-			return new ImmutableEnvironment("configs/");
-		}
-		return new ImmutableEnvironment("configs/" + environment + "/");
-	}
+  private Environment GetEnvironment(String environment) {
+    if (environment == null || environment.isEmpty()) {
+      return new ImmutableEnvironment("configs/");
+    }
+    return new ImmutableEnvironment("configs/" + environment + "/");
+  }
 
-	private BootstrapConfig GetBootstrapConfig() {
-		ConfigurationSource bootSource = new FilesConfigurationSource(
-				() -> Collections.singletonList(Paths.get("bootstrap.yaml")));
-		ConfigurationProvider bootProvider = new ConfigurationProviderBuilder().withConfigurationSource(bootSource)
-				.withEnvironment(GetEnvironment(null)).build();
-		return bootProvider.bind("bootstrap", BootstrapConfig.class);
-	}
+  private BootstrapConfig GetBootstrapConfig() {
+    ConfigurationSource bootSource = new FilesConfigurationSource(
+        () -> Collections.singletonList(Paths.get("bootstrap.yaml")));
+    ConfigurationProvider bootProvider = new ConfigurationProviderBuilder().withConfigurationSource(bootSource)
+        .withEnvironment(GetEnvironment(null)).build();
+    return bootProvider.bind("bootstrap", BootstrapConfig.class);
+  }
 
-	private RobotConfig GetRobotConfig(BootstrapConfig bootConfig) {
-		ConfigurationSource robotSource = new FilesConfigurationSource(
-				() -> Collections.singletonList(Paths.get("robot.yaml")));
-		ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
-				.withEnvironment(GetEnvironment(bootConfig.environment())).build();
-		return robotProvider.bind("robot", RobotConfig.class);
-	}
+  private RobotConfig GetRobotConfig(BootstrapConfig bootConfig) {
+    ConfigurationSource robotSource = new FilesConfigurationSource(
+        () -> Collections.singletonList(Paths.get("robot.yaml")));
+    ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
+        .withEnvironment(GetEnvironment(bootConfig.environment())).build();
+    return robotProvider.bind("robot", RobotConfig.class);
+  }
 
-	private AutonomousConfig GetAutonomousConfig(BootstrapConfig bootConfig) {
-		ConfigurationSource autoSource = new FilesConfigurationSource(
-				() -> Collections.singletonList(Paths.get("autonomous.yaml")));
-		ReloadStrategy reloadStrategy = new PeriodicalReloadStrategy(bootConfig.reload(), TimeUnit.SECONDS);
-		ConfigurationProvider autoProvider = new ConfigurationProviderBuilder().withConfigurationSource(autoSource)
-				.withEnvironment(GetEnvironment(null)).withReloadStrategy(reloadStrategy).build();
-		return autoProvider.bind("autonomous", AutonomousConfig.class);
-	}
+  private AutonomousConfig GetAutonomousConfig(BootstrapConfig bootConfig) {
+    ConfigurationSource autoSource = new FilesConfigurationSource(
+        () -> Collections.singletonList(Paths.get("autonomous.yaml")));
+    ReloadStrategy reloadStrategy = new PeriodicalReloadStrategy(bootConfig.reload(), TimeUnit.SECONDS);
+    ConfigurationProvider autoProvider = new ConfigurationProviderBuilder().withConfigurationSource(autoSource)
+        .withEnvironment(GetEnvironment(null)).withReloadStrategy(reloadStrategy).build();
+    return autoProvider.bind("autonomous", AutonomousConfig.class);
+  }
 }

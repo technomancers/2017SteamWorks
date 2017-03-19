@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class HardAutoLeft extends CommandGroup {
 
-	public HardAutoLeft(BlindConfig configs) {
-		addSequential(new TurnOnLight());
-		addSequential(new MoveBack(configs.moveBack()));
-		addSequential(new TurnRight(configs.turnRight()));
-		addSequential(new MoveBack(configs.finalBack()));
-	}
+  public HardAutoLeft(BlindConfig configs) {
+    addSequential(new TurnOnLight());
+    addSequential(new MoveBack(configs.moveBack()));
+    addSequential(new TurnRight(configs.turnRight()));
+    addSequential(new MoveBack(configs.finalBack()));
+  }
 }

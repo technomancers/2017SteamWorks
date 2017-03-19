@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class AutonomousRight extends CommandGroup {
 
-	public AutonomousRight(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
-		addSequential(new TurnOnLight());
-		addSequential(new MoveBack(configs.blind().moveBack()));
-		addSequential(new TurnLeft(configs.blind().turnLeft()));
-		addSequential(new Autonomous(configs, cameraConfigs));
-	}
+  public AutonomousRight(AutonomousConfig configs, VisionCameraConfig cameraConfigs) {
+    addSequential(new TurnOnLight());
+    addSequential(new MoveBack(configs.blind().moveBack()));
+    addSequential(new TurnLeft(configs.blind().turnLeft()));
+    addSequential(new Autonomous(configs, cameraConfigs));
+  }
 }

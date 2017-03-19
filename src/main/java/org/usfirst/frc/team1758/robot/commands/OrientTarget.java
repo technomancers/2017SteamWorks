@@ -3,18 +3,15 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.utilities.Configuration.OrientConfig;
-import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 
 public class OrientTarget extends CommandBase {
   private boolean finished;
   private Logger logger;
   private boolean firstTime;
   private OrientConfig configs;
-  private VisionCameraConfig cameraConfigs;
 
-  public OrientTarget(OrientConfig configs, VisionCameraConfig cameraConfigs) {
+  public OrientTarget(OrientConfig configs) {
     this.configs = configs;
-    this.cameraConfigs = cameraConfigs;
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("OrientTarget command created.");
     requires(vision);
@@ -39,7 +36,7 @@ public class OrientTarget extends CommandBase {
       double rot = 0;
       if (!isCentered()) {
         rot = configs.centerProportional()
-            * ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
+            * ((vision.getCenterX() - vision.getCameraConfig().width() / 2) / (vision.getCameraConfig().width() / 2));
       }
       double x = 0;
       if (!oriented()) {
@@ -62,8 +59,8 @@ public class OrientTarget extends CommandBase {
   }
 
   private boolean isCentered() {
-    return vision.getCenterX() < cameraConfigs.width() / 2 + configs.centerThreshold()
-        && vision.getCenterX() > cameraConfigs.width() / 2 - configs.centerThreshold();
+    return vision.getCenterX() < vision.getCameraConfig().width() / 2 + configs.centerThreshold()
+        && vision.getCenterX() > vision.getCameraConfig().width() / 2 - configs.centerThreshold();
   }
 
   private boolean oriented() {

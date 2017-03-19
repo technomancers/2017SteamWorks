@@ -3,18 +3,15 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.utilities.Configuration.ApproachConfig;
-import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 
 public class ApproachPeg extends CommandBase {
   private boolean finished;
   private Logger logger;
   private int counter;
   private ApproachConfig configs;
-  private VisionCameraConfig cameraConfigs;
 
-  public ApproachPeg(ApproachConfig configs, VisionCameraConfig cameraConfig) {
+  public ApproachPeg(ApproachConfig configs) {
     this.configs = configs;
-    this.cameraConfigs = cameraConfig;
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("ApproachPeg command created");
     requires(vision);
@@ -47,7 +44,7 @@ public class ApproachPeg extends CommandBase {
     double x = 0;
     if (!isCentered()) {
       x = configs.centerProportional()
-          * ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
+          * ((vision.getCenterX() - vision.getCameraConfig().width() / 2) / (vision.getCameraConfig().width() / 2));
     }
     double rotate = 0;
     driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
@@ -61,8 +58,8 @@ public class ApproachPeg extends CommandBase {
   }
 
   private boolean isCentered() {
-    return (vision.getCenterX() < (cameraConfigs.width() / 2) + configs.centerThreshold())
-        && (vision.getCenterX() > (cameraConfigs.width() / 2) - configs.centerThreshold());
+    return (vision.getCenterX() < (vision.getCameraConfig().width() / 2) + configs.centerThreshold())
+        && (vision.getCenterX() > (vision.getCameraConfig().width() / 2) - configs.centerThreshold());
   }
 
   private boolean isDone() {

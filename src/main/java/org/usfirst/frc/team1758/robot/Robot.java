@@ -37,11 +37,9 @@ public class Robot extends IterativeRobot {
     autonomousCommand = null;
     autoChooser = new SendableChooser<Command>();
     autoChooser.addDefault("No Autonomous", null);
-    autoChooser.addObject("Left", new AutonomousLeft(configs.autonomousConfig, configs.robotConfig.vision().camera()));
-    autoChooser.addObject("Middle",
-        new AutonomousMiddle(configs.autonomousConfig, configs.robotConfig.vision().camera()));
-    autoChooser.addObject("Right",
-        new AutonomousRight(configs.autonomousConfig, configs.robotConfig.vision().camera()));
+    autoChooser.addObject("Left", new AutonomousLeft(configs.autonomousConfig));
+    autoChooser.addObject("Middle", new AutonomousMiddle(configs.autonomousConfig));
+    autoChooser.addObject("Right", new AutonomousRight(configs.autonomousConfig));
     autoChooser.addObject("Hard Left", new HardAutoLeft(configs.autonomousConfig.blind()));
     autoChooser.addObject("Hard Right", new HardAutoRight(configs.autonomousConfig.blind()));
     autoChooser.addObject("Hard Middle", new HardAutoMiddle(configs.autonomousConfig.blind()));

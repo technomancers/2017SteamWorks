@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.vision.PegPipeline;
 import org.usfirst.frc.team1758.utilities.Configuration;
+import org.usfirst.frc.team1758.utilities.Configuration.VisionCameraConfig;
 import org.usfirst.frc.team1758.utilities.Configuration.VisionConfig;
 
 public class Vision extends Subsystem {
@@ -159,6 +160,10 @@ public class Vision extends Subsystem {
 
   public long getCurrTime() {
     return currTime;
+  }
+
+  public VisionCameraConfig getCameraConfig() {
+    return configs.camera();
   }
 
   public void stopVisionThread() {

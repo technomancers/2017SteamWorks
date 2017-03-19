@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
 import org.cfg4j.source.ConfigurationSource;
-import org.cfg4j.source.compose.MergeConfigurationSource;
 import org.cfg4j.source.context.environment.Environment;
 import org.cfg4j.source.context.environment.ImmutableEnvironment;
 import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;

@@ -2,13 +2,8 @@ package org.usfirst.frc.team1758.robot.commands;
 
 import org.usfirst.frc.team1758.utilities.Controller.Axes;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 import org.usfirst.frc.team1758.robot.OI;
 
@@ -24,7 +19,6 @@ public class DriveWithJoystick extends CommandBase {
 		logger.debug("Created DriveWithJoystick command");
 		requires(driveTrain);
 		requires(sensors);
-		requires(servos);
 	}
 
 	protected void initialize() {
@@ -54,9 +48,7 @@ public class DriveWithJoystick extends CommandBase {
 		double x = OI.drivingController.getNormalizedAxis(Axes.LEFT_X);
 		double y = OI.drivingController.getNormalizedAxis(Axes.LEFT_Y);
 		double twist = .8 * OI.drivingController.getNormalizedAxis(Axes.RIGHT_X);
-		double trigger = OI.drivingController.getRawAxis(Axes.TRIGGER_LEFT);
 		driveTrain.mecanumDriveCartesian(x, y, twist, gyroAngle);
-		servos.setServo(trigger);
 		if (OI.drivingController.lb.get()) {
 			sensors.resetGyroAngle();
 			driveTrain.resetEncoderPosition();

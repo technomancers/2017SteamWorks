@@ -8,13 +8,9 @@ public class MoveBack extends CommandBase {
 	private boolean finished;
 	private int distance;
 
-	public MoveBack() {
-		this(8000);
-	}
-
-	public MoveBack(int pulses){
+	public MoveBack(int distance){
 		requires(driveTrain);
-		distance = pulses;
+		this.distance = distance;
 	}
 
 	protected void initialize() {
@@ -24,7 +20,7 @@ public class MoveBack extends CommandBase {
 	}
 
 	protected void execute() {
-		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -1*distance)
+		if(driveTrain.getEncoderPosition(Motor.FrontRight) < -1*this.distance)
 		{
 			finished = true;
 			driveTrain.mecanumDriveCartesian(0, 0, 0, 0);

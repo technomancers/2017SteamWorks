@@ -4,11 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.ClimbRope;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
-import org.usfirst.frc.team1758.robot.commands.ResetBallPickup;
-import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
-//import org.usfirst.frc.team1758.robot.commands.ResetBallPickup;
-//import org.usfirst.frc.team1758.robot.commands.ShootBall;
-//import org.usfirst.frc.team1758.robot.commands.ToggleBallPickup;
 import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
 import org.usfirst.frc.team1758.robot.commands.TurnOnLight;
@@ -86,12 +81,8 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		(new TurnOnLight()).start();
-		(new ToggleBallPickup()).start();
-		(new ShootBall()).start();
 		(new ClimbRope()).start();
 		OI.drivingController.a.whenPressed(new ToggleGear());
-		//OI.drivingController.b.whenPressed(new ToggleBallPickup());
-		OI.pitController.a.whenPressed(new ResetBallPickup());
 	}
 
 	public void teleopPeriodic() {

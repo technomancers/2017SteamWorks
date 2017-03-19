@@ -33,15 +33,7 @@ public class Sensors extends Subsystem {
 		double ratio = (RobotMap.OUT_VOLTS / 512.0);
 		return sonic.getVoltage() / ratio;
 	}
-
-	public boolean getProximity() {
-		if (prox.getVoltage() < 0.3) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 	public void calibrateGyroAngle() {
 		logger.debug("Calibrating gyroscope");
 		gyro.calibrate();

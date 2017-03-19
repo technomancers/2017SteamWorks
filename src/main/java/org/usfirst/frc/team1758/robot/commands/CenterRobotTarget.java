@@ -3,7 +3,6 @@ package org.usfirst.frc.team1758.robot.commands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.RobotMap;
-import org.usfirst.frc.team1758.utilities.TechnoPID;
 
 public class CenterRobotTarget extends CommandBase {
 	private boolean finished;

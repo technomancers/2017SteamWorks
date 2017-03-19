@@ -1,12 +1,19 @@
 package org.usfirst.frc.team1758.robot.vision;
 
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.wpi.first.wpilibj.vision.VisionPipeline;
-
-import org.opencv.core.*;
-import org.opencv.imgproc.*;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.utilities.Configuration.GripConfig;
@@ -85,7 +92,7 @@ public class PegPipeline implements VisionPipeline {
 
   /**
    * This method is a generated getter for the output of a Find_Contours.
-   * @return ArrayList<MatOfPoint> output from Find_Contours.
+   * @return ArrayList&lt;MatOfPoint&gt; output from Find_Contours.
    */
   public ArrayList<MatOfPoint> findContoursOutput() {
     return findContoursOutput;
@@ -93,7 +100,7 @@ public class PegPipeline implements VisionPipeline {
 
   /**
    * This method is a generated getter for the output of a Filter_Contours.
-   * @return ArrayList<MatOfPoint> output from Filter_Contours.
+   * @return ArrayList&lt;MatOfPoint&gt; output from Filter_Contours.
    */
   public ArrayList<MatOfPoint> filterContoursOutput() {
     return filterContoursOutput;
@@ -161,15 +168,19 @@ public class PegPipeline implements VisionPipeline {
     for (int i = 0; i < inputContours.size(); i++) {
       final MatOfPoint contour = inputContours.get(i);
       final Rect bb = Imgproc.boundingRect(contour);
-      if (bb.width < minWidth || bb.width > maxWidth)
+      if (bb.width < minWidth || bb.width > maxWidth) {
         continue;
-      if (bb.height < minHeight || bb.height > maxHeight)
+      }
+      if (bb.height < minHeight || bb.height > maxHeight) {
         continue;
+      }
       final double area = Imgproc.contourArea(contour);
-      if (area < minArea)
+      if (area < minArea) {
         continue;
-      if (Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true) < minPerimeter)
+      }
+      if (Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true) < minPerimeter) {
         continue;
+      }
       Imgproc.convexHull(contour, hull);
       MatOfPoint mopHull = new MatOfPoint();
       mopHull.create((int) hull.size().height, 1, CvType.CV_32SC2);
@@ -179,13 +190,16 @@ public class PegPipeline implements VisionPipeline {
         mopHull.put(j, 0, point);
       }
       final double solid = 100 * area / Imgproc.contourArea(mopHull);
-      if (solid < solidity[0] || solid > solidity[1])
+      if (solid < solidity[0] || solid > solidity[1]) {
         continue;
-      if (contour.rows() < minVertexCount || contour.rows() > maxVertexCount)
+      }
+      if (contour.rows() < minVertexCount || contour.rows() > maxVertexCount) {
         continue;
+      }
       final double ratio = bb.width / (double) bb.height;
-      if (ratio < minRatio || ratio > maxRatio)
+      if (ratio < minRatio || ratio > maxRatio) {
         continue;
+      }
       output.add(contour);
     }
   }

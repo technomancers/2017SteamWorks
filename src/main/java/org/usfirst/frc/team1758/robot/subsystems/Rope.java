@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.utilities.Configuration.RopeConfig;
-
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team1758.utilities.Configuration.RopeConfig;
 
 public class Rope extends Subsystem {
   private CANTalon motor;

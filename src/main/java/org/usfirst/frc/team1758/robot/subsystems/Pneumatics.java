@@ -1,9 +1,9 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.utilities.Configuration.PneumaticsConfig;
-
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team1758.utilities.Configuration.PneumaticsConfig;
 
 public class Pneumatics extends Subsystem {
   private Compressor compressor;

@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.usfirst.frc.team1758.utilities.Configuration.GearConfig;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team1758.utilities.Configuration.GearConfig;
 
 public class Gear extends Subsystem {
   private DoubleSolenoid gearSolenoid;

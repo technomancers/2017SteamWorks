@@ -1,12 +1,12 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.utilities.Configuration.SensorsConfig;
-
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.usfirst.frc.team1758.utilities.Configuration.SensorsConfig;
 
 public class Sensors extends Subsystem {
   private ADXRS450_Gyro gyro;

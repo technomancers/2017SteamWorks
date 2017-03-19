@@ -1,6 +1,15 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import java.util.ArrayList;
+
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
@@ -13,14 +22,6 @@ import org.usfirst.frc.team1758.robot.vision.PegPipeline;
 import org.usfirst.frc.team1758.utilities.Configuration;
 import org.usfirst.frc.team1758.utilities.Configuration.VisionConfig;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.MjpegServer;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Relay.Value;
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 public class Vision extends Subsystem {
   private Logger logger;
   private Relay lightRelay;
@@ -32,8 +33,11 @@ public class Vision extends Subsystem {
   private int numRectangles;
   private double centerX;
   private PegPipeline pegPipeline;
-  private Rect leftMost, rightMost, bigRect;
-  private long currTime, prevTime;
+  private Rect leftMost;
+  private Rect rightMost;
+  private Rect bigRect;
+  private long currTime;
+  private long prevTime;
   private VisionConfig configs;
 
   public Vision(VisionConfig configs) {

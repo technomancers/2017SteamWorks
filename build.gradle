@@ -55,7 +55,7 @@ class DeployConfigsTask extends DefaultTask{
 	void deployConfigs() {
 		sshService.run {
 			session(sshService.remotes.rio){
-				put from: configDir, into: "~/" 
+				put from: configDir, into: "~/." 
 			}
 		}
 	}

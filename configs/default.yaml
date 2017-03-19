@@ -1,0 +1,62 @@
+robot:
+  driveTrain:
+    enable: true
+    motors:
+      rightFront:
+        reverse: false
+      rightBack: 
+        reverse: false
+      leftFront: 
+        reverse: false
+      leftBack: 
+        reverse: false
+    encoders:
+      encoderCodesPerRevolution: 1024
+  vision:
+    enable: true
+    camera:
+      width: 320
+      height: 240
+      fps: 30
+      exposure: 0
+      brightness: 50
+      format: mjpeg
+    server:
+      port: 1182
+  sensors:
+    enable: true
+    ultrasonic:
+      suppliedVolts: 4.85
+  rope:
+    enable: true
+    motor:
+      reverse: false
+  gear:
+    enable: true
+  pneumatics:
+    enable: true
+  controllers:
+    driving:
+      enable: true
+      port: 0
+      threshold: 0.1
+    pit:
+      enable: false
+      port: 1
+      threshold: 0.0
+  grip:
+    hueThreshold: 60.0, 89.0
+    saturationThreshold: 41.0, 255.0
+    valueThreshold: 34.0, 255.0
+    externalContours: false
+    minArea: 10.0
+    minPerimeter: 0.0
+    minWidth: 0.0
+    maxWidth: 1000.0
+    minHeight: 0.0
+    maxHeight: 1000.0
+    solidity: 0.0, 100.0
+    maxVertices: 1000000.0
+    minVertices: 0.0
+    minRatio: 0.0
+    maxRatio: 1000.0

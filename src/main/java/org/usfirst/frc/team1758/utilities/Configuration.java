@@ -3,14 +3,17 @@ package org.usfirst.frc.team1758.utilities;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import org.cfg4j.provider.ConfigurationProvider;
 import org.cfg4j.provider.ConfigurationProviderBuilder;
 import org.cfg4j.source.ConfigurationSource;
+import org.cfg4j.source.compose.MergeConfigurationSource;
 import org.cfg4j.source.context.environment.Environment;
 import org.cfg4j.source.context.environment.ImmutableEnvironment;
+import org.cfg4j.source.context.filesprovider.ConfigFilesProvider;
 import org.cfg4j.source.files.FilesConfigurationSource;
 import org.cfg4j.source.reload.ReloadStrategy;
 import org.cfg4j.source.reload.strategy.PeriodicalReloadStrategy;
@@ -251,8 +254,8 @@ public class Configuration {
   }
 
   private RobotConfig getRobotConfig(BootstrapConfig bootConfig) {
-    ConfigurationSource robotSource = new FilesConfigurationSource(
-        () -> Collections.singletonList(Paths.get("robot.yaml")));
+    ConfigFilesProvider robotFileProvider = () -> Arrays.asList(Paths.get("robot.yaml"), Paths.get("../default.yaml"));
+    ConfigurationSource robotSource = new FilesConfigurationSource(robotFileProvider);
     ConfigurationProvider robotProvider = new ConfigurationProviderBuilder().withConfigurationSource(robotSource)
         .withEnvironment(getEnvironment(bootConfig.environment())).build();
     return robotProvider.bind("robot", RobotConfig.class);

@@ -12,6 +12,14 @@ robot:
         reverse: false
     encoders:
       encoderCodesPerRevolution: 1024
+    sensitivity:
+      directionX: 1.0
+      directionY: 1.0
+      twist: 0.8
+    modes:
+      rabbit: 1.0
+      human: 0.66
+      turtle: 0.33
   vision:
     enable: true
     camera:

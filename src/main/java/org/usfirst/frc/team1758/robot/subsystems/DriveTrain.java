@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team1758.utilities.Configuration.DriveTrainConfig;
+import org.usfirst.frc.team1758.utilities.Configuration.DriveTrainModesConfig;
+import org.usfirst.frc.team1758.utilities.Configuration.DriveTrainSensitivityConfig;
 
 public class DriveTrain extends Subsystem {
   private CANTalon rfMotor;
@@ -18,6 +20,7 @@ public class DriveTrain extends Subsystem {
   private CANTalon lbMotor;
   private RobotDrive tmDrive;
   private Logger logger;
+  private DriveTrainConfig configs;
 
   public enum Motor {
     FrontRight, FrontLeft, BackRight, BackLeft
@@ -28,6 +31,7 @@ public class DriveTrain extends Subsystem {
   }
 
   public DriveTrain(DriveTrainConfig configs) {
+    this.configs = configs;
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Creating DriveTrain subsystem");
     rfMotor = new CANTalon(configs.motors().rightFront().port());
@@ -97,5 +101,13 @@ public class DriveTrain extends Subsystem {
       default: //ackRight
         return rbMotor.getEncPosition();
     }
+  }
+
+  public DriveTrainSensitivityConfig getSensitivityConfigs() {
+    return configs.sensitivity();
+  }
+
+  public DriveTrainModesConfig getModesConfigs() {
+    return configs.modes();
   }
 }

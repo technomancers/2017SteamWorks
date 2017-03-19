@@ -138,10 +138,30 @@ public class Configuration {
     int encoderCodesPerRevolution();
   }
 
+  public interface DriveTrainSensitivityConfig {
+    double directionX();
+
+    double directionY();
+
+    double twist();
+  }
+
+  public interface DriveTrainModesConfig {
+    double rabbit();
+
+    double human();
+    
+    double turtle();
+  }
+
   public interface DriveTrainConfig extends Enabler {
     DriveTrainMotorsConfig motors();
 
     DriveTrainEncodersConfig encoders();
+
+    DriveTrainSensitivityConfig sensitivity();
+
+    DriveTrainModesConfig modes();
   }
 
   public interface VisionCameraConfig extends Porter {

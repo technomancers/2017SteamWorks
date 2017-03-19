@@ -19,7 +19,7 @@ public class Controller {
   public JoystickButton buttonRb;
 
   public enum Axes {
-    LEFT_X(0), RIGHT_X(4), LEFT_Y(1), RIGHT_Y(5), TRIGGER_LEFT(2), TRIGGER_RIGHT(3);
+    LEFT_X(0), RIGHT_X(4), LEFT_Y(1), RIGHT_Y(5), TRIGGER_LEFT(2), TRIGGER_RIGHT(3), POV_X(6);
     public int port;
 
     Axes(int port) {
@@ -42,6 +42,7 @@ public class Controller {
     buttonY = new JoystickButton(joystick, 4);
     buttonLb = new JoystickButton(joystick, 5);
     buttonRb = new JoystickButton(joystick, 6);
+    joystick.getPOV();
   }
 
   public double getRawAxis(Axes axes) {

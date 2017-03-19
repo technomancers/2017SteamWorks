@@ -2,14 +2,15 @@ package org.usfirst.frc.team1758.robot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.utilities.Controller;
 import org.usfirst.frc.team1758.utilities.Configuration.ControllersConfig;
+import org.usfirst.frc.team1758.utilities.Controller;
 
-public class OI {
-  public static Controller drivingController, pitController;
+public class Operator {
+  public static Controller drivingController;
+  public static Controller pitController;
 
   public static void init(ControllersConfig configs) {
-    Logger logger = LoggerFactory.getLogger(OI.class);
+    Logger logger = LoggerFactory.getLogger(Operator.class);
     logger.debug("Creating Controllers");
     drivingController = new Controller(configs.driving());
     pitController = new Controller(configs.pit());

@@ -1,19 +1,21 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.command.Subsystem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team1758.utilities.Configuration.DriveTrainConfig;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 public class DriveTrain extends Subsystem {
-  private CANTalon rf_Motor, rb_Motor, lf_Motor, lb_Motor;
+  private CANTalon rfMotor;
+  private CANTalon rbMotor;
+  private CANTalon lfMotor;
+  private CANTalon lbMotor;
   private RobotDrive tmDrive;
   private Logger logger;
 
@@ -28,12 +30,12 @@ public class DriveTrain extends Subsystem {
   public DriveTrain(DriveTrainConfig configs) {
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Creating DriveTrain subsystem");
-    rf_Motor = new CANTalon(configs.motors().rightFront().port());
-    rb_Motor = new CANTalon(configs.motors().rightBack().port());
-    lf_Motor = new CANTalon(configs.motors().leftFront().port());
-    lb_Motor = new CANTalon(configs.motors().leftBack().port());
+    rfMotor = new CANTalon(configs.motors().rightFront().port());
+    rbMotor = new CANTalon(configs.motors().rightBack().port());
+    lfMotor = new CANTalon(configs.motors().leftFront().port());
+    lbMotor = new CANTalon(configs.motors().leftBack().port());
     configureEncoders(configs.encoders().encoderCodesPerRevolution());
-    tmDrive = new RobotDrive(lf_Motor, lb_Motor, rf_Motor, rb_Motor);
+    tmDrive = new RobotDrive(lfMotor, lbMotor, rfMotor, rbMotor);
     tmDrive.setInvertedMotor(MotorType.kFrontRight, configs.motors().rightFront().reverse());
     tmDrive.setInvertedMotor(MotorType.kRearRight, configs.motors().rightBack().reverse());
     tmDrive.setInvertedMotor(MotorType.kFrontLeft, configs.motors().leftFront().reverse());
@@ -57,43 +59,43 @@ public class DriveTrain extends Subsystem {
 
   public void configureEncoders(int codesPerRev) {
     logger.debug("Configuring the Encoders to {} per revolution", codesPerRev);
-    lf_Motor.configEncoderCodesPerRev(codesPerRev);
-    lb_Motor.configEncoderCodesPerRev(codesPerRev);
-    rf_Motor.configEncoderCodesPerRev(codesPerRev);
-    rb_Motor.configEncoderCodesPerRev(codesPerRev);
+    lfMotor.configEncoderCodesPerRev(codesPerRev);
+    lbMotor.configEncoderCodesPerRev(codesPerRev);
+    rfMotor.configEncoderCodesPerRev(codesPerRev);
+    rbMotor.configEncoderCodesPerRev(codesPerRev);
   }
 
   public void resetEncoderPosition() {
     logger.debug("Reseting encoder position");
-    lf_Motor.setEncPosition(0);
-    rf_Motor.setEncPosition(0);
-    lb_Motor.setEncPosition(0);
-    rb_Motor.setEncPosition(0);
+    lfMotor.setEncPosition(0);
+    rfMotor.setEncPosition(0);
+    lbMotor.setEncPosition(0);
+    rbMotor.setEncPosition(0);
   }
 
   public int getEncoderVelocity(Motor motor) {
     switch (motor) {
-    case FrontLeft:
-      return lf_Motor.getEncVelocity();
-    case FrontRight:
-      return rf_Motor.getEncVelocity();
-    case BackLeft:
-      return lb_Motor.getEncVelocity();
-    default: //BackRight
-      return rb_Motor.getEncVelocity();
+      case FrontLeft:
+        return lfMotor.getEncVelocity();
+      case FrontRight:
+        return rfMotor.getEncVelocity();
+      case BackLeft:
+        return lbMotor.getEncVelocity();
+      default: //ackRight
+        return rbMotor.getEncVelocity();
     }
   }
 
   public int getEncoderPosition(Motor motor) {
     switch (motor) {
-    case FrontLeft:
-      return lf_Motor.getEncPosition();
-    case FrontRight:
-      return rf_Motor.getEncPosition();
-    case BackLeft:
-      return lb_Motor.getEncPosition();
-    default: //BackRight
-      return rb_Motor.getEncPosition();
+      case FrontLeft:
+        return lfMotor.getEncPosition();
+      case FrontRight:
+        return rfMotor.getEncPosition();
+      case BackLeft:
+        return lbMotor.getEncPosition();
+      default: //ackRight
+        return rbMotor.getEncPosition();
     }
   }
 }

@@ -36,19 +36,18 @@ public class OrientTarget extends CommandBase {
       finished = true;
       logger.debug("OrientTarget isDone");
     } else {
-      double x, y, rot;
-      x = 0;
-      y = 0;
-      rot = 0;
+      double rot = 0;
       if (!isCentered()) {
         rot = configs.centerProportional()
             * ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
       }
+      double x = 0;
       if (!oriented()) {
         x = configs.orientedProportional() * (vision.getLeftMost().area() - vision.getRightMost().area());
       }
+      double y = 0;
       logger.trace("X: {}, ROT: {}", x, rot);
-      driveTrain.mecanumDriveCartesian(.5*x,.5*y, rot, 0.0);
+      driveTrain.mecanumDriveCartesian(x, y, rot, 0.0);
     }
   }
 

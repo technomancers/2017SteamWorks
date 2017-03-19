@@ -40,17 +40,16 @@ public class ApproachPeg extends CommandBase {
   }
 
   public void iterate() {
-    double x, y, rotate;
-    x = 0;
-    y = 0;
-    rotate = 0;
+    double y = 0;
     if (sensors.getUltrasonicValue() > configs.untilDistance()) {
       y = configs.speed();
     }
+    double x = 0;
     if (!isCentered()) {
       x = configs.centerProportional()
           * ((vision.getCenterX() - cameraConfigs.width() / 2) / (cameraConfigs.width() / 2));
     }
+    double rotate = 0;
     driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
   }
 

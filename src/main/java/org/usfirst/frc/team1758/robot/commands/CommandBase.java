@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
@@ -9,8 +11,6 @@ import org.usfirst.frc.team1758.robot.subsystems.Rope;
 import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 import org.usfirst.frc.team1758.utilities.Configuration.RobotConfig;
-
-import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class CommandBase extends Command {
   protected static DriveTrain driveTrain;

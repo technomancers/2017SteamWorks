@@ -1,5 +1,11 @@
 package org.usfirst.frc.team1758.robot;
 
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.commands.ClimbRope;
@@ -16,12 +22,6 @@ import org.usfirst.frc.team1758.robot.commands.groups.HardAutoRight;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 import org.usfirst.frc.team1758.utilities.Configuration;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class Robot extends IterativeRobot {
   Command autonomousCommand;
   private SendableChooser<Command> autoChooser;
@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
     configs = new Configuration();
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Initializing Robot");
-    OI.init(configs.robotConfig.controllers());
+    Operator.init(configs.robotConfig.controllers());
     CommandBase.init(configs.robotConfig);
     autonomousCommand = null;
     autoChooser = new SendableChooser<Command>();
@@ -83,11 +83,12 @@ public class Robot extends IterativeRobot {
 
   public void teleopInit() {
     logger.debug("Starting Telop");
-    if (autonomousCommand != null)
+    if (autonomousCommand != null) {
       autonomousCommand.cancel();
+    }
     (new TurnOnLight()).start();
     (new ClimbRope()).start();
-    OI.drivingController.buttonA.whenPressed(new ToggleGear());
+    Operator.drivingController.buttonA.whenPressed(new ToggleGear());
   }
 
   public void teleopPeriodic() {

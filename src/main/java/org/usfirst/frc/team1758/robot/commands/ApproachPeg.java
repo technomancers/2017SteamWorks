@@ -27,6 +27,7 @@ public class ApproachPeg extends CommandBase {
     logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
     if (isDone()) {
       finished = true;
+      logger.trace("ApproachPeg done");
       driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
     } else {
       iterate();
@@ -41,7 +42,7 @@ public class ApproachPeg extends CommandBase {
     }
     double x = 0;
     if (!isCentered()) {
-      x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-2.75 * (RobotMap.CAMERA_WIDTH / 2));
+      x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-2 * (RobotMap.CAMERA_WIDTH / 2));
     }
     double rotate = 0;
     logger.trace("Angle: {}", .3 * sensors.getGyroAngle());
@@ -56,12 +57,12 @@ public class ApproachPeg extends CommandBase {
   }
 
   private boolean isCentered() {
-    return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 7)
-        && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 7);
+    return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 20)
+        && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 20);
   }
 
   private boolean isDone() {
-    if (sensors.getUltrasonicValue() < 40 && isCentered()) {
+    if (sensors.getUltrasonicValue() < 40) {
       counter++;
     } else {
       counter = 0;

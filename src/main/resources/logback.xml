@@ -10,8 +10,9 @@ DEBUG
 INFO
 WARN
 ERROR-->
-	<logger name="org.usfirst.frc.team1758.robot.commands.CenterRobotTarget" level="TRACE"/>
+	<logger name="org.usfirst.frc.team1758.robot.commands.OrientTarget" level="TRACE"/>
 	<logger name="org.usfirst.frc.team1758.robot.commands.ApproachPeg" level="TRACE"/>
+	<logger name="org.usfirst.frc.team1758.robot.commands.ToggleGear" level="TRACE"/>
 	<root level="WARN">
     <appender-ref ref="STDOUT" />
   </root>

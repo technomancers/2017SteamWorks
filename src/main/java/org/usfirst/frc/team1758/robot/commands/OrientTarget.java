@@ -41,7 +41,7 @@ public class OrientTarget extends CommandBase {
       }
       double y = 0; 
       logger.trace("X: {}, ROT: {}", x, rot);
-      driveTrain.mecanumDriveCartesian(.5 * x, .5 * y, rot, 0.0);
+      driveTrain.mecanumDriveCartesian(.8 * x, .5 * y, rot, 0.0);
     }
   }
 
@@ -56,11 +56,11 @@ public class OrientTarget extends CommandBase {
   }
 
   private boolean isCentered() {
-    return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + 15 && vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - 15;
+    return vision.getCenterX() < RobotMap.CAMERA_WIDTH / 2 + 5 && vision.getCenterX() > RobotMap.CAMERA_WIDTH / 2 - 5;
   }
 
   private boolean oriented() {
-    return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 50;
+    return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 60;
   }
 
   private boolean isDone() {

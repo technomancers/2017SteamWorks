@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1758.utilities;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -61,5 +62,14 @@ public class Controller {
   
   public double getTwist() {
     return joystick.getTwist();
+  }
+
+  public double getPov() {
+    return joystick.getPOV(0);
+  }
+
+  public void rumble()  {
+    joystick.setRumble(RumbleType.kLeftRumble, 1);
+    joystick.setRumble(RumbleType.kRightRumble, 1);
   }
 }

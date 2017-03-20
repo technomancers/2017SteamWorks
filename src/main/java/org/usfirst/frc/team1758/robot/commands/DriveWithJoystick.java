@@ -10,6 +10,7 @@ public class DriveWithJoystick extends CommandBase {
   private boolean firstIt;
   private boolean firstTime;
   private double staticAngle;
+  private int mode;
   private Logger logger;
 
   public DriveWithJoystick() {
@@ -24,6 +25,7 @@ public class DriveWithJoystick extends CommandBase {
     firstIt = true;
     firstTime = true;
     staticAngle = 0.0;
+    mode = 2;
   }
 
   protected void execute() {
@@ -43,8 +45,12 @@ public class DriveWithJoystick extends CommandBase {
       gyroAngle = staticAngle;
       firstIt = true;
     }
-    double x = Operator.drivingController.getNormalizedAxis(Axes.LEFT_X);
-    double y = Operator.drivingController.getNormalizedAxis(Axes.LEFT_Y);
+    if (Operator.drivingController.buttonX.get()) {
+      mode++;
+    }
+    double movementRatio = (double) ((mode % 3) + 1)  * .33;
+    double x = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_X);
+    double y = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_Y);
     double twist = .8 * Operator.drivingController.getNormalizedAxis(Axes.RIGHT_X);
     driveTrain.mecanumDriveCartesian(x, y, twist, gyroAngle);
     if (Operator.drivingController.buttonLb.get()) {

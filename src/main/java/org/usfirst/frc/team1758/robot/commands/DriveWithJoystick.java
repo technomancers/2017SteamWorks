@@ -57,7 +57,7 @@ public class DriveWithJoystick extends CommandBase {
     double movementRatio = (double) ((mode % 2) + 1)  * .5;
     double x = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_X);
     double y = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_Y);
-    double twist = movementRatio * .8 * Operator.drivingController.getNormalizedAxis(Axes.RIGHT_X);
+    double twist = .8 * Operator.drivingController.getNormalizedAxis(Axes.RIGHT_X);
     driveTrain.mecanumDriveCartesian(x, y, twist, gyroAngle);
     if (Operator.drivingController.buttonLb.get()) {
       sensors.resetGyroAngle();

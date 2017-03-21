@@ -57,8 +57,8 @@ public class ApproachPeg extends CommandBase {
   }
 
   private boolean isCentered() {
-    return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 20)
-        && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 20);
+    return (vision.getCenterX() < (RobotMap.CAMERA_WIDTH / 2) + 5)
+        && (vision.getCenterX() > (RobotMap.CAMERA_WIDTH / 2) - 5);
   }
 
   private boolean isDone() {

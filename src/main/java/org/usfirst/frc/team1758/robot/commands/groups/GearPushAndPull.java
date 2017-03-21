@@ -9,8 +9,6 @@ public class GearPushAndPull extends CommandGroup {
 
   public GearPushAndPull() {
     addSequential(new ToggleGear());
-    addSequential(new ToggleGear());
-    addSequential(new ToggleGear());
     addSequential(new MoveForward(4000));
     addSequential(new ToggleGear());
   }

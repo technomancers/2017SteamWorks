@@ -33,15 +33,18 @@ public class OrientTarget extends CommandBase {
     } else {
       double rot = 0;
       if (!isCentered()) {
-        rot = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (4 * (RobotMap.CAMERA_WIDTH / 2));
+        rot = .75 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2);
+        if (Math.abs(rot) < .2) {
+          rot += .1 * rot / Math.abs(rot);
+        }
       }
       double x = 0;
       if (!oriented()) {
-        x = (vision.getLeftMost().area() - vision.getRightMost().area()) / -300;
+        x = (vision.getLeftMost().width - vision.getRightMost().width) * -.05;
       }
       double y = 0; 
       logger.trace("X: {}, ROT: {}", x, rot);
-      driveTrain.mecanumDriveCartesian(.8 * x, .5 * y, rot, 0.0);
+      driveTrain.mecanumDriveCartesian(x, y, rot, 0.0);
     }
   }
 
@@ -60,7 +63,7 @@ public class OrientTarget extends CommandBase {
   }
 
   private boolean oriented() {
-    return Math.abs(vision.getLeftMost().area() - vision.getRightMost().area()) < 60;
+    return Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 10;
   }
 
   private boolean isDone() {

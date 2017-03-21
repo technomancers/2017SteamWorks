@@ -36,7 +36,7 @@ public class ApproachPeg extends CommandBase {
 
   public void iterate() {
     double y = 0;
-    if (sensors.getUltrasonicValue() > 40) {
+    if (driveTrain.getUltrasonicValue() > 40) {
       y = 0.225;
     }
     double x = 0;

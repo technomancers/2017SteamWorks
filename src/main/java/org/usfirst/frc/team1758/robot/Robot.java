@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
     autoChooser.addObject("Hard Middle", new HardAutoMiddle());
     SmartDashboard.putData("Autonomous", autoChooser);
     CommandBase.getVision().startVisionThread();
-    CommandBase.getSensors().calibrateGyroAngle();
+    CommandBase.getDriveTrain().calibrateGyroAngle();
     CommandBase.getDriveTrain().resetEncoderPosition();
     updateSmartDashboard();
     (new ToggleCompressor()).start();

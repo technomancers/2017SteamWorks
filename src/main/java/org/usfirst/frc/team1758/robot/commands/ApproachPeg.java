@@ -35,17 +35,16 @@ public class ApproachPeg extends CommandBase {
   }
 
   public void iterate() {
-    double y = 0; 
-    if (driveTrain.getUltrasonicValue() > 40) {
-      y = 0.3;
+    double y = 0;
+    if (sensors.getUltrasonicValue() > 40) {
+      y = 0.225;
     }
     double x = 0;
     if (!isCentered()) {
-      x = (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-2 * (RobotMap.CAMERA_WIDTH / 2));
+      x = -.375 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2);
     }
     double rotate = 0;
-    logger.trace("Angle: {}", .3 * driveTrain.getGyroAngle());
-    driveTrain.mecanumDriveCartesian(.75 * x,.75 * y, rotate, 0);
+    driveTrain.mecanumDriveCartesian(x, y, rotate, 0);
   }
 
   protected boolean isFinished() {

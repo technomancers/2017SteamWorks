@@ -31,8 +31,8 @@ public class RobotMap {
 
   //Pneumatics
   public static final int COMPRESSOR_NODE_ID = 0;
-  public static final int GEAR_SOLENOID_IN = 0;
-  public static final int GEAR_SOLENOID_OUT = 1;
+  public static final int GEAR_SOLENOID_IN = 1;
+  public static final int GEAR_SOLENOID_OUT = 0;
   public static final int BALL_SOLENOID_IN = 2;
   public static final int BALL_SOLENOID_OUT = 3;
 

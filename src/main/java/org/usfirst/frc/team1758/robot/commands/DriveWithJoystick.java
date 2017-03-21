@@ -9,6 +9,7 @@ public class DriveWithJoystick extends CommandBase {
   private boolean finished;
   private boolean firstIt;
   private boolean firstTime;
+  private boolean firstPress;
   private double staticAngle;
   private int mode;
   private Logger logger;
@@ -25,7 +26,8 @@ public class DriveWithJoystick extends CommandBase {
     firstIt = true;
     firstTime = true;
     staticAngle = 0.0;
-    mode = 2;
+    mode = 1;
+    firstPress = true;
   }
 
   protected void execute() {
@@ -45,10 +47,13 @@ public class DriveWithJoystick extends CommandBase {
       gyroAngle = staticAngle;
       firstIt = true;
     }
-    if (Operator.drivingController.buttonX.get()) {
+    if (Operator.drivingController.buttonX.get() && firstPress) {
       mode++;
+      firstPress = false;
+    } else if (!Operator.drivingController.buttonX.get()) {
+      firstPress = true;
     }
-    double movementRatio = (double) ((mode % 3) + 1)  * .33;
+    double movementRatio = (double) ((mode % 2) + 1)  * .5;
     double x = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_X);
     double y = movementRatio * Operator.drivingController.getNormalizedAxis(Axes.LEFT_Y);
     double twist = .8 * Operator.drivingController.getNormalizedAxis(Axes.RIGHT_X);

@@ -10,8 +10,8 @@ public class AutonomousRight extends CommandGroup {
 
   public AutonomousRight() {
     addSequential(new TurnOnLight());
-    addSequential(new MoveBack(8000));
-    addSequential(new TurnLeft(30));
-    addSequential(new Autonomous());
+    addSequential(new MoveBack(9125));
+    addSequential(new TurnLeft(40));
+    addSequential(new Autonomous(3000));
   }
 }

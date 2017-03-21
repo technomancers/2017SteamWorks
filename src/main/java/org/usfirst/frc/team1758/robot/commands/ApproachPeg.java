@@ -42,7 +42,7 @@ public class ApproachPeg extends CommandBase {
     }
     double x = 0;
     if (!isCentered()) {
-      x = .375 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (-2 * (RobotMap.CAMERA_WIDTH / 2));
+      x = -.375 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2);
     }
     double rotate = 0;
     driveTrain.mecanumDriveCartesian(x, y, rotate, 0);

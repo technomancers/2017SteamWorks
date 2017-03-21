@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 
   public void updateSmartDashboard() {
     logger.trace("Update Smart Dashboard");
-    SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
+    SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getDriveTrain().getUltrasonicValue());
     SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
     SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX());
   }

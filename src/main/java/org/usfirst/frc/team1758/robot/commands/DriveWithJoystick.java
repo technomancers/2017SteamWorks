@@ -18,7 +18,6 @@ public class DriveWithJoystick extends CommandBase {
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Created DriveWithJoystick command");
     requires(driveTrain);
-    requires(sensors);
   }
 
   protected void initialize() {
@@ -38,9 +37,9 @@ public class DriveWithJoystick extends CommandBase {
     double gyroAngle;
     if (Operator.drivingController.buttonRb.get()) {
       if (firstIt) {
-        sensors.resetGyroAngle();
+        driveTrain.resetGyroAngle();
       }
-      gyroAngle = sensors.getGyroAngle();
+      gyroAngle = driveTrain.getGyroAngle();
       staticAngle = gyroAngle;
       firstIt = false;
     } else {
@@ -59,7 +58,7 @@ public class DriveWithJoystick extends CommandBase {
     double twist = .8 * Operator.drivingController.getNormalizedAxis(Axes.RIGHT_X);
     driveTrain.mecanumDriveCartesian(x, y, twist, gyroAngle);
     if (Operator.drivingController.buttonLb.get()) {
-      sensors.resetGyroAngle();
+      driveTrain.resetGyroAngle();
       driveTrain.resetEncoderPosition();
       staticAngle = 0.0;
     }

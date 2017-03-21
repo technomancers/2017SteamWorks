@@ -9,12 +9,10 @@ import org.usfirst.frc.team1758.robot.subsystems.Compressing;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1758.robot.subsystems.Gear;
 import org.usfirst.frc.team1758.robot.subsystems.Rope;
-import org.usfirst.frc.team1758.robot.subsystems.Sensors;
 import org.usfirst.frc.team1758.robot.subsystems.Vision;
 
 public abstract class CommandBase extends Command {
   protected static DriveTrain driveTrain;
-  protected static Sensors sensors;
   protected static Vision vision;
   protected static Gear gear;
   protected static Compressing compressing;
@@ -25,7 +23,6 @@ public abstract class CommandBase extends Command {
     Logger logger = LoggerFactory.getLogger(CommandBase.class);
     logger.debug("Initialized CommandBase");
     driveTrain = new DriveTrain();
-    sensors = new Sensors();
     vision = new Vision();
     gear = new Gear();
     compressing = new Compressing();
@@ -42,10 +39,6 @@ public abstract class CommandBase extends Command {
     super();
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Created CommandBase");
-  }
-
-  public static Sensors getSensors() {
-    return sensors;
   }
 
   public static DriveTrain getDriveTrain() {

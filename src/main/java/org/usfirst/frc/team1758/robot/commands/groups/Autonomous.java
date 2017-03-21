@@ -11,6 +11,6 @@ public class Autonomous extends CommandGroup {
     addSequential(new OrientTarget());
     addSequential(new ApproachPeg());
     addSequential(new MoveBack(distance));
-    addSequential(new GearPushAndPull());
+    addSequential(new GearDeploy());
   }
 }

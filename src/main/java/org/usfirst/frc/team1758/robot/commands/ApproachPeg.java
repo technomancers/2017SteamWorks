@@ -14,17 +14,16 @@ public class ApproachPeg extends CommandBase {
     logger.debug("ApproachPeg command created");
     requires(vision);
     requires(driveTrain);
-    requires(sensors);
   }
 
   protected void initialize() {
-    sensors.resetGyroAngle();
+    driveTrain.resetGyroAngle();
     finished = false;
     counter = 0;
   }
 
   protected void execute() {
-    logger.trace("Gyro: {} Center: {}", sensors.getUltrasonicValue(), isCentered());
+    logger.trace("Gyro: {} Center: {}", driveTrain.getUltrasonicValue(), isCentered());
     if (isDone()) {
       finished = true;
       logger.trace("ApproachPeg done");
@@ -36,7 +35,7 @@ public class ApproachPeg extends CommandBase {
   }
 
   public void iterate() {
-    double y = 0; 
+    double y = 0;
     if (sensors.getUltrasonicValue() > 40) {
       y = 0.225;
     }
@@ -61,7 +60,7 @@ public class ApproachPeg extends CommandBase {
   }
 
   private boolean isDone() {
-    if (sensors.getUltrasonicValue() < 40) {
+    if (driveTrain.getUltrasonicValue() < 40) {
       counter++;
     } else {
       counter = 0;

@@ -68,8 +68,8 @@ public class Controller {
     return joystick.getPOV(0);
   }
 
-  public void rumble()  {
-    joystick.setRumble(RumbleType.kLeftRumble, 1);
-    joystick.setRumble(RumbleType.kRightRumble, 1);
+  public void setRumble(double value)  {
+    joystick.setRumble(RumbleType.kLeftRumble, value);
+    joystick.setRumble(RumbleType.kRightRumble, value);
   }
 }

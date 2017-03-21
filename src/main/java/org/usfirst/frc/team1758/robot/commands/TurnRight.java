@@ -5,7 +5,6 @@ public class TurnRight extends CommandBase {
   private double angle;
 
   public TurnRight(double angle) {
-    requires(sensors);
     requires(driveTrain);
     this.angle = angle;
   }
@@ -13,11 +12,11 @@ public class TurnRight extends CommandBase {
   protected void initialize() {
     finished = false;
     driveTrain.resetEncoderPosition();
-    sensors.resetGyroAngle();
+    driveTrain.resetGyroAngle();
   }
 
   protected void execute() {
-    if (sensors.getGyroAngle() > this.angle) {
+    if (driveTrain.getGyroAngle() > this.angle) {
       finished = true;
       driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
     } else {

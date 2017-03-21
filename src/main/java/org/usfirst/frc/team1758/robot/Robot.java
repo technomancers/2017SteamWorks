@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
     autoChooser.addObject("Hard Right", new HardAutoRight());
     autoChooser.addObject("Hard Middle", new HardAutoMiddle());
     SmartDashboard.putData("Autonomous", autoChooser);
-    CommandBase.getSensors().calibrateGyroAngle();
+    CommandBase.getDriveTrain().calibrateGyroAngle();
     CommandBase.getDriveTrain().resetEncoderPosition();
     CommandBase.getVision().startVisionThread();
     updateSmartDashboard();
@@ -56,7 +56,7 @@ public class Robot extends IterativeRobot {
 
   public void updateSmartDashboard() {
     logger.trace("Update Smart Dashboard");
-    SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getSensors().getUltrasonicValue());
+    SmartDashboard.putNumber("Ultrasonic distance", CommandBase.getDriveTrain().getUltrasonicValue());
     SmartDashboard.putNumber("Right Front Encoder", CommandBase.getDriveTrain().getEncoderPosition(Motor.FrontRight));
     SmartDashboard.putNumber(("Center x"), CommandBase.getVision().getCenterX()); 
     SmartDashboard.putNumber("POV", Operator.drivingController.getPov());

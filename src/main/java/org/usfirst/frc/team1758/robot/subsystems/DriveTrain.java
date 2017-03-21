@@ -2,6 +2,8 @@ package org.usfirst.frc.team1758.robot.subsystems;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +19,8 @@ public class DriveTrain extends Subsystem {
   private CANTalon lfMotor;
   private CANTalon lbMotor;
   private RobotDrive tmDrive;
+  private ADXRS450_Gyro gyro;
+  private AnalogInput sonic;
   private Logger logger;
 
   public enum Motor {
@@ -30,6 +34,8 @@ public class DriveTrain extends Subsystem {
   public DriveTrain() {
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Creating DriveTrain subsystem");
+    gyro = new ADXRS450_Gyro();
+    sonic = new AnalogInput(RobotMap.ANALOG_SONIC_PORT);
     rfMotor = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
     rbMotor = new CANTalon(RobotMap.RIGHT_BACK_MOTOR);
     lfMotor = new CANTalon(RobotMap.LEFT_FRONT_MOTOR);
@@ -95,5 +101,24 @@ public class DriveTrain extends Subsystem {
       default: //BackRight
         return rbMotor.getEncPosition();
     }
+  }
+  
+  public double getGyroAngle() {
+    return gyro.getAngle();
+  }
+
+  public double getUltrasonicValue() {
+    double ratio = (RobotMap.OUT_VOLTS / 512.0);
+    return sonic.getVoltage() / ratio;
+  }
+  
+  public void calibrateGyroAngle() {
+    logger.debug("Calibrating gyroscope");
+    gyro.calibrate();
+  }
+
+  public void resetGyroAngle() {
+    logger.debug("Reseting the gyroscope");
+    gyro.reset();
   }
 }

@@ -16,7 +16,7 @@ public class MoveForward extends CommandBase {
   protected void initialize() {
     finished = false;
     driveTrain.resetEncoderPosition();
-    sensors.resetGyroAngle();
+    driveTrain.resetGyroAngle();
   }
 
   protected void execute() {

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1758.robot.commands;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 
@@ -7,13 +9,16 @@ import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 public class MoveBack extends CommandBase {
   private boolean finished;
   private int distance;
+  private Logger logger;
 
   public MoveBack(int distance) {
+    logger = LoggerFactory.getLogger(this.getClass());
     requires(driveTrain);
     this.distance = distance;
   }
 
   protected void initialize() {
+    logger.debug("MoveBack Command Started");
     finished = false;
     driveTrain.resetEncoderPosition();
     driveTrain.resetGyroAngle();
@@ -33,6 +38,7 @@ public class MoveBack extends CommandBase {
   }
 
   protected void end() {
+    logger.debug("MoveBack command finished");
   }
 
   protected void interrupted() {

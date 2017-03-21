@@ -34,9 +34,6 @@ public class OrientTarget extends CommandBase {
       double rot = 0;
       if (!isCentered()) {
         rot = .75 * (vision.getCenterX() - RobotMap.CAMERA_WIDTH / 2) / (RobotMap.CAMERA_WIDTH / 2);
-        if (Math.abs(rot) < .2) {
-          rot += .1 * rot / Math.abs(rot);
-        }
       }
       double x = 0;
       if (!oriented()) {

@@ -2,7 +2,7 @@ package org.usfirst.frc.team1758.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class WaitTil extends CommandBase{
+public class WaitTil extends CommandBase {
   private boolean finished;
   private Timer timer;
   private double seconds;
@@ -17,11 +17,12 @@ public class WaitTil extends CommandBase{
     timer.start();
   }
 
-  protected void execute(){
+  protected void execute() {
     if (timer.get() > seconds) {
       finished = true;
     }
   }
+  
   protected boolean isFinished() {
     return finished;
   }

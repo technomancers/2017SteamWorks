@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.commands.ClimbRope;
 import org.usfirst.frc.team1758.robot.commands.CommandBase;
 import org.usfirst.frc.team1758.robot.commands.ToggleCompressor;
 import org.usfirst.frc.team1758.robot.commands.ToggleGear;
@@ -82,7 +81,6 @@ public class Robot extends IterativeRobot {
       autonomousCommand.cancel();
     }
     (new TurnOnLight()).start();
-    (new ClimbRope()).start();
     Operator.drivingController.buttonA.whenPressed(new ToggleGear());
   }
 

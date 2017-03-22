@@ -16,6 +16,7 @@ public class ClimbRope extends CommandBase {
 
   protected void execute() {
     double speed = Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
+    speed += Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
     rope.setMotor(speed);
   }
 

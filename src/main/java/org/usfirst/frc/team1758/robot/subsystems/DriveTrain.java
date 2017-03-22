@@ -22,6 +22,7 @@ public class DriveTrain extends Subsystem {
   private ADXRS450_Gyro gyro;
   private AnalogInput sonic;
   private Logger logger;
+  private int counter;
 
   public enum Motor {
     FrontRight, FrontLeft, BackRight, BackLeft
@@ -34,6 +35,7 @@ public class DriveTrain extends Subsystem {
   public DriveTrain() {
     logger = LoggerFactory.getLogger(this.getClass());
     logger.debug("Creating DriveTrain subsystem");
+    counter = 0;
     gyro = new ADXRS450_Gyro();
     sonic = new AnalogInput(RobotMap.ANALOG_SONIC_PORT);
     rfMotor = new CANTalon(RobotMap.RIGHT_FRONT_MOTOR);
@@ -101,6 +103,41 @@ public class DriveTrain extends Subsystem {
       default: //BackRight
         return rbMotor.getEncPosition();
     }
+  }
+
+  public boolean doneMoving(int distance) {
+    int done = 0;
+    int stopped = 0;
+    if (Math.abs(getEncoderPosition(Motor.FrontLeft)) > distance) {
+      done++;
+    }
+    if (Math.abs(getEncoderVelocity(Motor.FrontLeft)) < 10) {
+      stopped++;
+    }
+    if (Math.abs(getEncoderPosition(Motor.FrontRight)) > distance) {
+      done++;
+    }
+    if (Math.abs(getEncoderVelocity(Motor.FrontRight)) < 10) {
+      stopped++;
+    }
+    if (Math.abs(getEncoderPosition(Motor.BackLeft)) > distance) {
+      done++;
+    }
+    if (Math.abs(getEncoderVelocity(Motor.BackLeft)) < 10) {
+      stopped++;
+    }
+    if (Math.abs(getEncoderPosition(Motor.BackRight)) > distance) {
+      done++;
+    }
+    if (Math.abs(getEncoderVelocity(Motor.BackRight)) < 10) {
+      stopped++;
+    }
+    if (done >= 2 || (done >= 1 && stopped >= 3)) {
+      counter ++;
+    } else {
+      counter = 0;
+    }
+    return counter > 5;
   }
   
   public double getGyroAngle() {

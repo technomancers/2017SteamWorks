@@ -2,7 +2,6 @@ package org.usfirst.frc.team1758.robot.commands;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.usfirst.frc.team1758.robot.subsystems.DriveTrain.Motor;
 
 
 
@@ -25,7 +24,7 @@ public class MoveBack extends CommandBase {
   }
 
   protected void execute() {
-    if (driveTrain.getEncoderPosition(Motor.FrontRight) < -1 * this.distance) {
+    if (driveTrain.doneMoving(this.distance)) {
       finished = true;
       driveTrain.mecanumDriveCartesian(0, 0, 0, 0);
     } else {

@@ -9,6 +9,6 @@ public class AutonomousMiddle extends CommandGroup {
   public AutonomousMiddle() {
     addSequential(new TurnOnLight());
     addSequential(new MoveBack(3200));
-    addSequential(new Autonomous(3000));
+    addSequential(new Autonomous(4000));
   }
 }

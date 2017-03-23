@@ -40,7 +40,8 @@ public class OrientTarget extends CommandBase {
       }
       double x = 0;
       if (!oriented()) {
-        x = (vision.getLeftMost().width - vision.getRightMost().width) * -.05;
+        x += (vision.getLeftMost().width - vision.getRightMost().width) * -.025;
+        x += (vision.getLeftMost().tl().y - vision.getRightMost().tl().y) * .025;
       }
       double y = 0; 
       logger.trace("X: {}, ROT: {}", x, rot);
@@ -63,7 +64,7 @@ public class OrientTarget extends CommandBase {
   }
 
   private boolean oriented() {
-    return Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 6;
+    return (Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 6) && (Math.abs(vision.getLeftMost().tl().y - vision.getRightMost().tl().y)<6);
   }
 
   private boolean isDone() {

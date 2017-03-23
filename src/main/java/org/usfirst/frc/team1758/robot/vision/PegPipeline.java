@@ -61,7 +61,7 @@ public class PegPipeline implements VisionPipeline {
 
     // Step Filter_Contours0:
     ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-    double filterContoursMinArea = 10.0;
+    double filterContoursMinArea = 76.8;
     double filterContoursMinPerimeter = 0.0;
     double filterContoursMinWidth = 0.0;
     double filterContoursMaxWidth = 1000.0;

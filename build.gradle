@@ -12,7 +12,7 @@ dependencies {
 	//Include external dependencies here (Uses maven central)
 	checkstyle 'com.puppycrawl.tools:checkstyle:+'
 	compile fileTree(dir: 'libs', include: ['*.jar'])
-  rioLib fileTree(dir:'libs', include:['*.so'])
+  riolibs fileTree(dir:'libs', include:['*.so'])
 	compile 'org.slf4j:slf4j-api:+'
 	compile 'ch.qos.logback:logback-classic:+'
 	compile 'ch.qos.logback:logback-core:+'

@@ -4,10 +4,10 @@ import edu.wpi.cscore.VideoMode.PixelFormat;
 
 public class RobotMap {
   //DriveTrain
-  public static final int RIGHT_FRONT_MOTOR = 1;
-  public static final int RIGHT_BACK_MOTOR = 0;
-  public static final int LEFT_FRONT_MOTOR = 4;
-  public static final int LEFT_BACK_MOTOR = 3;
+  public static final int RIGHT_FRONT_MOTOR = 3;
+  public static final int RIGHT_BACK_MOTOR = 4;
+  public static final int LEFT_FRONT_MOTOR = 1;
+  public static final int LEFT_BACK_MOTOR = 2;
   public static final int ENCODER_CODES_PER_REVOLUTION = 1024;
 
   //Vison
@@ -43,5 +43,5 @@ public class RobotMap {
   public static final int SHOOTER_MOTOR_PORT = 5;
 
   //Rope
-  public static final int ROPE_MOTOR_PORT = 6;
+  public static final int ROPE_MOTOR_PORT = 0;
 }

@@ -6,15 +6,16 @@ import org.usfirst.frc.team1758.robot.RobotMap;
 
 public class OrientTarget extends CommandBase {
   private boolean finished;
+  private boolean widthEquals;
+  private boolean heightEquals;
   private Logger logger;
   private boolean firstTime;
 
   public OrientTarget() {
     logger = LoggerFactory.getLogger(this.getClass());
-    logger.debug("CenterRobotTarget command created.");
+    logger.debug("OrientTarget command created.");
     requires(vision);
     requires(driveTrain);
-
   }
 
   protected void initialize() {
@@ -24,12 +25,12 @@ public class OrientTarget extends CommandBase {
 
   protected void execute() {
     if (firstTime) {
-      logger.debug("CenterRobotTarget command started");
+      logger.debug("OrientTarget command started");
       firstTime = false;
     }
     if (isDone()) {
       finished = true;
-      logger.debug("CenterRobotTarget isDone");
+      logger.debug("OrientTarget isDone");
     } else {
       double rot = 0;
       if (!isCentered()) {
@@ -64,7 +65,9 @@ public class OrientTarget extends CommandBase {
   }
 
   private boolean oriented() {
-    return (Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 6) && (Math.abs(vision.getLeftMost().tl().y - vision.getRightMost().tl().y)<6);
+    widthEquals = (Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 6);
+    heightEquals = (Math.abs(vision.getLeftMost().tl().y - vision.getRightMost().tl().y) < 3);
+    return widthEquals && heightEquals;
   }
 
   private boolean isDone() {

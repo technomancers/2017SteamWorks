@@ -16,9 +16,9 @@ public class ClimbRope extends CommandBase {
 
   protected void execute() {
     double speed = 0.0; 
-    speed += Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
-    speed -= Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
-    if (speed < 0) {
+    speed -= Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_LEFT);
+    speed += Operator.drivingController.getNormalizedAxis(Axes.TRIGGER_RIGHT);
+    if (speed > 0) {
       Operator.drivingController.setRumble(1);
     } else {
       Operator.drivingController.setRumble(0);

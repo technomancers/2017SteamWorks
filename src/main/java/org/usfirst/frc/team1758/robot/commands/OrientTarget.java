@@ -7,7 +7,6 @@ import org.usfirst.frc.team1758.robot.RobotMap;
 public class OrientTarget extends CommandBase {
   private boolean finished;
   private boolean widthEquals;
-  private boolean heightEquals;
   private Logger logger;
   private boolean firstTime;
 
@@ -42,7 +41,6 @@ public class OrientTarget extends CommandBase {
       double x = 0;
       if (!oriented()) {
         x += (vision.getLeftMost().width - vision.getRightMost().width) * -.025;
-        x += (vision.getLeftMost().tl().y - vision.getRightMost().tl().y) * .025;
       }
       double y = 0; 
       logger.trace("X: {}, ROT: {}", x, rot);
@@ -66,8 +64,7 @@ public class OrientTarget extends CommandBase {
 
   private boolean oriented() {
     widthEquals = (Math.abs(vision.getLeftMost().width - vision.getRightMost().width) < 6);
-    heightEquals = (Math.abs(vision.getLeftMost().tl().y - vision.getRightMost().tl().y) < 3);
-    return widthEquals && heightEquals;
+    return widthEquals;
   }
 
   private boolean isDone() {

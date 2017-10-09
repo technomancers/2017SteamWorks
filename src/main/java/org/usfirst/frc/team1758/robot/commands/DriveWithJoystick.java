@@ -20,6 +20,7 @@ public class DriveWithJoystick extends CommandBase {
     requires(driveTrain);
   }
 
+
   protected void initialize() {
     finished = false;
     firstIt = true;

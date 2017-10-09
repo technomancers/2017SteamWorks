@@ -1,29 +1,42 @@
 plugins {
-	id 'io.github.technomancers.gradlerio' version '0.1.17'
+    id "java"
+    id "eclipse"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.1.5"
 }
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'checkstyle'
 
+frc {
+    team = "1758"
+    robotClass = "org.usfirst.frc.team1758.robot.Robot"
+}
 
-description 'Build and Deploy to the RoboRIO with WPI\'s FRC libraries'
+wpi {
+    opencvVersion = "3.1.0"
+}
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
-	//Include external dependencies here (Uses maven central)
-	checkstyle 'com.puppycrawl.tools:checkstyle:+'
-	compile fileTree(dir: 'libs', include: ['*.jar'])
-  riolibs fileTree(dir:'libs', include:['*.so'])
-	compile 'org.slf4j:slf4j-api:+'
-	compile 'ch.qos.logback:logback-classic:+'
-	compile 'ch.qos.logback:logback-core:+'
+  compile wpilib()
+  compile talonSrx()
+ 	compile fileTree(dir: 'libs', include: ['*.jar'])
+ 	compile 'org.slf4j:slf4j-api:+'
+ 	compile 'ch.qos.logback:logback-classic:+'
+ 	compile 'ch.qos.logback:logback-core:+'
 }
 
-checkstyle{
-	configFile file('checkstyle.xml')
+def robotManifest = {
+  attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+  attributes 'Robot-Class': frc.robotClass
 }
 
-gradlerio{
-	teamNumber '1758'
-	robotClass 'org.usfirst.frc.team1758.robot.Robot'
-	rioIP '10.17.58.21'
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest robotManifest
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.2.1'
 }

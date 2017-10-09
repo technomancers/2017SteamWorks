@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1758.robot.subsystems;
 
-import com.ctre.CANTalon;
-
+import com.ctre.MotorControl.CANTalon;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotDrive;

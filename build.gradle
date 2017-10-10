@@ -8,6 +8,7 @@ plugins {
 frc {
     team = "1758"
     robotClass = "org.usfirst.frc.team1758.robot.Robot"
+    rioIP = "169.254.6.245"
 }
 
 wpi {

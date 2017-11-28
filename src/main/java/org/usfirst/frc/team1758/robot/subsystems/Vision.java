@@ -8,7 +8,11 @@ import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+import org.apache.commons.collections4.queue.CircularFifoQueue;
+import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
+import org.apache.commons.math3.analysis.interpolation.SplineInterpolator; 
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction; 
+import java.util.Queue;
 import java.util.ArrayList;
 
 import org.opencv.core.Mat;
@@ -38,6 +42,8 @@ public class Vision extends Subsystem {
   private Rect bigRect;
   private long currTime;
   private long prevTime;
+  private ArrayList<Double> centerXValues, timesOfFrames;
+  private double realCurrentTime;
 
   public Vision() {
     logger = LoggerFactory.getLogger(this.getClass());
@@ -104,6 +110,13 @@ public class Vision extends Subsystem {
             continue;
           }
           prevTime = currTime;
+          if(timesOfFrames.size() > 1000)
+          {
+            timesOfFrames.remove(0);
+            timesOfFrames.add((double)currTime);
+          } else {
+            timesOfFrames.add((double)currTime);
+          }
           pegPipeline.process(image);
           leftMost = new Rect(RobotMap.CAMERA_WIDTH, RobotMap.CAMERA_HEIGHT, 0, 0);
           rightMost = new Rect(0,0,0,0);
@@ -124,6 +137,13 @@ public class Vision extends Subsystem {
           }
           numRectangles = mops.size();
           centerX = (leftMost.tl().x + rightMost.br().x) / 2.0;
+          if(centerXValues.size() > 1000)
+          {
+            centerXValues.remove(0);
+            centerXValues.add(centerX);
+          } else {
+            centerXValues.add(centerX);
+          }
           Imgproc.line(image, new Point(centerX, 0), new Point(centerX, RobotMap.CAMERA_HEIGHT), new Scalar(255, 0, 0));
           outputStream.putFrame(image);
         }
@@ -134,7 +154,13 @@ public class Vision extends Subsystem {
   }
 
   public double getCenterX() {
-    return centerX;
+      double linearValue = linearInterp(timesOfFrames, centerXValues, (double)(gearSink.grabFrameNoTimeout(new Mat(RobotMap.CAMERA_HEIGHT, RobotMap.CAMERA_WIDTH, 6)) ));
+      if(linearValue == 0)
+      {
+        return centerX;
+      } else {
+        return linearValue;
+      }
   }
 
   public double getNumRectangles() {
@@ -165,4 +191,27 @@ public class Vision extends Subsystem {
       logger.warn("Vision thread is not created or not runnable to stop");
     }
   }
+
+  public double linearInterp(ArrayList<Double> x, ArrayList <Double> y, double xi) {
+    // return linear interpolation of (x,y) on xi
+    if(x.size() > 2 && x.size() == y.size()){
+      int timeCounter = 0;
+      int centerCounter = 0;
+      double [] times = new double [x.size()];
+      double [] centers = new double [y.size()];
+      for (double valOfX : x) {
+        times[timeCounter] = valOfX;
+        timeCounter++;
+      }
+      for (double valOfX : y) {
+        centers[centerCounter] = valOfX;
+        centerCounter++;
+      }
+      LinearInterpolator li = new LinearInterpolator();
+      PolynomialSplineFunction psf = li.interpolate(times, centers);
+      double yi = psf.value(xi);
+      return yi;
+    }
+    return 0;
+    }
 }
